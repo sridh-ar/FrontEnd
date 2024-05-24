@@ -58,7 +58,7 @@ export default function Home() {
       )
       :
       (
-        <main className="flex items-center justify-between flex-col h-screen w-full bg-gray-200">
+        <main className="flex items-center flex-col h-screen w-full bg-gray-200">
           {/* Logo Image */}
           <a href={loggedIn ? "/dashboard" : "/signin"}>
             <img
