@@ -1,4 +1,3 @@
-"use client";
 import { motion } from "framer-motion";
 // import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -157,7 +156,7 @@ export default function PlayerRegistration() {
                 color="gray"
                 onClick={() => {
                   setisLoading(true);
-                  window.location.replace("/")
+                  window.history.back();
                 }}
               />
             </div>
