@@ -1,34 +1,40 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
-import store from "./utils/stateVariables";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import reportWebVitals from "./reportWebVitals";
+import store from "./utils/stateVariables";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import React from "react";
+import "./index.css";
+
+// Components & Pages
 import PlayerRegistration from "./pages/PlayerRegistration";
-import Privacy from "./pages/Privacy";
 import RefundPage from "./pages/RefundPage";
+import Dashboard from "./pages/Dashboard";
+import Privacy from "./pages/Privacy";
 import Support from "./pages/Support";
 import Terms from "./pages/Terms";
-import Dashboard from "./pages/Dashboard";
+import App from "./App";
+import ThanksPage from "./pages/Thanks";
+import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-          <Route path="/" element={<App />}/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
           <Route path="playerRegister" Component={PlayerRegistration} />
           <Route path="privacy" Component={Privacy} />
           <Route path="cancellation-refund" Component={RefundPage} />
           <Route path="support" Component={Support} />
           <Route path="terms" Component={Terms} />
           <Route path="dashboard" Component={Dashboard} />
+          <Route path="thanks" Component={ThanksPage} />
           {/* <Route path="*" element={<NoPage />} /> */}
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+      <Toaster />
     </Provider>
   </React.StrictMode>
 );

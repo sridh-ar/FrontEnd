@@ -27,7 +27,7 @@ export default function Support() {
 
             <h2 class="mt-4 text-lg font-medium text-gray-800 dark:text-white">Phone</h2>
             <p class="mt-2 text-gray-500 dark:text-gray-400">Contact for any Queries</p>
-            <p class="mt-2 text-blue-500 dark:text-blue-400">{phone}</p>
+            <a class="mt-2 text-blue-500 dark:text-blue-400" href={`tel:${phone}`}>{phone}</a>
           </div>
 
 
@@ -40,7 +40,7 @@ export default function Support() {
 
             <h2 class="mt-4 text-lg font-medium text-gray-800 dark:text-white">Email</h2>
             <p class="mt-2 text-gray-500 dark:text-gray-400">Our friendly team is here to help.</p>
-            <p class="mt-2 text-blue-500 dark:text-blue-400">{email}</p>
+            <a class="mt-2 text-blue-500 dark:text-blue-400" href={`mailto:${email}`}>{email}</a>
           </div>
 
           <div class="flex flex-col items-center justify-center text-center">

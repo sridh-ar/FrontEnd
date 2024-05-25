@@ -11,6 +11,7 @@ import { updateConfigStateValue } from "./utils/stateVariables";
 
 // Images
 import logo from './images/leo.png'
+import Button from "./components/common/Button";
 
 export default function Home() {
   // States
@@ -49,45 +50,49 @@ export default function Home() {
     // setTimeout(() => setIsLoading(false), 200);
 
   }, []);
+
+  // Loading Component
+  if (isLoading) {
+    return (
+      <div className="w-screen h-screen">
+        <LoadingScreen />
+      </div>
+    )
+  }
+
   return (
-    isLoading ?
-      (
-        <div className="w-screen h-screen">
-          <LoadingScreen />
-        </div>
-      )
-      :
-      (
-        <main className="flex items-center flex-col h-screen w-full bg-gray-200">
-          {/* Logo Image */}
-          <a href={loggedIn ? "/dashboard" : "/signin"}>
-            <img
-              className="relative outline-none m-5"
-              src={logo}
-              alt="Next.js Logo"
-              width={250}
-              height={250}
-              priority
-            />
-          </a>
+    <main className="grid grid-rows-1 h-screen w-full bg-gray-200">
 
-          { /* Body */}
-          <div className="flex items-center flex-col">
-            <a className="flex justify-center items-center bg-[#ffffff] shadow px-6 py-1.5 rounded-full text-sm tracking-wide cursor-pointer m-1 sm:w-full"
-              href={configValues.remainingSlots <= 0 ? '/playerRegister' : `/playerRegister`}>
-              {`Register for ${configValues.appName} 🏆`}
-            </a>
+      {/* Body */}
+      <div className="row-span-2 flex flex-col items-center">
+        {/* Logo Image */}
+        <a href={loggedIn ? "/dashboard" : "/signin"}>
+          <img
+            className="relative outline-none m-5"
+            src={logo}
+            alt="Next.js Logo"
+            width={250}
+            height={250}
+            priority
+          />
+        </a>
 
-            { /* Remaining Slots */}
-            <span className="text-xs tracking-wide text-orange-700 mt-3">
-              Remaininig Slots - {configValues.remainingSlots}
-            </span>
-          </div >
+        { /* Button */}
+        <div className="flex items-center flex-col">
+          <Button
+            title={`Register for ${configValues.appName} 🏆`}
+            onClick={() => window.location.replace(configValues.remainingSlots <= 0 ? '#' : `/playerRegister`)} />
 
-          { /* Footer */}
-          <Footer />
-        </main>
-      )
+          { /* Remaining Slots */}
+          <span className="text-xs tracking-wide text-orange-700 mt-3">
+            Remaininig Slots - {configValues.remainingSlots}
+          </span>
+        </div >
 
+      </div>
+
+      { /* Footer */}
+      <Footer />
+    </main>
   );
 }

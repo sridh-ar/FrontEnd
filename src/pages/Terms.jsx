@@ -1,11 +1,10 @@
-"use client";
-// import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 
 const email = process.env.EMAIL || "sairamanath@gmail.com";
 
 export default function Terms() {
   return (
-    <main className="bg-white">
+    <main className="bg-gray-100">
       <div class="md:max-w-screen-sm text-center px-4 sm:px-6 lg:px-8 pt-10 pb-6 mx-auto">
         <h1 class="text-2xl font-bold md:text-4xl dark:text-white">
           Terms &amp; Conditions
@@ -93,7 +92,8 @@ export default function Terms() {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
+
+      <Footer />
     </main>
   );
 }
