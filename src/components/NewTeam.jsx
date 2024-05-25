@@ -1,14 +1,19 @@
 "use client";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import { uploadBytes, ref, getStorage, getDownloadURL } from "firebase/storage";
 import { firebaseApp } from "../utils/firebase";
+import LoadingScreen from "./common/LoadingScreen";
+import CloseIcon from "./common/CloseIcon";
+import { newTeam } from "../utils/constants";
+import Input from "./common/Input";
+import Button from "./common/Button";
+import { fetchAPI } from "../utils/commonServices";
+import toast from "react-hot-toast";
 
 
 export default function NewTeam({ closeFunction }) {
-  const [isTeamModalLoading, setTeamModalLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [teamData, setteamData] = useState({
     team_name: '',
@@ -48,111 +53,71 @@ export default function NewTeam({ closeFunction }) {
     });
   };
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setTeamModalLoading(true);
-
+    console.log(teamData)
+    setIsLoading(true);
     try {
-      const response = await fetch("/api/insert", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "table_name": "team",
-        },
-        body: JSON.stringify(teamData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit team data, Contact Admin');
-      }
-
-      setTeamModalLoading(false);
+      await fetchAPI("/team/create", "POST", teamData)
+      toast.success("Team Added  Successfully", { duration: 5000 });
+      setIsLoading(false);
       closeFunction();
     } catch (error) {
-      alert(error.message);
-      window.location.replace("/dashboard");
+      console.log('[NewTeam.jsx] Error - ', error.stack);
+      toast.error('Unable to add New Team.');
+      closeFunction();
     }
-  };
+  }
 
   return (
-    <>
-      <div className="bg-black p-2 py-10 fixed inset-0 w-full z-50 bg-opacity-50 flex items-center justify-center">
+    <div className="bg-black p-2 py-10 fixed inset-0 w-full z-50 bg-opacity-50 flex items-center justify-center">
+      <motion.div className="relative bg-white rounded flex flex-col items-center w-[70%] p-2 overflow-hidden"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+      >
+        {/* Loading Screen */}
+        {isLoading && <LoadingScreen className="absolute bg-white z-[100]" />}
 
-        {isTeamModalLoading ?
-          <div className="relative bg-white rounded-xl flex flex-col items-center justify-center w-[70%] h-full p-2">
-            <img src="/loader.svg" alt="" className="w-32" />
+        {/* Close Icon */}
+        <CloseIcon className="top-6 right-8" onClick={() => closeFunction()} />
+
+        {/* Form Data */}
+        <p className="font-medium my-4 text-lg">👩‍🚀 Team Registration</p>
+
+        <form className="grid grid-cols-2 gap-3 p-5 w-full" onSubmit={handleSubmit}>
+
+          {/* Inputs */}
+          {newTeam.inputColumns.map((input, index) => (
+            <Input
+              index={index}
+              label={input.label}
+              required={input.required}
+              type={input.type}
+              idName={input.name}
+              value={teamData[input.name]}
+              onChange={handleInputChange}
+              disabled={input.disabled}
+            />
+          ))}
+
+          {/* File Upload */}
+          {newTeam.fileUploadInputs.map((input, index) => (
+            <Input
+              index={index}
+              label={input.label}
+              required={input.required}
+              type={input.type}
+              idName={input.name}
+              onChange={handleInputChange}
+            />
+          ))}
+
+          {/* Submit Button */}
+          <div className="col-span-2 flex items-center justify-center">
+            <Button title="Submit" type="submit" className="col-span-2 mt-2" />
           </div>
-          :
-          <motion.div className="relative bg-white rounded flex flex-col items-center w-[70%] h-full p-2"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-          >
-            {/* Close Icon */}
-            <div className=" bg-gray-300 shadow flex items-center justify-center rounded-full absolute top-8 cursor-pointer right-8 w-7 h-7 z-50">
-              <XMarkIcon
-                width={20}
-                height={20}
-                color="gray"
-                onClick={() => closeFunction()}
-              />
-            </div>
-
-            <p className="font-medium my-2 text-lg">📰 Team Registration</p>
-
-            <form className="grid grid-cols-2 gap-3 p-5 w-full" onSubmit={handleSubmit}>
-
-              {/* Inputs */}
-              {[{ label: "Team Name", type: "text", required: true, name: "team_name" },
-              { label: "Captain Name", type: "text", required: true, name: "captain" },
-              { label: "Owner Name", type: "text", required: true, name: "owner" },
-              { label: "Slots", type: "text", name: "slots", disabled: true },
-              { label: "Remaining Slots", type: "text", name: "remaining_slots", disabled: true },
-              { label: "Total Points Available", type: "text", name: "total_points_available", disabled: true },
-              { label: "Remaining Points Available", type: "text", name: "remaining_points_available", disabled: true }
-              ].map((input, index) => (
-                <div key={index} className="flex flex-col justify-center w-full gap-2 text-sm">
-                  <label>{input.required ? `${input.label} *` : `${input.label}`}</label>
-                  <input
-                    className='outline-none ring-1 ring-indigo-100 p-2 h-9 w-full px-4 rounded-full bg-gray-200'
-                    type={input.type}
-                    name={input.name}
-                    value={teamData[input.name]}
-                    placeholder={input.label}
-                    onChange={handleInputChange}
-                    required={input.required}
-                    disabled={input.disabled}
-                  />
-                </div>
-              ))}
-
-              {/* File Upload */}
-              {[{ label: "Team Photo", type: "file", required: true, name: "team_photo" },
-              { label: "Captain Photo", type: "file", required: true, name: "captain_photo" },
-              { label: "Owner Photo", type: "file", required: true, name: "owner_photo" }
-              ].map((input, index) => (
-                <div key={index} className="flex flex-col justify-center w-full gap-2 text-sm">
-                  <label>{input.required ? `${input.label} *` : `${input.label}`}</label>
-                  <label htmlFor="file-upload" className="cursor-pointer flex items-center space-x-2 outline-none ring-1 ring-indigo-100 p-2 h-9 w-full px-4 rounded-full bg-gray-200">
-                    <ArrowUpTrayIcon width={17} />
-                    <input id="file-upload" type="file" className="file:hidden" name={input.name} onChange={handleInputChange} required />
-                  </label>
-                </div>
-              ))}
-
-              {/* Submit Button */}
-              <div className="col-span-2 flex items-center justify-center">
-                <motion.button
-                  type="submit"
-                  className={`rounded bg-indigo-400 p-1 px-6 m-3 cursor-pointer text-white`}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  Submit
-                </motion.button>
-              </div>
-            </form>
-          </motion.div>
-        }
-      </div>
-    </>
+        </form>
+      </motion.div>
+    </div>
   )
 }

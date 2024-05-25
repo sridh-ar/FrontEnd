@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { uploadBytes, ref, getStorage, getDownloadURL } from "firebase/storage";
 import { firebaseApp } from '../utils/firebase';
@@ -102,7 +101,7 @@ export default function PlayerRegistration() {
       <div className="bg-white rounded-xl flex flex-col items-center w-full p-2 py-4" >
 
         {/* Close Icon */}
-        < CloseIcon className="top-10 left-10" />
+        < CloseIcon className="top-10 right-10" onClick={() => window.history.back()} />
 
         {/* Actual Form Body */}
         < p className="font-semibold tracking-wider my-3 text-lg" >🎭 Player Registration</p >

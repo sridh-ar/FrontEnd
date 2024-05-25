@@ -1,4 +1,4 @@
-export default function Input({ type = "text", index, idName, label, value, required = false, onChange, hidden, options = [] }) {
+export default function Input({ type = "text", index, idName, label, value, required = false, onChange, hidden, options = [], disabled = false }) {
     if (type == 'select') {
         return (
             <div
@@ -44,6 +44,7 @@ export default function Input({ type = "text", index, idName, label, value, requ
                 placeholder={label}
                 onChange={onChange}
                 required={required}
+                disabled={disabled}
             />
         </div>
     )

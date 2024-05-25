@@ -4,7 +4,7 @@ export default function Button({ title = "", className = "bg-black", type = "but
             type={type}
             onClick={onClick}
             disabled={disabled}
-            className={`text-white tracking-[0.5px] rounded-full text-sm inline-flex items-center justify-center px-8 py-1.5 bg-black ${className}`}
+            className={`text-white shadow tracking-[0.5px] rounded-full text-sm inline-flex items-center justify-center px-6 py-1.5 bg-black ${className}`}
         >
             {title}
         </button>

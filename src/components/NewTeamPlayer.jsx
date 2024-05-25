@@ -1,13 +1,17 @@
-"use client";
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import CloseIcon from './common/CloseIcon'
+import LoadingScreen from "./common/LoadingScreen";
+import Input from "./common/Input";
+import { newTeamPlayer } from "../utils/constants";
+import Button from "./common/Button";
 
 export default function NewTeamPlayer({ closeFunction, selectedTeam }) {
-  const [isTeamModalLoading, setTeamModalLoading] = useState(false);
+  //State Variables
+  const [isLoading, setisLoading] = useState(false);
   const [playerData, setPlayerData] = useState(null);
 
-  const [teamData, setteamData] = useState({
+  const [teamPlayerData, setTeamPlayerData] = useState({
     team_name: selectedTeam.team_name,
     player_no: "",
     player_name: "",
@@ -29,19 +33,19 @@ export default function NewTeamPlayer({ closeFunction, selectedTeam }) {
         .catch((err) => alert(err.message));
     }
 
-    setteamData({
-      ...teamData,
+    setTeamPlayerData({
+      ...teamPlayerData,
       [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setTeamModalLoading(true);
+    setisLoading(true);
 
     try {
       const query = `select player_no from team_players where player_no = ${parseInt(
-        teamData.player_no
+        teamPlayerData.player_no
       )}`;
 
       fetch(`/api/select?query=${query}`)
@@ -49,7 +53,7 @@ export default function NewTeamPlayer({ closeFunction, selectedTeam }) {
         .then(async (data) => {
           console.log(data);
           if (data.length > 0) {
-            setTeamModalLoading(false);
+            setisLoading(false);
             alert("Player already part of another team or Not Available");
           } else {
             const response = await fetch("/api/insert", {
@@ -58,7 +62,7 @@ export default function NewTeamPlayer({ closeFunction, selectedTeam }) {
                 "Content-Type": "application/json",
                 table_name: "team_players",
               },
-              body: JSON.stringify(teamData),
+              body: JSON.stringify(teamPlayerData),
             });
 
             if (!response.ok) {
@@ -70,13 +74,13 @@ export default function NewTeamPlayer({ closeFunction, selectedTeam }) {
             // updating team remainig points and remaing slots
             let updateQuery = `UPDATE team SET remaining_slots = remaining_slots - 1, 
               remaining_points_available = remaining_points_available - ${parseInt(
-              teamData.points
+              teamPlayerData.points
             )} 
-              WHERE id = ${teamData.team_id}`;
+              WHERE id = ${teamPlayerData.team_id}`;
 
             fetch(`/api/update?query=${updateQuery}`);
 
-            setTeamModalLoading(false);
+            setisLoading(false);
             closeFunction();
           }
         })
@@ -87,117 +91,68 @@ export default function NewTeamPlayer({ closeFunction, selectedTeam }) {
     }
   };
 
+  if (isLoading) {
+    <LoadingScreen />
+  }
+
   return (
-    <>
-      <div className="bg-black p-2 py-36 fixed inset-0 w-full z-50 bg-opacity-50 flex items-center justify-center">
-        {isTeamModalLoading ? (
-          <div className="relative bg-white rounded-xl flex flex-col items-center justify-center w-[60%] h-full p-2">
-            <img src="/loading.gif" alt="" className="w-60" />
-          </div>
-        ) : (
-          <motion.div
-            className="relative bg-white rounded-xl flex flex-col items-center w-[60%] h-full p-2"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-          >
-            {/* Close Icon */}
-            <div className=" bg-gray-300 shadow flex items-center justify-center rounded-full absolute top-8 cursor-pointer right-8 w-7 h-7 z-50">
-              <XMarkIcon
-                width={20}
-                height={20}
-                color="gray"
-                onClick={() => closeFunction()}
-              />
-            </div>
 
-            <p className="font-semibold my-2">Team Player Register Form</p>
+    <div className="bg-black p-2 py-36 fixed inset-0 w-full z-50 bg-opacity-50 flex items-center justify-center">
+      <motion.div
+        className="relative bg-white rounded-xl flex flex-col items-center w-[60%] h-full p-2"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+      >
+        {/* Close Icon */}
+        <CloseIcon className="top-6 right-8" onClick={() => closeFunction()} />
 
-            <form
-              className="grid grid-cols-2 gap-3 p-5 w-full"
-              onSubmit={handleSubmit}
+        <p className="font-semibold my-4">🎭 New Player Registration</p>
+
+        <form className="grid grid-cols-2 gap-3 p-5 w-full" onSubmit={handleSubmit}>
+          {/* Inputs */}
+          {newTeamPlayer.inputColumns.map((input, index) => (
+            <div
+              key={index}
+              className="relative flex flex-col justify-center w-full gap-2 text-sm"
             >
-              {/* Inputs */}
-              {[
-                {
-                  label: "Team Name",
-                  name: "team_name",
-                  type: "text",
-                  disabled: true,
-                  value: selectedTeam.team_name,
-                },
-                {
-                  label: "Player No",
-                  name: "player_no",
-                  type: "text",
-                  required: true,
-                },
-                {
-                  label: "Player Name",
-                  name: "player_name",
-                  type: "text",
-                  required: true,
-                },
-                {
-                  label: "Points",
-                  name: "points",
-                  type: "number",
-                  required: true,
-                },
-              ].map((input, index) => (
+              <Input
+                label={input.label}
+                required={input.required}
+                type={input.type}
+                idName={input.name}
+                value={teamPlayerData[input.name]}
+                onChange={handleInputChange}
+                disabled={input.disabled}
+              />
+
+              {/* Player Detail Modal */}
+              {input.name == "player_no" && playerData && (
                 <div
-                  key={index}
-                  className="relative flex flex-col justify-center w-full gap-2 text-sm"
+                  className="bg-white rounded p-2 shadow ring-1 ring-gray-200 absolute cursor-pointer w-[99%] text-sm right-0 -bottom-16 z-50"
+                  onClick={() => {
+                    setTeamPlayerData({
+                      ...teamPlayerData,
+                      player_name: playerData.name,
+                    });
+                    setPlayerData(null);
+                  }}
                 >
-                  <label>
-                    {input.required ? `${input.label} *` : `${input.label}`}
-                  </label>
-                  <input
-                    className="outline-none ring-1 ring-indigo-100 p-2 h-9 w-full px-4 rounded-full bg-gray-200"
-                    type={input.type}
-                    name={input.name}
-                    value={teamData[input.name]}
-                    placeholder={input.label}
-                    onChange={handleInputChange}
-                    required={input.required}
-                    disabled={input.disabled}
-                  />
-
-                  {/* Player Detail Modal */}
-                  {input.name == "player_no" && playerData && (
-                    <div
-                      className="bg-white rounded p-2 shadow ring-1 ring-gray-200 absolute cursor-pointer w-[99%] text-sm right-0 -bottom-16 z-50"
-                      onClick={() => {
-                        setteamData({
-                          ...teamData,
-                          player_name: playerData.name,
-                        });
-                        setPlayerData(null);
-                      }}
-                    >
-                      <b>Name: </b>
-                      {playerData.name}
-                      <br />
-                      <b>Player Role: </b>
-                      {playerData.player_role}
-                    </div>
-                  )}
+                  <b>Name: </b>
+                  {playerData.name}
+                  <br />
+                  <b>Player Role: </b>
+                  {playerData.player_role}
                 </div>
-              ))}
+              )}
+            </div>
+          ))}
 
-              {/* Submit Button */}
-              <div className="col-span-2 flex items-center justify-center">
-                <motion.button
-                  type="submit"
-                  className={`rounded bg-indigo-400 p-1 px-6 m-3 cursor-pointer text-white`}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  Submit
-                </motion.button>
-              </div>
-            </form>
-          </motion.div>
-        )}
-      </div>
-    </>
+          {/* Submit Button */}
+          <div className="col-span-2 flex items-center justify-center my-1">
+            <Button title="Submit" type="submit" className="col-span-2" />
+          </div>
+        </form>
+      </motion.div>
+    </div>
   );
 }
