@@ -1,4 +1,4 @@
-export default function Button({ title = "", className = "bg-black", type = "button", onClick, disabled = false }) {
+export default function Button({ title = '', className = 'bg-black', type = 'button', onClick, disabled = false }) {
     return (
         <button
             type={type}
@@ -8,5 +8,5 @@ export default function Button({ title = "", className = "bg-black", type = "but
         >
             {title}
         </button>
-    )
+    );
 }

@@ -1,21 +1,21 @@
-import { motion } from "framer-motion";
-import PlayersCard from "../components/PlayersCard";
-import { ReceiptRefundIcon } from "@heroicons/react/24/outline";
-import Button from "../components/common/Button";
-import ModalWrapper from "../components/common/ModalWrapper";
+import { motion } from 'framer-motion';
+import PlayersCard from '../components/PlayersCard';
+import { ReceiptRefundIcon } from '@heroicons/react/24/outline';
+import Button from '../components/common/Button';
+import ModalWrapper from '../components/common/ModalWrapper';
 
 export default function ThanksPage() {
-    let data = localStorage.getItem("playerData")
+    let data = localStorage.getItem('playerData');
 
     if (!data) {
         return (
             <ModalWrapper>
-                <div class="relative bg-white rounded-lg shadow p-5 text-center">
-                    <h3 class=" my-4 font-normal text-gray-500">Something went wrong. Contact Admin</h3>
+                <div className="relative bg-white rounded-lg shadow p-5 text-center">
+                    <h3 className=" my-4 font-normal text-gray-500">Something went wrong. Contact Admin</h3>
                     <Button title="Return to Home" className="bg-red-500" onClick={() => window.location.replace('/')} />
                 </div>
             </ModalWrapper>
-        )
+        );
     }
 
     // Parsing Stringfy Data
@@ -49,7 +49,7 @@ export default function ThanksPage() {
             <p className="font-semibold">Pleae take a Screenshot for Reference</p>
             <button
                 className="bg-indigo-300 rounded-full p-1.5 px-6 text-sm my-4 flex items-center justify-center gap-1"
-                onClick={() => window.location.replace("/")}
+                onClick={() => window.location.replace('/')}
             >
                 Return to Home
                 <ReceiptRefundIcon width={20} />
