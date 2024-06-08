@@ -105,8 +105,21 @@ export const newTeam = {
         { label: 'Remaining Points Available', type: 'text', name: 'remaining_points_available', disabled: true },
     ],
     fileUploadInputs: [
-        { label: 'Team Photo', type: 'file', required: true, name: 'team_photo' },
-        { label: 'Captain Photo', type: 'file', required: true, name: 'captain_photo' },
-        { label: 'Owner Photo', type: 'file', required: true, name: 'owner_photo' },
+        { label: 'Team Photo', type: 'file', required: false, name: 'team_photo' },
+        { label: 'Captain Photo', type: 'file', required: false, name: 'captain_photo' },
+        { label: 'Owner Photo', type: 'file', required: false, name: 'owner_photo' },
     ],
+};
+
+export const mockTableData = {
+    team_name: '',
+    captain: '',
+    owner: '',
+    slots: '',
+    remaining_slots: '',
+    total_points_available: '',
+    remaining_points_available: '',
+    team_photo: '',
+    owner_photo: '',
+    captain_photo: '',
 };

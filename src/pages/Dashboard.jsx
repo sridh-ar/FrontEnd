@@ -8,8 +8,9 @@ import { TrashIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import Button from '../components/common/Button';
 import toast from 'react-hot-toast';
 import SidebarContainer from '../components/common/SideBarContainer';
+import { mockTableData } from '../utils/constants';
 
-export default function Dashboard({ selectedTeamModal }) {
+export default function Dashboard() {
     // State variables initialization
     const [openNewTeamModel, setOpenNewTeamModel] = useState(false);
     const [openNewTeamPlayer, setOpenNewTeamPlayer] = useState(false);
@@ -22,6 +23,13 @@ export default function Dashboard({ selectedTeamModal }) {
     async function initialDataRetrival() {
         try {
             const apiResult = await fetchAPI('/team');
+            // To fill the table with dummy data for Cleaner UI look
+            const additionalList = 11 - apiResult.length;
+            if (apiResult.length < 11) {
+                for (let i = 1; i <= additionalList; i++) {
+                    apiResult.push(mockTableData);
+                }
+            }
             setTeamData(apiResult);
             setisLoading(false);
         } catch (error) {
@@ -94,9 +102,9 @@ export default function Dashboard({ selectedTeamModal }) {
         <SidebarContainer isLoading={isLoading}>
             <div className="bg-gray-200 overflow-y-auto p-3 w-full relative">
                 {/* Render table only when data is loaded */}
-                <div className="bg-white h-full rounded-md">
-                    <table className="w-full divide-y text-center bg-white overflow-hidden rounded-md tracking-wide border-collapse">
-                        <tr className="bg-slate-300 h-10 text-sm divide-x shadow ">
+                <div className="bg-white h-full rounded">
+                    <table className="w-full text-center bg-white overflow-hidden rounded tracking-wide border-collapse">
+                        <tr className="bg-[#529aa2] text-white h-10 text-sm divide-x shadow ">
                             <th>Team Name</th>
                             <th>Captain</th>
                             <th>Owner</th>
@@ -108,9 +116,11 @@ export default function Dashboard({ selectedTeamModal }) {
                         </tr>
 
                         {teamData.map((item) => (
-                            <tr className="p-2 h-12 text-sm text-center capitalize border-gray-400" key={item.id}>
-                                <td className="relative cursor-pointer" onClick={() => selectedTeamModal(item)}>
-                                    <img src={item.team_photo} alt="Team_Photo" className="w-8 h-8 absolute rounded inset-0 top-2 left-2" />
+                            <tr className="p-2 h-12 text-sm text-center capitalize border-gray-400 relative" key={item.id}>
+                                <td className="relative cursor-pointer">
+                                    {item.team_name && (
+                                        <img src={item.team_photo} className="w-8 h-8 absolute rounded inset-0 top-2 left-2" />
+                                    )}
                                     {item.team_name.slice(0, 15)}
                                 </td>
 
@@ -123,11 +133,14 @@ export default function Dashboard({ selectedTeamModal }) {
 
                                 {/* Table Actions */}
                                 <td>
-                                    <div className="flex items-center justify-evenly cursor-pointer">
-                                        <UserPlusIcon width={22} className="fill-green-800" onClick={() => handleNewTeamPlayer(item)} />
-                                        <TrashIcon width={22} className="fill-red-700" onClick={() => handleTeamDelete(item.id)} />
-                                    </div>
+                                    {item.team_name && (
+                                        <div className="flex items-center justify-evenly cursor-pointer">
+                                            <UserPlusIcon width={22} className="fill-green-800" onClick={() => handleNewTeamPlayer(item)} />
+                                            <TrashIcon width={22} className="fill-red-700" onClick={() => handleTeamDelete(item.id)} />
+                                        </div>
+                                    )}
                                 </td>
+                                {item.team_name && <div className="bg-slate-400 w-full h-[0.5px] absolute bottom-0 right-0" />}
                             </tr>
                         ))}
                     </table>

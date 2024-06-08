@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 
 export default function NewTeam({ closeFunction }) {
     const [isLoading, setIsLoading] = useState(false);
+    const [isImageUploading, setIsImageUploading] = useState(false);
 
     const [teamData, setteamData] = useState({
         team_name: '',
@@ -33,12 +34,14 @@ export default function NewTeam({ closeFunction }) {
 
         // handle file for upload
         if (['team_photo', 'owner_photo', 'captain_photo'].includes(name)) {
+            setIsImageUploading(true);
             let imageResult = e.target.files[0];
             const storage = getStorage(firebaseApp);
             const imageRef = ref(storage, `kpl/Team_${Math.floor(Math.random() * 90000) + 10000}`);
             await uploadBytes(imageRef, imageResult).then(async (res) => {
                 await getDownloadURL(res.ref).then((res) => {
                     value = res;
+                    setIsImageUploading(false);
                 });
             });
         }
@@ -112,7 +115,12 @@ export default function NewTeam({ closeFunction }) {
 
                     {/* Submit Button */}
                     <div className="col-span-2 flex items-center justify-center">
-                        <Button title="Submit" type="submit" className="col-span-2 mt-2" />
+                        <Button
+                            title={isImageUploading ? 'Image is Uploading...' : 'Submit'}
+                            type="submit"
+                            className="col-span-2 mt-2"
+                            disabled={isImageUploading}
+                        />
                     </div>
                 </form>
             </motion.div>
