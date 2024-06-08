@@ -10,7 +10,7 @@ export default function SideBar() {
         <main className="bg-[#54AAB3] w-full h-screen text-white flex flex-col justify-between">
             <section>
                 {/* Logo */}
-                <img src={logo} alt="Next.js Logo" className=" px-5 py-3" />
+                <img src={logo} alt="Next.js Logo" className="px-5 py-3" />
 
                 {/* Divider */}
                 <div className="w-full h-[0.5px] bg-gray-200 mb-6"></div>
@@ -20,26 +20,29 @@ export default function SideBar() {
                     { name: 'Dashboard', icon: 'HomeModernIcon' },
                     { name: 'Players', icon: 'UserGroupIcon' },
                     { name: 'Admin', icon: 'CogIcon' },
-                ].map((item, index) => (
-                    <a
-                        className={`ml-4 pl-5 flex cursor-pointer gap-2 w-full p-2 my-1 text-sm font-medium rounded-l-full relative ${url.includes(item.name.toLowerCase()) ? 'text-black bg-gray-200' : 'text-white'}`}
-                        href={`/${item.name.toLowerCase()}`}
-                        key={index}
-                    >
-                        {url.includes(item.name.toLowerCase()) && (
-                            <>
-                                <div className="bg-gray-200 absolute transition-colors duration-300 h-5 w-5 -top-5 z-10 right-4">
-                                    <div className="bg-[#54AAB3] transition-colors duration-300 h-5 w-5 rounded-br-2xl"></div>
-                                </div>
-                                <div className="bg-gray-200 absolute transition-colors duration-300 h-5 w-5 -bottom-5 z-10 right-4">
-                                    <div className="bg-[#54AAB3] transition-colors duration-300 h-5 w-5 rounded-tr-2xl"></div>
-                                </div>
-                            </>
-                        )}
-                        <Icon icon={item.icon} outline color="white" />
-                        {item.name}
-                    </a>
-                ))}
+                ].map((item, index) => {
+                    const isActive = url.includes(item.name.toLowerCase());
+                    return (
+                        <a
+                            className={`ml-4 pl-5 flex cursor-pointer gap-2 w-full p-2 my-1 text-sm font-medium rounded-l-full relative ${isActive ? 'text-black bg-gray-200' : 'text-white'}`}
+                            href={`/${item.name.toLowerCase()}`}
+                            key={index}
+                        >
+                            {isActive && (
+                                <>
+                                    <div className="bg-gray-200 absolute transition-colors duration-300 h-5 w-5 -top-5 z-10 right-4">
+                                        <div className="bg-[#54AAB3] transition-colors duration-300 h-5 w-5 rounded-br-2xl"></div>
+                                    </div>
+                                    <div className="bg-gray-200 absolute transition-colors duration-300 h-5 w-5 -bottom-5 z-10 right-4">
+                                        <div className="bg-[#54AAB3] transition-colors duration-300 h-5 w-5 rounded-tr-2xl"></div>
+                                    </div>
+                                </>
+                            )}
+                            <Icon icon={item.icon} outline className="white" />
+                            {item.name}
+                        </a>
+                    );
+                })}
             </section>
 
             {/* Account */}
