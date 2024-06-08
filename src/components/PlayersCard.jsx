@@ -1,6 +1,9 @@
 /* eslint-disable no-restricted-globals */
 import { useState } from 'react';
 import Icon from './common/Icon';
+import { fetchAPI } from '../utils/commonServices';
+import toast from 'react-hot-toast';
+import loader from '../images/loading.gif';
 
 function TextField({ title, value, icon }) {
     return (
@@ -17,12 +20,22 @@ function TextField({ title, value, icon }) {
     );
 }
 
-export default function PlayersCard({ name, contact, role, team, image }) {
-    // const [isOpen, setIsOpen] = useState(false);
-    // const [isLoading, setIsLoading] = useState(true);
+export default function PlayersCard({ name, contact, role, team, image, id }) {
+    const [isButtonLoading, setIsButtonLoading] = useState(false);
+
+    async function handleDelete() {
+        setIsButtonLoading(true);
+        try {
+            await fetchAPI(`/player/delete/${id}`, 'PUT');
+            window.location.reload();
+        } catch (error) {
+            toast.error('Unable to Delete the Player.');
+        }
+        setIsButtonLoading(false);
+    }
 
     return (
-        <main className="bg-white shadow p-3 flex w-full items-center rounded-md">
+        <main className="bg-white shadow p-3 flex w-full items-center rounded-md relative">
             <img
                 src={image}
                 alt="Rounded avatar"
@@ -39,6 +52,19 @@ export default function PlayersCard({ name, contact, role, team, image }) {
                 <TextField title="Role" value={role} icon="AcademicCapIcon" />
                 <TextField title="Team" value={team} icon="UserGroupIcon" />
             </div>
+
+            {/* Delete Icon */}
+            {!isButtonLoading ? (
+                <Icon
+                    icon="XCircleIcon"
+                    size={6}
+                    className="cursor-pointer fill-red-500 absolute right-3 top-3"
+                    onClick={() => handleDelete()}
+                    tooltip="Delete"
+                />
+            ) : (
+                <img src={loader} alt="Loading" className="w-5 absolute right-3 top-3" />
+            )}
         </main>
     );
 }

@@ -107,7 +107,7 @@ export default function AdminMenu() {
 
     return (
         <SidebarContainer isLoading={isLoading}>
-            <div className="bg-gray-200 shadow overflow-y-auto p-1 w-full h-full">
+            <div className="bg-gray-200 overflow-y-auto p-1 w-full h-full">
                 <AdminSection
                     title="Application Configurations"
                     description="This is your team's visible name. For example, the name of your company or department."
