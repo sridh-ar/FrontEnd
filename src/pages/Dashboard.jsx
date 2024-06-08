@@ -144,8 +144,6 @@ export default function Dashboard() {
                             </tr>
                         ))}
                     </table>
-                    {/* Divider */}
-                    <div className="bg-slate-300 w-full h-[0.5px]" />
                 </div>
 
                 {/* Render button to open new team modal */}
