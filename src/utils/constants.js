@@ -123,3 +123,16 @@ export const mockTableData = {
     owner_photo: '',
     captain_photo: '',
 };
+
+export const TEAM_DASHBOARD_ROWS = [
+    'Team Name',
+    'Captain',
+    'Owner',
+    'Slots',
+    'Remaining Slots',
+    'Total Points',
+    'Remaining Pts',
+    'Actions',
+];
+
+export const TEAM_TABLE_ROWS = ['Player Id', 'Player Name', 'Contact No', 'Jersey Name', 'Jersey Size', 'Jersey No'];

@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import NewTeamModal from '../components/NewTeamModal';
 import NewTeamPlayerModal from '../components/NewTeamPlayerModal';
-import { uploadBytes, ref, getStorage, getDownloadURL } from 'firebase/storage';
-import { firebaseApp } from '../utils/firebase';
 import { fetchAPI } from '../utils/commonServices';
 import { TrashIcon, UserPlusIcon } from '@heroicons/react/24/solid';
-import Button from '../components/common/Button';
 import toast from 'react-hot-toast';
 import SidebarContainer from '../components/common/SideBarContainer';
-import { mockTableData } from '../utils/constants';
+import { TEAM_DASHBOARD_ROWS, TEAM_TABLE_ROWS, mockTableData } from '../utils/constants';
 import Icon from '../components/common/Icon';
 
 export default function Dashboard() {
@@ -16,7 +13,7 @@ export default function Dashboard() {
     const [openNewTeamModel, setOpenNewTeamModel] = useState(false);
     const [openNewTeamPlayer, setOpenNewTeamPlayer] = useState(false);
     const [teamData, setTeamData] = useState([]);
-    const [selectedTeam, setSelectedTeam] = useState({});
+    const [selectedTeamForPlayer, setSelectedTeamForPlayer] = useState({});
     const [isLoading, setisLoading] = useState(true);
 
     // Fetch team data from API on component mount and whenever isOpen or isAddOpen changes
@@ -43,41 +40,6 @@ export default function Dashboard() {
         initialDataRetrival();
     }, [openNewTeamModel, openNewTeamPlayer]);
 
-    // Function to handle form submission
-    async function handleSubmit(event) {
-        event.preventDefault();
-        let values = [];
-        let imageResult = '';
-        for (let i = 0; i < 9; i++) {
-            if (i === 7 || i === 8) {
-                imageResult = event.target[i].files[0];
-                const storage = getStorage(firebaseApp);
-                const imageRef = ref(storage, `kpl/team/Player_${Math.floor(Math.random() * 90000) + 10000}`);
-                await uploadBytes(imageRef, imageResult).then(async (res) => {
-                    await getDownloadURL(res.ref).then((res) => {
-                        values.push(res);
-                    });
-                });
-            } else {
-                values.push(event.target[i].value);
-            }
-        }
-        fetch('/api/insert', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                table_name: 'team',
-            },
-            body: JSON.stringify(values),
-        })
-            .then((response) => response.json())
-            .then(() => {
-                setOpenNewTeamModel(false);
-                setisLoading(true);
-            })
-            .catch((error) => console.error(error));
-    }
-
     //Handling Functions
     async function handleTeamDelete(teamId) {
         console.log({ teamId });
@@ -95,7 +57,7 @@ export default function Dashboard() {
 
     // Handling new team member function
     async function handleNewTeamPlayer(teamData) {
-        setSelectedTeam(teamData);
+        setSelectedTeamForPlayer(teamData);
         setOpenNewTeamPlayer(true);
     }
 
@@ -105,20 +67,15 @@ export default function Dashboard() {
                 {/* Render table only when data is loaded */}
                 <div className="bg-white h-full rounded">
                     <table className="w-full text-center bg-white overflow-hidden rounded tracking-wide border-collapse">
-                        <tr className="bg-[#529aa2] text-white h-10 text-sm divide-x shadow ">
-                            <th>Team Name</th>
-                            <th>Captain</th>
-                            <th>Owner</th>
-                            <th>Slots</th>
-                            <th>Remaining Slots</th>
-                            <th>Total Points</th>
-                            <th>Remaining Pts</th>
-                            <th>Actions</th>
+                        <tr className="bg-[#529aa2] text-white h-10 text-sm divide-x shadow">
+                            {TEAM_DASHBOARD_ROWS.map((row) => (
+                                <th>{row}</th>
+                            ))}
                         </tr>
 
                         {teamData.map((item) => (
                             <tr className="p-2 h-12 text-sm text-center capitalize border-gray-400 relative" key={item.id}>
-                                <td className="relative cursor-pointer">
+                                <td className="relative cursor-pointer" onClick={() => (window.location.href = `/dashboard/${item.id}`)}>
                                     {item.team_name && (
                                         <img src={item.team_photo} className="w-8 h-8 absolute rounded inset-0 top-2 left-2" />
                                     )}
@@ -136,8 +93,18 @@ export default function Dashboard() {
                                 <td>
                                     {item.team_name && (
                                         <div className="flex items-center justify-evenly cursor-pointer">
-                                            <UserPlusIcon width={22} className="fill-green-800" onClick={() => handleNewTeamPlayer(item)} />
-                                            <TrashIcon width={22} className="fill-red-700" onClick={() => handleTeamDelete(item.id)} />
+                                            <Icon
+                                                icon="UserPlusIcon"
+                                                size={6}
+                                                className="fill-green-800"
+                                                onClick={() => handleNewTeamPlayer(item)}
+                                            />
+                                            <Icon
+                                                icon="TrashIcon"
+                                                size={6}
+                                                className="fill-red-700"
+                                                onClick={() => handleTeamDelete(item.id)}
+                                            />
                                         </div>
                                     )}
                                 </td>
@@ -154,7 +121,9 @@ export default function Dashboard() {
                 {openNewTeamModel && <NewTeamModal closeFunction={() => setOpenNewTeamModel(false)} />}
 
                 {/* Render new team player modal */}
-                {openNewTeamPlayer && <NewTeamPlayerModal closeFunction={() => setOpenNewTeamPlayer(false)} selectedTeam={selectedTeam} />}
+                {openNewTeamPlayer && (
+                    <NewTeamPlayerModal closeFunction={() => setOpenNewTeamPlayer(false)} selectedTeam={selectedTeamForPlayer} />
+                )}
             </div>
         </SidebarContainer>
     );

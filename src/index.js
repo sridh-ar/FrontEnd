@@ -19,6 +19,7 @@ import { Toaster } from 'react-hot-toast';
 import SidebarContainer from './components/common/SideBarContainer';
 import AdminMenu from './components/Admin/AdminMenu';
 import PlayerDashboard from './pages/PlayerDashboard';
+import TeamDetailScreen from './pages/TeamDetailScreen';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -40,6 +41,7 @@ root.render(
                     <Route path="dashboard" Component={Dashboard} />
                     <Route path="admin" Component={AdminMenu} />
                     <Route path="players" Component={PlayerDashboard} />
+                    <Route path="dashboard/:id" Component={TeamDetailScreen} />
                 </Routes>
             </BrowserRouter>
             <Toaster />
