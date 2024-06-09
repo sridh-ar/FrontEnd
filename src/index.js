@@ -16,7 +16,7 @@ import Terms from './pages/Terms';
 import App from './App';
 import ThanksPage from './pages/Thanks';
 import { Toaster } from 'react-hot-toast';
-import SidebarContainer from './components/common/SideBarContainer';
+import SidebarContainer from './components/common/SideBarContainer1';
 import AdminMenu from './components/Admin/AdminMenu';
 import PlayerDashboard from './pages/PlayerDashboard';
 import TeamDetailScreen from './pages/TeamDetailScreen';

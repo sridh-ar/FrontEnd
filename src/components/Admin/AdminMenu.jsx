@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { fetchAPI } from '../../utils/commonServices';
-import SidebarContainer from '../common/SideBarContainer';
+import SidebarContainer from '../common/SidebarContainer';
 import AppConfigInput from './AppConfigInput';
 import Button from '../common/Button';
 

@@ -4,7 +4,7 @@ import { TrashIcon } from '@heroicons/react/24/solid';
 import { fetchAPI } from '../utils/commonServices';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
-import SidebarContainer from '../components/common/SideBarContainer';
+import SidebarContainer from '../components/common/SideBarContainer1';
 import { TEAM_TABLE_ROWS } from '../utils/constants';
 import Icon from '../components/common/Icon';
 
