@@ -79,7 +79,7 @@ export default function NewTeamModal({ closeFunction }) {
                 {isLoading && <LoadingScreen className="absolute bg-white z-[100]" />}
 
                 {/* Close Icon */}
-                <Icon icon="XCircleIcon" className="cursor-pointer absolute top-6 right-8" size={7} onClick={() => closeFunction()} />
+                <Icon icon="XCircleIcon" className="absolute top-6 right-8" size={7} onClick={() => closeFunction()} />
 
                 {/* Form Data */}
                 <p className="font-medium my-4 text-lg">👩‍🚀 Team Registration</p>

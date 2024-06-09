@@ -6,7 +6,13 @@ export default function Icon({ icon, className, size, outline = false, onClick, 
     const { ...icons } = outline ? OutlineIcons : SolidIcons;
     const Icon = icons[icon];
 
-    const classes = [`${className ? className : 'text-black'}`, `h-${size ? size : 5}`, `w-${size ? size : 5}`, 'outline-none'];
+    const classes = [
+        `${className ? className : 'text-black'}`,
+        `h-${size ? size : 5}`,
+        `w-${size ? size : 5}`,
+        'outline-none',
+        'cursor-pointer',
+    ];
 
     return (
         <>

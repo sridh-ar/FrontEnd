@@ -9,6 +9,7 @@ import Button from '../components/common/Button';
 import toast from 'react-hot-toast';
 import SidebarContainer from '../components/common/SideBarContainer';
 import { mockTableData } from '../utils/constants';
+import Icon from '../components/common/Icon';
 
 export default function Dashboard() {
     // State variables initialization
@@ -140,14 +141,14 @@ export default function Dashboard() {
                                         </div>
                                     )}
                                 </td>
-                                {item.team_name && <div className="bg-slate-400 w-full h-[0.5px] absolute bottom-0 right-0" />}
+                                {item.team_name && <div className="bg-slate-300 w-full h-[0.5px] absolute bottom-0 right-0" />}
                             </tr>
                         ))}
                     </table>
                 </div>
 
-                {/* Render button to open new team modal */}
-                {<Button title="+" className="fixed bottom-8 right-14 w-10 h-12 px-0 py-0" onClick={() => setOpenNewTeamModel(true)} />}
+                {/* Render Icon to open new team modal */}
+                <Icon icon="PlusCircleIcon" className="fixed bottom-8 right-14" size={10} onClick={() => setOpenNewTeamModel(true)} />
 
                 {/* Render new team modal */}
                 {openNewTeamModel && <NewTeamModal closeFunction={() => setOpenNewTeamModel(false)} />}

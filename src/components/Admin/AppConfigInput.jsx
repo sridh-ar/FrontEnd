@@ -65,17 +65,11 @@ export default function AppConfigInput({ config = {}, addConfig = false }) {
                                             bg-gray-100 shadow-inner p-2 px-4 rounded-md my-3 ${editMode ? 'ring-1 ring-black' : ''}`}
                     />
 
-                    <Icon
-                        icon="DocumentPlusIcon"
-                        size={5}
-                        className="cursor-pointer fill-green-800"
-                        onClick={handleEditSave}
-                        tooltip="Create"
-                    />
+                    <Icon icon="DocumentPlusIcon" size={5} className="fill-green-800" onClick={handleEditSave} tooltip="Create" />
                     <Icon
                         icon="XMarkIcon"
                         size={5}
-                        className="cursor-pointer fill-red-600"
+                        className="fill-red-600"
                         onClick={() => setConfigDetails({ config_name: '', config_value: '' })}
                         tooltip="Clear"
                     />
@@ -104,11 +98,11 @@ export default function AppConfigInput({ config = {}, addConfig = false }) {
                 <Icon
                     icon={editMode ? 'CheckIcon' : 'PencilSquareIcon'}
                     size={5}
-                    className="cursor-pointer fill-green-800"
+                    className="fill-green-800"
                     onClick={handleEditSave}
                     tooltip={editMode ? 'Save' : 'Edit'}
                 />
-                <Icon icon="TrashIcon" size={5} className="cursor-pointer fill-red-600" onClick={handleDelete} tooltip="Delete" />
+                <Icon icon="TrashIcon" size={5} className="fill-red-600" onClick={handleDelete} tooltip="Delete" />
             </>
         </div>
     );

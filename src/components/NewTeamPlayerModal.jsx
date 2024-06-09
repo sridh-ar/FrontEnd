@@ -97,7 +97,7 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
                 animate={{ scale: 1, opacity: 1 }}
             >
                 {/* Close Icon */}
-                <Icon icon="XCircleIcon" className="cursor-pointer absolute top-6 right-8" size={7} onClick={() => closeFunction()} />
+                <Icon icon="XCircleIcon" className="absolute top-6 right-8" size={7} onClick={() => closeFunction()} />
 
                 <p className="font-semibold my-4">🎭 New Player Registration</p>
 

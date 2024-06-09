@@ -1,5 +1,6 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
+import Icon from '../components/common/Icon';
 // import { Meteors } from "./ui/meteors";
 // import { Button } from "./ui/moving-border";
 
@@ -22,9 +23,7 @@ export default function PlayersCardFull({ name, id, role, team, battingStyle, bo
                 <div className="bg-black w-screen h-screen opacity-50 absolute" />
 
                 {/* Close Icon */}
-                <button className="absolute top-8 cursor-pointer right-8 w-[40px] h-[40px] z-50">
-                    <XMarkIcon width={20} height={20} color="gray" onClick={() => closeModal(false)} />
-                </button>
+                <Icon icon="XCircleIcon" className="absolute top-6 right-8" size={7} onClick={() => closeModal(false)} />
 
                 {/* Stars */}
                 {/* <Meteors number={30} /> */}
