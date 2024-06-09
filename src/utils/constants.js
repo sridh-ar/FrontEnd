@@ -136,3 +136,9 @@ export const TEAM_DASHBOARD_ROWS = [
 ];
 
 export const TEAM_TABLE_ROWS = ['Player Id', 'Player Name', 'Contact No', 'Jersey Name', 'Jersey Size', 'Jersey No'];
+
+export const SIDEBAR_MENUS = [
+    { name: 'Dashboard', icon: 'HomeModernIcon' },
+    { name: 'Players', icon: 'UserGroupIcon' },
+    { name: 'Admin', icon: 'CogIcon' },
+];
