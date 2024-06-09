@@ -25,7 +25,7 @@ export default function SideBar() {
                     return (
                         <a
                             className={`ml-4 pl-5 flex cursor-pointer gap-2 w-full p-2 my-1 text-sm font-medium rounded-l-full relative ${isActive ? 'text-black bg-gray-200' : 'text-white'}`}
-                            href={`/${item.name.toLowerCase()}`}
+                            href={isActive ? '#' : `/${item.name.toLowerCase()}`}
                             key={index}
                         >
                             {isActive && (

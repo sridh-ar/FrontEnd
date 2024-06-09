@@ -4,7 +4,6 @@ import SidebarContainer from '../components/common/SideBarContainer';
 import { fetchAPI } from '../utils/commonServices';
 import Icon from '../components/common/Icon';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import loadingImg from '../images/loading.gif';
 
 const SearchBar = ({ handleSearch }) => {
     return (
@@ -67,7 +66,7 @@ export default function PlayerDashboard() {
                 hasMore={hasMore}
                 loader={
                     <div className="col-span-2 flex justify-center">
-                        <img src={loadingImg} className="w-20" />{' '}
+                        <img src="/loading.gif" className="w-20" />{' '}
                     </div>
                 }
                 endMessage={

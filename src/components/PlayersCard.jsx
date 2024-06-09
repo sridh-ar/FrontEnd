@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Icon from './common/Icon';
 import { fetchAPI } from '../utils/commonServices';
 import toast from 'react-hot-toast';
-import loader from '../images/loading.gif';
 
 function TextField({ title, value, icon }) {
     return (
@@ -60,10 +59,9 @@ export default function PlayersCard({ name, contact, role, team, image, id }) {
                     size={6}
                     className="cursor-pointer fill-red-500 absolute right-3 top-3"
                     onClick={() => handleDelete()}
-                    tooltip="Delete"
                 />
             ) : (
-                <img src={loader} alt="Loading" className="w-5 absolute right-3 top-3" />
+                <img src="/loading.gif" alt="Loading" className="w-5 absolute right-3 top-3" />
             )}
         </main>
     );

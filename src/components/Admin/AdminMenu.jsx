@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { fetchAPI } from '../../utils/commonServices';
 import SidebarContainer from '../common/SideBarContainer';
 import AppConfigInput from './AppConfigInput';
-import loader from '../../images/loading.gif';
+import Button from '../common/Button';
 
 const AdminSection = ({ title, description, subDescription, buttonName, configValue, imageData }) => {
     const isApplicationAvatar = title === 'Application Avatar';
@@ -59,10 +59,10 @@ const AdminSection = ({ title, description, subDescription, buttonName, configVa
 
                 {isApplicationAvatar && (
                     <div>
-                        <label htmlFor="myInput">
+                        <label htmlFor="myInput" className="cursor-pointer">
                             <img
                                 src={imageData}
-                                alt="Loading"
+                                alt="Logo"
                                 className="ring-1 ring-black w-20 h-20 object-cover rounded-full overflow-hidden"
                             />
                         </label>
@@ -73,11 +73,7 @@ const AdminSection = ({ title, description, subDescription, buttonName, configVa
 
             <section className="bg-gray-200 p-3 px-5 flex items-center justify-between text-sm">
                 <p>{subDescription}</p>
-                {buttonName && (
-                    <button className="bg-black text-white px-3 py-1 rounded" onClick={() => methods.handleReset(isResetApp)}>
-                        {!isButtonLoading ? buttonName : <img src={loader} alt="Loading" className="h-5" />}
-                    </button>
-                )}
+                {buttonName && <Button title={buttonName} isLoading={isButtonLoading} onClick={() => methods.handleReset(!isResetApp)} />}
             </section>
         </div>
     );
