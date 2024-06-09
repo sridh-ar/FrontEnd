@@ -6,9 +6,9 @@ import { registration } from '../utils/constants';
 
 // Components
 import LoadingScreen from '../components/common/LoadingScreen';
-import CloseIcon from '../components/common/CloseIcon';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import Icon from '../components/common/Icon';
 
 export default function PlayerRegistration() {
     // States
@@ -97,7 +97,12 @@ export default function PlayerRegistration() {
         <div className="bg-gray-200 p-3">
             <div className="bg-white rounded-xl flex flex-col items-center w-full p-2 py-4">
                 {/* Close Icon */}
-                <CloseIcon className="top-10 right-10" onClick={() => window.history.back()} />
+                <Icon
+                    icon="XCircleIcon"
+                    className="cursor-pointer absolute top-10 right-10"
+                    size={8}
+                    onClick={() => window.history.back()}
+                />
 
                 {/* Actual Form Body */}
                 <p className="font-semibold tracking-wider my-3 text-lg">🎭 Player Registration</p>

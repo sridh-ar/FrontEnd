@@ -57,7 +57,7 @@ export default function PlayersCard({ name, contact, role, team, image, id }) {
                 <Icon
                     icon="XCircleIcon"
                     size={6}
-                    className="cursor-pointer fill-red-500 absolute right-3 top-3"
+                    className="cursor-pointer fill-gray-500 absolute right-3 top-3"
                     onClick={() => handleDelete()}
                 />
             ) : (

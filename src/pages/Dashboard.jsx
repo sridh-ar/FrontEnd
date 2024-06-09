@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import NewTeam from '../components/NewTeam';
-import NewTeamPlayer from '../components/NewTeamPlayer';
+import NewTeamModal from '../components/NewTeamModal';
+import NewTeamPlayerModal from '../components/NewTeamPlayerModal';
 import { uploadBytes, ref, getStorage, getDownloadURL } from 'firebase/storage';
 import { firebaseApp } from '../utils/firebase';
 import { fetchAPI } from '../utils/commonServices';
@@ -150,10 +150,10 @@ export default function Dashboard() {
                 {<Button title="+" className="fixed bottom-8 right-14 w-10 h-12 px-0 py-0" onClick={() => setOpenNewTeamModel(true)} />}
 
                 {/* Render new team modal */}
-                {openNewTeamModel && <NewTeam closeFunction={() => setOpenNewTeamModel(false)} />}
+                {openNewTeamModel && <NewTeamModal closeFunction={() => setOpenNewTeamModel(false)} />}
 
                 {/* Render new team player modal */}
-                {openNewTeamPlayer && <NewTeamPlayer closeFunction={() => setOpenNewTeamPlayer(false)} selectedTeam={selectedTeam} />}
+                {openNewTeamPlayer && <NewTeamPlayerModal closeFunction={() => setOpenNewTeamPlayer(false)} selectedTeam={selectedTeam} />}
             </div>
         </SidebarContainer>
     );
