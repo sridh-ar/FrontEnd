@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { SIDEBAR_MENUS } from '../../utils/constants';
 import Icon from './Icon';
 import LoadingScreen from './LoadingScreen';

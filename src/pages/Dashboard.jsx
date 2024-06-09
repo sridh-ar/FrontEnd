@@ -5,7 +5,7 @@ import { fetchAPI } from '../utils/commonServices';
 import { TrashIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
 import SidebarContainer1 from '../components/common/SideBarContainer1';
-import SidebarContainer from '../components/common/SidebarContainer';
+import SidebarContainer from '../components/common/SideBarContainer';
 import { TEAM_DASHBOARD_ROWS, TEAM_TABLE_ROWS, mockTableData } from '../utils/constants';
 import Icon from '../components/common/Icon';
 

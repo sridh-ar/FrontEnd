@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PlayersCard from '../components/PlayersCard';
-import SidebarContainer from '../components/common/SidebarContainer';
+import SidebarContainer from '../components/common/SideBarContainer';
 import { fetchAPI } from '../utils/commonServices';
 import Icon from '../components/common/Icon';
 import InfiniteScroll from 'react-infinite-scroll-component';
