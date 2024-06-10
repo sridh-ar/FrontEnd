@@ -4,24 +4,14 @@ import { fetchAPI } from './utils/commonServices';
 
 // Components
 import Footer from './components/Footer';
-
-// Redux
 import LoadingScreen from './components/common/LoadingScreen';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateConfigStateValue } from './utils/stateVariables';
-
-// Images
-import logo from './images/leo.png';
 import Button from './components/common/Button';
 
 export default function Home() {
     // States
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-
-    // Redux State
-    const dispatch = useDispatch();
-    const configValues = useSelector((state) => state.config.value);
+    const [configValues, setconfigValues] = useState({});
 
     async function validateUser() {
         // const res = await validateToken();
@@ -38,7 +28,11 @@ export default function Home() {
             return accumulator;
         }, {});
 
-        dispatch(updateConfigStateValue(configObject));
+        if (configObject) {
+            configObject['remainingSlots'] = configObject.allowedRegistrationCount - configObject.totalRegisteredPlayers;
+        }
+        console.log(configObject);
+        setconfigValues(configObject);
         setIsLoading(false);
     }
 

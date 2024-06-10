@@ -7,14 +7,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 const SearchBar = ({ handleSearch }) => {
     return (
-        <div className="w-1/3 h-10 fixed left-[44%] top-2 z-20 my-0.5">
+        <div className="w-1/4 h-8 fixed left-[40%] top-2 z-20 my-0.5">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <Icon icon="MagnifyingGlassIcon" />
             </div>
             <input
                 type="search"
-                className="w-full h-10 p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 outline-none "
-                placeholder="Search for a player..."
+                className="w-full h-8 p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 outline-none "
+                placeholder="Search player by Name or Id"
                 onChange={(input) => handleSearch(input.target.value)}
             />
         </div>
@@ -60,7 +60,7 @@ export default function PlayerDashboard() {
     return (
         <SidebarContainer isLoading={isLoading}>
             <InfiniteScroll
-                className="bg-gray-200 grid grid-cols-2 mt-10 h-full p-5 gap-3"
+                className="grid grid-cols-3 h-full p-7 gap-3"
                 dataLength={items.length}
                 next={fetchMoreData}
                 hasMore={hasMore}

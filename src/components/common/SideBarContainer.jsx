@@ -9,7 +9,7 @@ export default function SidebarContainer({ children, isLoading = true }) {
     return (
         <main className="bg-white flex w-screen h-screen">
             {/* Side Bar */}
-            <section className="min-h-screen bg-white flex flex-col justify-between py-3 p-0.5 items-center">
+            <section className="min-h-screen bg-white flex flex-col justify-between py-3 items-center w-[3.5%]">
                 {/* Logo */}
                 <img src="/logo.png" alt="Next.js Logo" className="w-14" />
 
@@ -20,12 +20,12 @@ export default function SidebarContainer({ children, isLoading = true }) {
                         menuName = isActive ? item.name : menuName;
                         return (
                             <button
-                                className={`text-gray-400 border-l-2 flex justify-center py-1 px-4 ${isActive ? 'border-[#8ccc45]' : ''}`}
+                                className={`text-gray-400 border-l-2 flex justify-center ${isActive ? 'border-[#8ccc45]' : ''}`}
                                 onClick={() => (window.location.href = `/${item.name.toLowerCase()}`)}
                                 disabled={isActive}
                                 key={index}
                             >
-                                <Icon icon={item.icon} size={6} className={isActive ? 'text-[#8ccc45]' : 'text-[#aab4c3]'} />
+                                <Icon icon={item.icon} size={5} className={isActive ? 'text-[#8ccc45]' : 'text-[#aab4c3]'} />
                             </button>
                         );
                     })}
@@ -38,7 +38,7 @@ export default function SidebarContainer({ children, isLoading = true }) {
             {/* Container */}
             <section className="bg-white w-full">
                 {/* NavBar */}
-                <nav className="h-[10%] flex items-center justify-between px-5">
+                <nav className="h-[9%] flex items-center justify-between px-5">
                     <p className="font-semibold tracking-wider">{menuName}</p>
                     <Icon icon="UserCircleIcon" size={8} />
                 </nav>

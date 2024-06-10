@@ -32,7 +32,7 @@ const AdminSection = ({ title, description, subDescription, buttonName, configVa
             if (file) {
                 const reader = new FileReader();
                 reader.onloadend = async () => {
-                    await fetchAPI('/admin/uploadlogo', 'POST', { data: reader.result });
+                    await fetchAPI(`/admin/update/logo`, 'PUT', { config_value: reader.result });
                     window.location.reload();
                 };
                 reader.readAsDataURL(file);
@@ -41,7 +41,7 @@ const AdminSection = ({ title, description, subDescription, buttonName, configVa
     };
 
     return (
-        <div className="container bg-white w-[95%] m-5 shadow rounded text-sm admin-section">
+        <div className="container bg-white my-5 shadow rounded-3xl overflow-hidden text-sm admin-section">
             <section className={`p-3 px-5 ${isApplicationAvatar ? 'flex items-center justify-between' : ''}`}>
                 <div>
                     <p className="text-lg font-semibold my-2">{title}</p>
@@ -88,9 +88,10 @@ export default function AdminMenu() {
         async function getConfigValues() {
             try {
                 const result = await fetchAPI('/admin');
-                const logoResult = await fetchAPI('/admin/getlogo');
-                setAppConfig(result);
-                setLogoData(logoResult.data);
+                const logoData = result.find((config) => config.config_name == 'logo');
+
+                setAppConfig(result.filter((config) => config.config_name != 'logo'));
+                setLogoData(logoData.config_value);
             } catch (error) {
                 toast.error('Unable to fetch App Config API');
                 console.error('[AdminMenu.jsx][getConfigValues] Error - ', error.message);
@@ -103,7 +104,7 @@ export default function AdminMenu() {
 
     return (
         <SidebarContainer isLoading={isLoading}>
-            <div className="bg-gray-200 overflow-y-auto p-1 w-full h-full">
+            <div className=" px-7 py-2 w-full h-full">
                 <AdminSection
                     title="Application Configurations"
                     description="This is your team's visible name. For example, the name of your company or department."

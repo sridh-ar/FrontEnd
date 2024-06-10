@@ -34,18 +34,18 @@ export default function PlayersCard({ name, contact, role, team, image, id }) {
     }
 
     return (
-        <main className="bg-white shadow p-3 flex w-full items-center rounded-md relative">
+        <main className="bg-white shadow p-3 flex w-full items-center rounded-lg relative">
             <img
                 src={image}
                 alt="Rounded avatar"
                 loading="eager"
                 // onLoad={() => setIsLoading(false)}
                 // onClick={() => setIsOpen(true)}
-                className={`w-40 h-40 object-cover mx-5 mr-7 rounded-full col-span-1 ring-1 ring-gray-200 p-0.5 shadow-md `}
+                className={`w-36 h-36 object-cover mx-5 mr-7 rounded-full col-span-1 ring-1 ring-gray-200 p-0.5 shadow-md `}
             />
-            <div className="flex items-start flex-col ml-5">
+            <div className="flex items-start flex-col">
                 <section className="text-lg font-semibold text-gray-600 capitalize mb-2">
-                    {name.length > 20 ? name.slice(0, 20) + '..' : name}
+                    {name.length > 12 ? name.slice(0, 12) + '..' : name}
                 </section>
                 <TextField title="Phone" value={contact} icon="PhoneIcon" />
                 <TextField title="Role" value={role} icon="AcademicCapIcon" />
