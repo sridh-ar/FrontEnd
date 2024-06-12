@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import PlayersCard from '../components/PlayersCard';
+import PlayersCard from '../Player_Dashboard/PlayersCard.jsx';
 import { ReceiptRefundIcon } from '@heroicons/react/24/outline';
-import Button from '../components/common/Button';
-import ModalWrapper from '../components/common/ModalWrapper';
+import Button from '../../commonComponents/Button';
+import ModalWrapper from '../../commonComponents/ModalWrapper';
 
 export default function ThanksPage() {
     let data = localStorage.getItem('playerData');

@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { uploadBytes, ref, getStorage, getDownloadURL } from 'firebase/storage';
-import { firebaseApp } from '../utils/firebase';
-import LoadingScreen from './common/LoadingScreen';
-import { newTeam } from '../utils/constants';
-import Input from './common/Input';
-import Button from './common/Button';
-import { fetchAPI } from '../utils/commonServices';
+import { firebaseApp } from '../../utils/firebase';
+import LoadingScreen from '../../commonComponents/LoadingScreen';
+import { newTeam } from '../../utils/constants';
+import Input from '../../commonComponents/Input';
+import Button from '../../commonComponents/Button';
+import { fetchAPI } from '../../utils/commonServices';
 import toast from 'react-hot-toast';
-import Icon from './common/Icon';
-import ModalWrapper from './common/ModalWrapper';
+import Icon from '../../commonComponents/Icon';
+import ModalWrapper from '../../commonComponents/ModalWrapper';
 
 export default function NewTeamModal({ closeFunction }) {
     const [isLoading, setIsLoading] = useState(false);
@@ -79,7 +79,7 @@ export default function NewTeamModal({ closeFunction }) {
                 {isLoading && <LoadingScreen className="absolute bg-white z-[100]" />}
 
                 {/* Close Icon */}
-                <Icon icon="XCircleIcon" className="absolute top-6 right-8" size={7} onClick={() => closeFunction()} />
+                <Icon icon="XCircleIcon" className="absolute top-6 right-8" onClick={() => closeFunction()} />
 
                 {/* Form Data */}
                 <p className="font-medium my-4 text-lg">👩‍🚀 Team Registration</p>

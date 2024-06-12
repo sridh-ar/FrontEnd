@@ -124,6 +124,17 @@ export const mockTableData = {
     captain_photo: '',
 };
 
+export const mockTeamTableData = {
+    id: '',
+    name: '',
+    contact_number: '',
+    jersey_name: '',
+    jersey_size: '',
+    jersey_no: '',
+    team_name: '',
+    owner: '',
+};
+
 export const TEAM_DASHBOARD_ROWS = [
     'Team Name',
     'Captain',

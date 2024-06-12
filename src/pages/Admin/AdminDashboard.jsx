@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { fetchAPI } from '../../utils/commonServices';
-import SidebarContainer from '../common/SideBarContainer';
+import SidebarContainer from '../../commonComponents/SideBarContainer';
 import AppConfigInput from './AppConfigInput';
-import Button from '../common/Button';
+import Button from '../../commonComponents/Button';
 
 const AdminSection = ({ title, description, subDescription, buttonName, configValue, imageData }) => {
     const isApplicationAvatar = title === 'Application Avatar';
@@ -79,7 +79,7 @@ const AdminSection = ({ title, description, subDescription, buttonName, configVa
     );
 };
 
-export default function AdminMenu() {
+export default function AdminDashboard() {
     const [isLoading, setIsLoading] = useState(true);
     const [appConfig, setAppConfig] = useState([]);
     const [logoData, setLogoData] = useState([]);

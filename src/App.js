@@ -4,8 +4,8 @@ import { fetchAPI } from './utils/commonServices';
 
 // Components
 import Footer from './components/Footer';
-import LoadingScreen from './components/common/LoadingScreen';
-import Button from './components/common/Button';
+import LoadingScreen from './commonComponents/LoadingScreen';
+import Button from './commonComponents/Button';
 
 export default function Home() {
     // States

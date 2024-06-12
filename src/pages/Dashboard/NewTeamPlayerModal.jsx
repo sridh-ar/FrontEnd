@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import LoadingScreen from './common/LoadingScreen';
-import Input from './common/Input';
-import { newTeamPlayer } from '../utils/constants';
-import Button from './common/Button';
-import Icon from './common/Icon';
-import ModalWrapper from './common/ModalWrapper';
+import LoadingScreen from '../../commonComponents/LoadingScreen';
+import Input from '../../commonComponents/Input';
+import { newTeamPlayer } from '../../utils/constants';
+import Button from '../../commonComponents/Button';
+import Icon from '../../commonComponents/Icon';
+import ModalWrapper from '../../commonComponents/ModalWrapper';
 
 export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
     //State Variables
@@ -92,12 +92,12 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
     return (
         <ModalWrapper>
             <motion.div
-                className="relative bg-white rounded-xl flex flex-col items-center w-[60%] h-[55%] p-2"
+                className="relative bg-white rounded-xl flex flex-col items-center w-[60%] h-[60%] p-2"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
             >
                 {/* Close Icon */}
-                <Icon icon="XCircleIcon" className="absolute top-6 right-8" size={7} onClick={() => closeFunction()} />
+                <Icon icon="XCircleIcon" className="absolute top-6 right-8" onClick={() => closeFunction()} />
 
                 <p className="font-semibold my-4">🎭 New Player Registration</p>
 

@@ -1,4 +1,4 @@
-import { SIDEBAR_MENUS } from '../../utils/constants';
+import { SIDEBAR_MENUS } from '../utils/constants';
 import Icon from './Icon';
 import LoadingScreen from './LoadingScreen';
 
@@ -44,7 +44,7 @@ export default function SidebarContainer({ children, isLoading = true }) {
                 </nav>
 
                 {/* Component */}
-                <div className="bg-[#ecf0f6] rounded-tl-[60px] h-[90%] overflow-auto">
+                <div className="bg-[#ecf0f6] rounded-tl-[60px] h-[91%] overflow-auto">
                     {isLoading && <LoadingScreen />}
                     {!isLoading && children}
                 </div>

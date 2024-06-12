@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Icon from '../common/Icon';
+import Icon from '../../commonComponents/Icon';
 import { fetchAPI } from '../../utils/commonServices';
 import toast from 'react-hot-toast';
 

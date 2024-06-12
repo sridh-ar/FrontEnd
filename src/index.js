@@ -7,19 +7,17 @@ import React from 'react';
 import './index.css';
 
 // Components & Pages
-import PlayerRegistration from './pages/PlayerRegistration';
-import RefundPage from './pages/RefundPage';
-import Dashboard from './pages/Dashboard';
-import Privacy from './pages/Privacy';
-import Support from './pages/Support';
-import Terms from './pages/Terms';
+import PlayerRegistration from './pages/Player_Registeration/PlayerRegistration';
+import RefundPage from './pages/Support_Pages/RefundPage';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Privacy from './pages/Support_Pages/Privacy';
+import Support from './pages/Support_Pages/Support';
+import Terms from './pages/Support_Pages/Terms';
 import App from './App';
-import ThanksPage from './pages/Thanks';
+import ThanksPage from './pages/Player_Registeration/Thanks';
 import { Toaster } from 'react-hot-toast';
-import SidebarContainer from './components/common/SideBarContainer1';
-import AdminMenu from './components/Admin/AdminMenu';
-import PlayerDashboard from './pages/PlayerDashboard';
-import TeamDetailScreen from './pages/TeamDetailScreen';
+import AdminMenu from './pages/Admin/AdminDashboard';
+import PlayerDashboard from './pages/Player_Dashboard/PlayerDashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -35,13 +33,11 @@ root.render(
                     <Route path="support" Component={Support} />
                     <Route path="terms" Component={Terms} />
                     <Route path="thanks" Component={ThanksPage} />
-                    <Route path="side" Component={SidebarContainer} />
                     {/* <Route path="*" element={<NoPage />} /> */}
                     {/* Dashboard Routes */}
                     <Route path="dashboard" Component={Dashboard} />
                     <Route path="admin" Component={AdminMenu} />
                     <Route path="players" Component={PlayerDashboard} />
-                    <Route path="dashboard/:id" Component={TeamDetailScreen} />
                 </Routes>
             </BrowserRouter>
             <Toaster />
