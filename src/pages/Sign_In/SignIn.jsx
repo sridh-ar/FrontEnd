@@ -27,32 +27,32 @@ export default function SignIn() {
     }
 
     return (
-        <div className="flex items-center justify-center h-screen">
-            <img src="/login_bg.jpg" className="absolute -z-10 w-full h-full" />
+        <div className="flex h-screen items-center justify-center">
+            <img src="/login_bg.jpg" className="absolute -z-10 h-full w-full" />
 
             <form
                 // className="container bg-white sm:w-2/6 p-5 "
-                className="bg-white rounded-lg flex flex-col p-2 items-center justify-center lg:flex-row w-[80%] lg:w-[50%]"
+                className="flex w-[80%] flex-col items-center justify-center rounded-lg bg-white p-2 lg:w-[50%] lg:flex-row"
                 onSubmit={handleSubmit}
             >
-                <img src="/login_logo.jpg" className=" w-[50%]" />
+                <img src="/login_logo.jpg" className="w-[50%]" />
 
-                <div className="flex flex-col items-center justify-center ">
-                    <p className="font-semibold text-lg m-5">Admin Login</p>
+                <div className="flex flex-col items-center justify-center">
+                    <p className="m-5 text-lg font-semibold">Admin Login</p>
 
                     {/* Email */}
-                    <div className=" bg-gray-200 flex items-center justify-center rounded-full p-2 px-4 m-2 w-full">
+                    <div className="m-2 flex w-full items-center justify-center rounded-full bg-gray-200 p-2 px-4">
                         <EnvelopeIcon height={20} width={20} />
-                        <input type="email" required placeholder="Email" className=" outline-0 mx-2 bg-gray-200 text-sm w-full" />
+                        <input type="email" required placeholder="Email" className="mx-2 w-full bg-gray-200 text-sm outline-0" />
                     </div>
 
                     {/* Password */}
-                    <div className="bg-gray-200 flex items-center justify-center rounded-full p-2 px-4 m-2 w-full">
+                    <div className="m-2 flex w-full items-center justify-center rounded-full bg-gray-200 p-2 px-4">
                         <EnvelopeIcon height={20} width={20} />
-                        <input type="password" required placeholder="Password" className="outline-0 mx-2 bg-gray-200 text-sm w-full" />
+                        <input type="password" required placeholder="Password" className="mx-2 w-full bg-gray-200 text-sm outline-0" />
                     </div>
 
-                    <button type="submit" required className="w-full mx-2 bg-green-400 text-sm p-1 px-4 m-2 rounded-full">
+                    <button type="submit" required className="m-2 mx-2 w-full rounded-full bg-green-400 p-1 px-4 text-sm">
                         Login
                     </button>
                 </div>

@@ -10,8 +10,8 @@ export default function ThanksPage() {
     if (!data) {
         return (
             <ModalWrapper>
-                <div className="relative bg-white rounded-lg shadow p-5 text-center">
-                    <h3 className=" my-4 font-normal text-gray-500">Something went wrong. Contact Admin</h3>
+                <div className="relative rounded-lg bg-white p-5 text-center shadow">
+                    <h3 className="my-4 font-normal text-gray-500">Something went wrong. Contact Admin</h3>
                     <Button title="Return to Home" className="bg-red-500" onClick={() => window.location.replace('/')} />
                 </div>
             </ModalWrapper>
@@ -22,7 +22,7 @@ export default function ThanksPage() {
     data = JSON.parse(data);
 
     return (
-        <div className="w-screen h-screen flex flex-col items-center justify-center">
+        <div className="flex h-screen w-screen flex-col items-center justify-center p-5">
             <PlayersCard
                 key={data.name}
                 name={data.name}
@@ -38,17 +38,9 @@ export default function ThanksPage() {
                 bowlingStyle={data.bowling_style}
                 fromRegisterMenu
             />
-            <motion.img
-                src="/thanks-brown.gif"
-                alt="Thanks"
-                className="w-56 relative -z-20"
-                initial={{ opacity: 0, top: -200 }}
-                animate={{ opacity: 1, top: -20 }}
-                transition={{ duration: 0.5 }}
-            />
-            <p className="font-semibold">Pleae take a Screenshot for Reference</p>
+            <p className="mt-4 font-semibold">Pleae take a Screenshot for Reference</p>
             <button
-                className="bg-indigo-300 rounded-full p-1.5 px-6 text-sm my-4 flex items-center justify-center gap-1"
+                className="my-4 flex items-center justify-center gap-1 rounded-full bg-black p-1.5 px-6 text-sm text-white"
                 onClick={() => window.location.replace('/')}
             >
                 Return to Home

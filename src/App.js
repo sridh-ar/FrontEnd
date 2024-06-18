@@ -44,30 +44,31 @@ export default function Home() {
     // Loading Component
     if (isLoading) {
         return (
-            <div className="w-screen h-screen">
+            <div className="h-screen w-screen">
                 <LoadingScreen />
             </div>
         );
     }
 
     return (
-        <main className="flex flex-col justify-between h-screen w-full bg-gray-200">
+        <main className="flex h-screen w-full flex-col justify-between bg-gray-200">
             {/* Body */}
-            <div className="flex flex-col items-center h-2/3 justify-center">
+            <div className="flex h-2/3 flex-col items-center justify-center">
                 {/* Logo Image */}
                 <a href={loggedIn ? '/Dashboard' : '/signin'}>
-                    <img className="relative outline-none m-5" src={configValues.logo} alt="Next.js Logo" width={250} height={250} />
+                    <img className="relative m-5 outline-none" src={configValues.logo} alt="Next.js Logo" width={250} height={250} />
                 </a>
 
                 {/* Button */}
-                <div className="flex items-center flex-col">
+                <div className="flex flex-col items-center">
                     <Button
                         title={`Register for ${configValues.appName} 🏆`}
                         onClick={() => (window.location.href = configValues.remainingSlots <= 0 ? '#' : `/playerRegister`)}
+                        className="bg-gray-800 text-white"
                     />
 
                     {/* Remaining Slots */}
-                    <span className="text-xs tracking-wide text-orange-700 mt-3">Remaininig Slots - {configValues.remainingSlots}</span>
+                    <span className="mt-3 text-xs tracking-wide text-orange-700">Remaininig Slots - {configValues.remainingSlots}</span>
                 </div>
             </div>
 

@@ -1,13 +1,13 @@
 export default function Footer() {
     return (
-        <footer className="p-4 mt-5 bg-white md:p-8 lg:p-10 dark:bg-gray-800 w-full shadow">
+        <footer className="mt-5 w-full bg-gray-800 p-4 shadow md:p-8 lg:p-10">
             <div className="mx-auto max-w-screen-xl text-center">
-                <p className="my-3 mt-0 text-gray-500 dark:text-gray-400">
+                <p className="my-3 mt-0 text-gray-400">
                     Register for exciting competitions, showcase your skills, and compete for glory in our upcoming events.
                 </p>
-                <ul className="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
+                <ul className="mb-6 flex flex-wrap items-center justify-center text-white">
                     <li>
-                        <a href="/support" className="mr-4 hover:underline md:mr-6 ">
+                        <a href="/support" className="mr-4 hover:underline md:mr-6">
                             Contact
                         </a>
                     </li>
@@ -17,7 +17,7 @@ export default function Footer() {
                         </a>
                     </li>
                     <li>
-                        <a href="/privacy" className="mr-4 hover:underline md:mr-6 ">
+                        <a href="/privacy" className="mr-4 hover:underline md:mr-6">
                             Privacy policy
                         </a>
                     </li>
@@ -27,7 +27,7 @@ export default function Footer() {
                         </a>
                     </li>
                 </ul>
-                <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">©2024-2025. All Rights Reserved.</span>
+                <span className="text-sm text-gray-400 sm:text-center">©2024-2025. All Rights Reserved.</span>
             </div>
         </footer>
     );

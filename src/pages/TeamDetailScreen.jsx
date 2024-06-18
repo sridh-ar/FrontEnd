@@ -30,11 +30,11 @@ export default function TeamDetailScreen() {
 
     return (
         <SidebarContainer isLoading={isLoading}>
-            <div className="bg-gray-200 overflow-y-auto p-3 w-full relative">
+            <div className="relative w-full overflow-y-auto bg-gray-200 p-3">
                 {/* Render table only when data is loaded */}
-                <div className="bg-white h-full rounded">
+                <div className="h-full rounded bg-white">
                     {/* Render the team name and captain name  */}
-                    <div className="bg-[#529aa2] rounded p-2 px-40 mb-0.5 flex justify-between items-center text-xl font-bold italic text-white">
+                    <div className="mb-0.5 flex items-center justify-between rounded bg-[#529aa2] p-2 px-40 text-xl font-bold italic text-white">
                         <p>
                             Team Name: <span className="text-gray-600">{'demo'}</span>
                         </p>
@@ -43,15 +43,15 @@ export default function TeamDetailScreen() {
                         </p>
                     </div>
 
-                    <table className="w-full text-center bg-white overflow-hidden rounded tracking-wide border-collapse">
-                        <tr className="bg-[#529aa2] text-white h-10 text-sm divide-x shadow">
+                    <table className="w-full border-collapse overflow-hidden rounded bg-white text-center tracking-wide">
+                        <tr className="h-10 divide-x bg-[#529aa2] text-sm text-white shadow">
                             {TEAM_TABLE_ROWS.map((row) => (
                                 <th>{row}</th>
                             ))}
                         </tr>
 
                         {playersData.map((player) => (
-                            <tr className="p-2 h-12 text-sm" key={player.id}>
+                            <tr className="h-12 p-2 text-sm" key={player.id}>
                                 <td>{player.id}</td>
                                 <td className="capitalize">{player.name.length > 15 ? `${player.name.slice(0, 15)}...` : player.name}</td>
                                 <td className="capitalize">{player.contact_number}</td>

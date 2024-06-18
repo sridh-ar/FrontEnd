@@ -9,7 +9,7 @@ export default function PlayersCardFull({ name, id, role, team, battingStyle, bo
     const [isPlayerLoading, setPlayerLoading] = useState(true);
 
     return (
-        <div className="top-0 left-0 absolute w-screen h-screen z-50">
+        <div className="absolute left-0 top-0 z-50 h-screen w-screen">
             <div className="relative bg-white">
                 {/* BG Image */}
                 <img
@@ -17,20 +17,20 @@ export default function PlayersCardFull({ name, id, role, team, battingStyle, bo
                     alt="Rounded avatar"
                     width={1000}
                     height={1000}
-                    className="w-screen h-screen rounded col-span-1 absolute object-cover"
+                    className="absolute col-span-1 h-screen w-screen rounded object-cover"
                     loading="eager"
                 />
-                <div className="bg-black w-screen h-screen opacity-50 absolute" />
+                <div className="absolute h-screen w-screen bg-black opacity-50" />
 
                 {/* Close Icon */}
-                <Icon icon="XCircleIcon" className="absolute top-6 right-8" size={7} onClick={() => closeModal(false)} />
+                <Icon icon="XCircleIcon" className="absolute right-8 top-6" size={7} onClick={() => closeModal(false)} />
 
                 {/* Stars */}
                 {/* <Meteors number={30} /> */}
                 {/* <Meteors number={30} /> */}
 
                 {/* Modal Body */}
-                <div className="absolute text-white w-full h-screen grid items-end p-5 px-20 grid-cols-7 ">
+                <div className="absolute grid h-screen w-full grid-cols-7 items-end p-5 px-20 text-white">
                     {/* Player Name */}
                     <section className="col-span-2 flex flex-col items-start">
                         <p className="text-7xl capitalize">{name.split(' ')[0]}</p>
@@ -39,45 +39,45 @@ export default function PlayersCardFull({ name, id, role, team, battingStyle, bo
                     </section>
 
                     {/* Player Image */}
-                    <div className="col-span-3 w-full flex justify-center">
-                        <img src={image} alt="Rounded avatar" className="w-[90%] max-h-[90vh] object-contain shadow-xl" loading="eager" />
+                    <div className="col-span-3 flex w-full justify-center">
+                        <img src={image} alt="Rounded avatar" className="max-h-[90vh] w-[90%] object-contain shadow-xl" loading="eager" />
                     </div>
 
                     {/* Table */}
-                    <section className=" col-span-2 flex flex-col items-end">
+                    <section className="col-span-2 flex flex-col items-end">
                         <table className="text-2xl">
                             <tr className="bg-gray-800">
-                                <td className="font-semibold p-2 px-5">Serial No</td>
+                                <td className="p-2 px-5 font-semibold">Serial No</td>
                                 <td>{id}</td>
                             </tr>
                             <tr>
-                                <td className="font-semibold p-2 px-5">Role</td>
+                                <td className="p-2 px-5 font-semibold">Role</td>
                                 <td>{role}</td>
                             </tr>
                             <tr className="bg-gray-800">
-                                <td className="font-semibold p-2 px-5">Batting Style</td>
+                                <td className="p-2 px-5 font-semibold">Batting Style</td>
                                 <td>{battingStyle}</td>
                             </tr>
                             <tr>
-                                <td className="font-semibold p-2 px-5">Bowling Style</td>
+                                <td className="p-2 px-5 font-semibold">Bowling Style</td>
                                 <td>{bowlingStyle}</td>
                             </tr>
                             <tr className="bg-gray-800">
-                                <td className="font-semibold p-2 px-5">Team</td>
+                                <td className="p-2 px-5 font-semibold">Team</td>
                                 <td>{team}</td>
                             </tr>
                             <tr>
-                                <td className="font-semibold p-2 px-5">Area</td>
+                                <td className="p-2 px-5 font-semibold">Area</td>
                                 <td>{area}</td>
                             </tr>
                         </table>
                     </section>
-                    <div className="absolute w-[90%] h-1 shadow-[0_-5px_20px_#fff] bottom-2 ml-[5%]" />
-                    <div className="absolute w-[90%] h-1 shadow-[0_-5px_20px_#fff] bottom-2 ml-[5%]" />
+                    <div className="absolute bottom-2 ml-[5%] h-1 w-[90%] shadow-[0_-5px_20px_#fff]" />
+                    <div className="absolute bottom-2 ml-[5%] h-1 w-[90%] shadow-[0_-5px_20px_#fff]" />
                 </div>
             </div>
             {isBgLoading && isPlayerLoading && (
-                <div className="relative bg-white w-screen h-screen flex items-center justify-center">
+                <div className="relative flex h-screen w-screen items-center justify-center bg-white">
                     <img src="/loading.gif" alt="loader" className="w-60" />
                 </div>
             )}

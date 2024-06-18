@@ -1,3 +1,5 @@
+import Icon from './Icon';
+
 export default function Input({
     type = 'text',
     index,
@@ -12,13 +14,13 @@ export default function Input({
 }) {
     if (type == 'select') {
         return (
-            <div key={index} className={`flex flex-col justify-center w-full gap-1 text-sm ${hidden ? 'hidden' : ''}`}>
+            <div key={index} className={`flex w-full flex-col justify-center gap-1 text-sm ${hidden ? 'hidden' : ''}`}>
                 <label>
                     {label}
                     {required && <span className="text-red-600">{' *'}</span>}
                 </label>
                 <select
-                    className="outline-none p-2 px-4 ring-1 h-9 w-full ring-indigo-100 my-2 rounded-full bg-gray-200"
+                    className="my-2 h-9 w-full rounded-full bg-gray-200 p-2 px-4 outline-none ring-1 ring-indigo-100"
                     name={idName}
                     value={value}
                     required={required}
@@ -34,15 +36,39 @@ export default function Input({
         );
     }
 
-    // Other than Select
+    if (type == 'file') {
+        return (
+            <div key={index || idName} className="flex w-full flex-col justify-center gap-2 text-sm">
+                <label>
+                    {label}
+                    {required && <span className="text-red-600">{' *'}</span>}
+                </label>
+                <div className="flex h-9 w-full rounded-full bg-gray-200 p-2 px-4 outline-none ring-1 ring-indigo-100">
+                    <Icon icon="ArrowUpTrayIcon" size={5} />
+                    <input
+                        className={`ml-3 h-full w-full file:hidden`}
+                        type={type}
+                        name={idName}
+                        value={value}
+                        placeholder={label}
+                        onChange={onChange}
+                        required={required}
+                        disabled={disabled}
+                    />
+                </div>
+            </div>
+        );
+    }
+
+    // Other than Select and file
     return (
-        <div key={index || idName} className="flex flex-col justify-center w-full gap-2 text-sm">
+        <div key={index || idName} className="flex w-full flex-col justify-center gap-2 text-sm">
             <label>
                 {label}
                 {required && <span className="text-red-600">{' *'}</span>}
             </label>
             <input
-                className={`outline-none ring-1 ring-indigo-100 p-2 h-9 w-full px-4 rounded-full bg-gray-200 ${type == 'file' ? 'file:hidden' : ''}`}
+                className={`h-9 w-full rounded-full bg-gray-200 p-2 px-4 outline-none ring-1 ring-indigo-100`}
                 type={type}
                 name={idName}
                 value={value}

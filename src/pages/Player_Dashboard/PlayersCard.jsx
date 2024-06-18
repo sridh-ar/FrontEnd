@@ -6,12 +6,12 @@ import toast from 'react-hot-toast';
 
 function TextField({ title, value, icon }) {
     return (
-        <section className="flex items-center justify-center my-1">
-            <span className=" w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mx-2">
+        <section className="my-1 flex items-center justify-center">
+            <span className="mx-2 flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
                 <Icon icon={icon} size={5} outline />
             </span>
 
-            <div className="text-gray-600 text-sm">
+            <div className="text-sm text-gray-600">
                 {title}
                 <p className="font-semibold">{value}</p>
             </div>
@@ -19,7 +19,7 @@ function TextField({ title, value, icon }) {
     );
 }
 
-export default function PlayersCard({ name, contact, role, team, image, id }) {
+export default function PlayersCard({ name, contact, role, team, image, id, fromRegisterMenu = false }) {
     const [isButtonLoading, setIsButtonLoading] = useState(false);
 
     async function handleDelete() {
@@ -34,17 +34,15 @@ export default function PlayersCard({ name, contact, role, team, image, id }) {
     }
 
     return (
-        <main className="bg-white shadow p-3 flex w-full items-center rounded-lg relative">
+        <main className="relative flex w-full items-center rounded-lg bg-white p-3 shadow">
             <img
                 src={image}
                 alt="Rounded avatar"
                 loading="eager"
-                // onLoad={() => setIsLoading(false)}
-                // onClick={() => setIsOpen(true)}
-                className={`w-36 h-36 object-cover mx-5 mr-7 rounded-full col-span-1 ring-1 ring-gray-200 p-0.5 shadow-md `}
+                className={`col-span-1 mx-5 mr-7 h-36 w-36 rounded-full object-cover p-0.5 shadow-md ring-1 ring-gray-200`}
             />
-            <div className="flex items-start flex-col">
-                <section className="text-lg font-semibold text-gray-600 capitalize mb-2">
+            <div className="flex flex-col items-start">
+                <section className="mb-2 text-lg font-semibold capitalize text-gray-600">
                     {name.length > 12 ? name.slice(0, 12) + '..' : name}
                 </section>
                 <TextField title="Phone" value={contact} icon="PhoneIcon" />
@@ -54,9 +52,14 @@ export default function PlayersCard({ name, contact, role, team, image, id }) {
 
             {/* Delete Icon */}
             {!isButtonLoading ? (
-                <Icon icon="XCircleIcon" size={6} className="fill-gray-500 absolute right-3 top-3" onClick={() => handleDelete()} />
+                <Icon
+                    icon="XCircleIcon"
+                    size={6}
+                    className={`absolute right-3 top-3 fill-gray-500 ${fromRegisterMenu ? 'hidden' : ''}`}
+                    onClick={() => handleDelete()}
+                />
             ) : (
-                <img src="/loading.gif" alt="Loading" className="w-5 absolute right-3 top-3" />
+                <img src="/loading.gif" alt="Loading" className="absolute right-3 top-3 w-5" />
             )}
         </main>
     );

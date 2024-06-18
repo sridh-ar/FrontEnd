@@ -71,20 +71,20 @@ export default function NewTeamModal({ closeFunction }) {
     return (
         <ModalWrapper>
             <motion.div
-                className="relative bg-white rounded flex flex-col items-center w-[70%] p-2 overflow-hidden"
+                className="relative flex w-[70%] flex-col items-center overflow-hidden rounded bg-white p-2"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
             >
                 {/* Loading Screen */}
-                {isLoading && <LoadingScreen className="absolute bg-white z-[100]" />}
+                {isLoading && <LoadingScreen className="absolute z-[100] bg-white" />}
 
                 {/* Close Icon */}
-                <Icon icon="XCircleIcon" className="absolute top-6 right-8" onClick={() => closeFunction()} />
+                <Icon icon="XCircleIcon" className="absolute right-8 top-6" onClick={() => closeFunction()} />
 
                 {/* Form Data */}
-                <p className="font-medium my-4 text-lg">👩‍🚀 Team Registration</p>
+                <p className="my-4 text-lg font-medium">👩‍🚀 Team Registration</p>
 
-                <form className="grid grid-cols-2 gap-3 p-5 w-full" onSubmit={handleSubmit}>
+                <form className="grid w-full grid-cols-2 gap-3 p-5" onSubmit={handleSubmit}>
                     {/* Inputs */}
                     {newTeam.inputColumns.map((input, index) => (
                         <Input

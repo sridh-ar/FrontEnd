@@ -41,10 +41,10 @@ const AdminSection = ({ title, description, subDescription, buttonName, configVa
     };
 
     return (
-        <div className="container bg-white my-5 shadow rounded-3xl overflow-hidden text-sm admin-section">
+        <div className="admin-section container my-5 overflow-hidden rounded-3xl bg-white text-sm shadow">
             <section className={`p-3 px-5 ${isApplicationAvatar ? 'flex items-center justify-between' : ''}`}>
                 <div>
-                    <p className="text-lg font-semibold my-2">{title}</p>
+                    <p className="my-2 text-lg font-semibold">{title}</p>
                     <p>{description}</p>
                 </div>
 
@@ -63,7 +63,7 @@ const AdminSection = ({ title, description, subDescription, buttonName, configVa
                             <img
                                 src={imageData}
                                 alt="Logo"
-                                className="ring-1 ring-black w-20 h-20 object-cover rounded-full overflow-hidden"
+                                className="h-20 w-20 overflow-hidden rounded-full object-cover ring-1 ring-black"
                             />
                         </label>
                         <input id="myInput" style={{ display: 'none' }} type={'file'} onChange={methods.handleLogoChange} />
@@ -71,7 +71,7 @@ const AdminSection = ({ title, description, subDescription, buttonName, configVa
                 )}
             </section>
 
-            <section className="bg-gray-200 p-3 px-5 flex items-center justify-between text-sm">
+            <section className="flex items-center justify-between bg-gray-200 p-3 px-5 text-sm">
                 <p>{subDescription}</p>
                 {buttonName && <Button title={buttonName} isLoading={isButtonLoading} onClick={() => methods.handleReset(!isResetApp)} />}
             </section>
@@ -104,7 +104,7 @@ export default function AdminDashboard() {
 
     return (
         <SidebarContainer isLoading={isLoading}>
-            <div className=" px-7 py-2 w-full h-full">
+            <div className="h-full w-full px-7 py-2">
                 <AdminSection
                     title="Application Configurations"
                     description="This is your team's visible name. For example, the name of your company or department."

@@ -5,14 +5,14 @@ const email = process.env.EMAIL || 'sairamanath@gmail.com';
 export default function Terms() {
     return (
         <main className="bg-gray-100">
-            <div className="md:max-w-screen-sm text-center px-4 sm:px-6 lg:px-8 pt-10 pb-6 mx-auto">
+            <div className="mx-auto px-4 pb-6 pt-10 text-center sm:px-6 md:max-w-screen-sm lg:px-8">
                 <h1 className="text-2xl font-bold md:text-4xl dark:text-white">Terms &amp; Conditions</h1>
             </div>
 
-            <div className="md:max-w-screen-sm lg:max-w-[992px] px-4 sm:px-6 lg:px-8 pb-12 md:pt-6 sm:pb-20 mx-auto">
+            <div className="mx-auto px-4 pb-12 sm:px-6 sm:pb-20 md:max-w-screen-sm md:pt-6 lg:max-w-[992px] lg:px-8">
                 <div className="grid gap-4 md:gap-8">
                     <div>
-                        <h2 className="text-lg sm:text-xl font-semibold mb-2 dark:text-white">General Terms</h2>
+                        <h2 className="mb-2 text-lg font-semibold sm:text-xl dark:text-white">General Terms</h2>
 
                         <p className="mb-3 dark:text-gray-400">
                             Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms.
@@ -26,7 +26,7 @@ export default function Terms() {
                     </div>
 
                     <div>
-                        <h2 className="text-lg sm:text-xl font-semibold mb-2 dark:text-white">Accounts</h2>
+                        <h2 className="mb-2 text-lg font-semibold sm:text-xl dark:text-white">Accounts</h2>
 
                         <p className="mb-2 dark:text-gray-400">
                             We are not offering any accounts right now on our website. This website require no signup or login.
@@ -34,7 +34,7 @@ export default function Terms() {
                     </div>
 
                     <div>
-                        <h2 className="text-lg sm:text-xl font-semibold mb-2 dark:text-white">Security</h2>
+                        <h2 className="mb-2 text-lg font-semibold sm:text-xl dark:text-white">Security</h2>
 
                         <p className="dark:text-gray-400">
                             We does not process any order payments through the website. All payments are processed securely through online
@@ -44,7 +44,7 @@ export default function Terms() {
                     </div>
 
                     <div>
-                        <h2 className="text-lg sm:text-xl font-semibold mb-2 dark:text-white">Ownership</h2>
+                        <h2 className="mb-2 text-lg font-semibold sm:text-xl dark:text-white">Ownership</h2>
 
                         <p className="dark:text-gray-400">
                             Ownership of the product is governed by the usage license selected by the seller.
@@ -52,7 +52,7 @@ export default function Terms() {
                     </div>
 
                     <div>
-                        <h2 className="text-lg sm:text-xl font-semibold mb-2 dark:text-white">Changes to terms</h2>
+                        <h2 className="mb-2 text-lg font-semibold sm:text-xl dark:text-white">Changes to terms</h2>
 
                         <p className="dark:text-gray-400">
                             If we change our terms of use we will post those changes on this page. Registered users will be sent an email
@@ -60,7 +60,7 @@ export default function Terms() {
                         </p>
                     </div>
                     <div>
-                        <h2 className="text-lg sm:text-xl font-semibold mb-2 dark:text-white">Contact Us</h2>
+                        <h2 className="mb-2 text-lg font-semibold sm:text-xl dark:text-white">Contact Us</h2>
 
                         <p className="dark:text-gray-400">If you have any questions about these Terms, please contact us at</p>
                         <a className="text-blue-500" href={`mailto:${email}`}>

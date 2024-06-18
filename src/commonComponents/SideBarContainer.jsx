@@ -7,25 +7,27 @@ export default function SidebarContainer({ children, isLoading = true }) {
     const url = window.location.href.toLowerCase();
 
     return (
-        <main className="bg-white flex w-screen h-screen">
+        <main className="flex h-screen w-screen bg-white">
             {/* Side Bar */}
-            <section className="min-h-screen bg-white flex flex-col justify-between py-3 items-center w-[3.5%]">
+            <section className="flex min-h-screen w-[3.5%] flex-col items-center justify-between bg-white py-3">
                 {/* Logo */}
-                <img src="/logo.png" alt="Next.js Logo" className="w-14" />
+                <div className="h-10 w-10 bg-red-200">
+                    <img src="/logo.png" alt="Next.js Logo" className="w-10" />
+                </div>
 
                 {/* Menus Icons */}
-                <div className="flex flex-col gap-6 w-full">
+                <div className="flex w-full flex-col gap-6">
                     {SIDEBAR_MENUS.map((item, index) => {
                         const isActive = url.includes(item.name.toLowerCase());
                         menuName = isActive ? item.name : menuName;
                         return (
                             <button
-                                className={`text-gray-400 border-l-2 flex justify-center ${isActive ? 'border-[#8ccc45]' : ''}`}
+                                className={`flex justify-center border-l-2 text-gray-400 ${isActive ? 'border-[#8ccc45]' : ''}`}
                                 onClick={() => (window.location.href = `/${item.name.toLowerCase()}`)}
                                 disabled={isActive}
                                 key={index}
                             >
-                                <Icon icon={item.icon} size={5} className={isActive ? 'text-[#8ccc45]' : 'text-[#aab4c3]'} />
+                                <Icon icon={item.icon} size={6} className={isActive ? 'text-[#8ccc45]' : 'text-[#aab4c3]'} />
                             </button>
                         );
                     })}
@@ -36,15 +38,15 @@ export default function SidebarContainer({ children, isLoading = true }) {
             </section>
 
             {/* Container */}
-            <section className="bg-white w-full">
+            <section className="w-full bg-white">
                 {/* NavBar */}
-                <nav className="h-[9%] flex items-center justify-between px-5">
+                <nav className="flex h-[9%] items-center justify-between px-5">
                     <p className="font-semibold tracking-wider">{menuName}</p>
                     <Icon icon="UserCircleIcon" size={8} />
                 </nav>
 
                 {/* Component */}
-                <div className="bg-[#ecf0f6] rounded-tl-[60px] h-[91%] overflow-auto">
+                <div className="h-[91%] w-full overflow-hidden rounded-tl-[60px] bg-[#ecf0f6]">
                     {isLoading && <LoadingScreen />}
                     {!isLoading && children}
                 </div>

@@ -92,19 +92,19 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
     return (
         <ModalWrapper>
             <motion.div
-                className="relative bg-white rounded-xl flex flex-col items-center w-[60%] h-[60%] p-2"
+                className="relative flex h-[60%] w-[60%] flex-col items-center rounded-xl bg-white p-2"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
             >
                 {/* Close Icon */}
-                <Icon icon="XCircleIcon" className="absolute top-6 right-8" onClick={() => closeFunction()} />
+                <Icon icon="XCircleIcon" className="absolute right-8 top-6" onClick={() => closeFunction()} />
 
-                <p className="font-semibold my-4">🎭 New Player Registration</p>
+                <p className="my-4 font-semibold">🎭 New Player Registration</p>
 
-                <form className="grid grid-cols-2 gap-3 p-5 w-full" onSubmit={handleSubmit}>
+                <form className="grid w-full grid-cols-2 gap-3 p-5" onSubmit={handleSubmit}>
                     {/* Inputs */}
                     {newTeamPlayer.inputColumns.map((input, index) => (
-                        <div key={index} className="relative flex flex-col justify-center w-full gap-2 text-sm">
+                        <div key={index} className="relative flex w-full flex-col justify-center gap-2 text-sm">
                             <Input
                                 label={input.label}
                                 required={input.required}
@@ -118,7 +118,7 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
                             {/* Player Detail Modal */}
                             {input.name == 'player_no' && playerData && (
                                 <div
-                                    className="bg-white rounded p-2 shadow ring-1 ring-gray-200 absolute cursor-pointer w-[99%] text-sm right-0 -bottom-16 z-50"
+                                    className="absolute -bottom-16 right-0 z-50 w-[99%] cursor-pointer rounded bg-white p-2 text-sm shadow ring-1 ring-gray-200"
                                     onClick={() => {
                                         setTeamPlayerData({
                                             ...teamPlayerData,
@@ -138,7 +138,7 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
                     ))}
 
                     {/* Submit Button */}
-                    <div className="col-span-2 flex items-center justify-center my-1">
+                    <div className="col-span-2 my-1 flex items-center justify-center">
                         <Button title="Submit" type="submit" className="col-span-2" />
                     </div>
                 </form>

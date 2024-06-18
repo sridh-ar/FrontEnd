@@ -9,11 +9,13 @@ import LoadingScreen from '../../commonComponents/LoadingScreen';
 import Input from '../../commonComponents/Input';
 import Button from '../../commonComponents/Button';
 import Icon from '../../commonComponents/Icon';
+import { fetchAPI } from '../../utils/commonServices';
 
 export default function PlayerRegistration() {
     // States
     const [isLoading, setisLoading] = useState(true);
     const [isTermAccepted, setisTermAccepted] = useState(false);
+    const [isUploading, setisUploading] = useState(false);
 
     const [playerData, setPlayerData] = useState({
         name: '',
@@ -38,12 +40,14 @@ export default function PlayerRegistration() {
 
         // handle file for upload
         if (name == 'player_photo') {
+            setisUploading(true);
             let imageResult = e.target.files[0];
             const storage = getStorage(firebaseApp);
             const imageRef = ref(storage, `kpl/Player_${Math.floor(Math.random() * 90000) + 10000}`);
             await uploadBytes(imageRef, imageResult).then(async (res) => {
                 await getDownloadURL(res.ref).then((res) => {
                     value = res;
+                    setisUploading(false);
                 });
             });
         }
@@ -60,18 +64,7 @@ export default function PlayerRegistration() {
         localStorage.removeItem('playerData');
 
         try {
-            const response = await fetch('/api/player', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(playerData),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to submit player data, Contact Admin');
-            }
-
+            await fetchAPI('/player/create', 'POST', playerData);
             localStorage.setItem('playerData', JSON.stringify(playerData));
             setisLoading(false);
             window.location.replace('/thanks');
@@ -87,7 +80,7 @@ export default function PlayerRegistration() {
 
     if (isLoading) {
         return (
-            <div className="w-screen h-screen">
+            <div className="h-screen w-screen">
                 <LoadingScreen />
             </div>
         );
@@ -95,17 +88,18 @@ export default function PlayerRegistration() {
 
     return (
         <div className="bg-gray-200 p-3">
-            <div className="bg-white rounded-xl flex flex-col items-center w-full p-2 py-4">
+            <div className="flex w-full flex-col items-center rounded-xl bg-white p-2 py-4">
                 {/* Close Icon */}
-                <Icon icon="XCircleIcon" className="absolute top-10 right-10" size={8} onClick={() => window.history.back()} />
+                <Icon icon="XCircleIcon" className="absolute right-10 top-10" size={8} onClick={() => window.history.back()} />
 
                 {/* Actual Form Body */}
-                <p className="font-semibold tracking-wider my-3 text-lg">🎭 Player Registration</p>
-                <form className="grid grid-cols-2 gap-3 p-5 w-full" onSubmit={handleSubmit}>
+                <p className="my-3 text-lg font-semibold tracking-wider">🎭 Player Registration</p>
+                <form className="grid w-full grid-cols-2 gap-3 p-5" onSubmit={handleSubmit}>
                     {/* Inputs */}
                     {registration.inputColumns.map((input, index) => (
                         <Input
                             index={index}
+                            type={input.type}
                             key={index}
                             idName={input.name}
                             label={input.label}
@@ -116,14 +110,7 @@ export default function PlayerRegistration() {
                     ))}
 
                     {/* File Upload */}
-                    <Input
-                        type="file"
-                        label="Player Photo"
-                        idName="player_photo"
-                        required
-                        onChange={handleInputChange}
-                        icon={<ArrowUpTrayIcon width={20} />}
-                    />
+                    <Input type="file" label="Player Photo" idName="player_photo" required onChange={handleInputChange} />
 
                     {/* Selects */}
                     {registration.selectColumns.map((select, index) => (
@@ -145,9 +132,9 @@ export default function PlayerRegistration() {
                     ))}
 
                     {/* Terms & Conditions */}
-                    <div className="w-full flex flex-col text-sm col-span-2">
+                    <div className="col-span-2 flex w-full flex-col text-sm">
                         <h3 className="font-bold">Terms & Conditions:</h3>
-                        <ol className="list-disc relative left-10 my-3 w-[90%] sm:w-full break-words">
+                        <ol className="relative left-10 my-3 w-[90%] list-disc break-words sm:w-full">
                             <li>Player Registration Amount is Rs.111/-</li>
                             <li>Players Should be available for the whole tournament</li>
                             <li>
@@ -158,16 +145,16 @@ export default function PlayerRegistration() {
                         </ol>
 
                         {/* Terms Checkbox */}
-                        <div className="flex items-start mb-5">
+                        <div className="mb-5 flex items-start">
                             <input
                                 id="terms"
                                 type="checkbox"
                                 checked={isTermAccepted}
-                                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                                className="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300"
                                 required
                                 onChange={() => setisTermAccepted(!isTermAccepted)}
                             />
-                            <label htmlFor="terms" className="ms-2 text-sm font-medium text-gray-900 ml-2">
+                            <label htmlFor="terms" className="ml-2 ms-2 text-sm font-medium text-gray-900">
                                 I agree with the{' '}
                                 <a href="/terms" className="text-blue-600 hover:underline">
                                     terms and conditions
@@ -178,7 +165,7 @@ export default function PlayerRegistration() {
 
                     {/* Submit Button */}
                     <div className="col-span-2 flex items-center justify-center">
-                        <Button title="Submit" className="col-span-2 px-10" type="submit" />
+                        <Button title="Submit" className="col-span-2 bg-black px-10 text-white" type="submit" isLoading={isUploading} />
                     </div>
                 </form>
             </div>

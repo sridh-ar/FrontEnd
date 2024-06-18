@@ -47,13 +47,13 @@ export default function AppConfigInput({ config = {}, addConfig = false }) {
 
     if (addConfig) {
         return (
-            <div className="w-full flex justify-evenly items-center">
+            <div className="flex w-full items-center justify-evenly">
                 <input
                     type="text"
                     value={configDetails.config_name}
                     onChange={(event) => setConfigDetails({ ...configDetails, config_name: event.target.value })}
                     placeholder="Config Name"
-                    className="w-[40%] outline-none border-black border-opacity-10 border-[1px] bg-gray-100 shadow p-2 px-4 rounded-md my-3 capitalize"
+                    className="my-3 w-[40%] rounded-md border-[1px] border-black border-opacity-10 bg-gray-100 p-2 px-4 capitalize shadow outline-none"
                 />
                 <>
                     <input
@@ -61,8 +61,7 @@ export default function AppConfigInput({ config = {}, addConfig = false }) {
                         value={configDetails.config_value}
                         placeholder="Config Value"
                         onChange={(event) => setConfigDetails({ ...configDetails, config_value: event.target.value })}
-                        className={`w-[40%] outline-none border-black border-opacity-10 border-[1px] 
-                                            bg-gray-100 shadow-inner p-2 px-4 rounded-md my-3 ${editMode ? 'ring-1 ring-black' : ''}`}
+                        className={`my-3 w-[40%] rounded-md border-[1px] border-black border-opacity-10 bg-gray-100 p-2 px-4 shadow-inner outline-none ${editMode ? 'ring-1 ring-black' : ''}`}
                     />
 
                     <Icon icon="DocumentPlusIcon" size={5} className="fill-green-800" onClick={handleEditSave} tooltip="Create" />
@@ -79,12 +78,12 @@ export default function AppConfigInput({ config = {}, addConfig = false }) {
     }
 
     return (
-        <div className="w-full flex justify-evenly items-center">
+        <div className="flex w-full items-center justify-evenly">
             <input
                 type="text"
                 value={config.config_name}
                 disabled
-                className="w-[40%] outline-none border-black border-opacity-10 border-[1px] bg-gray-100 shadow p-2 px-4 rounded-md my-3 capitalize"
+                className="my-3 w-[40%] rounded-md border-[1px] border-black border-opacity-10 bg-gray-100 p-2 px-4 capitalize shadow outline-none"
             />
             <>
                 <input
@@ -92,8 +91,7 @@ export default function AppConfigInput({ config = {}, addConfig = false }) {
                     value={inputValue}
                     onChange={(event) => setInputValue(event.target.value)}
                     disabled={!editMode}
-                    className={`w-[40%] outline-none border-black border-opacity-10 border-[1px] 
-                                        bg-gray-100 shadow-inner p-2 px-4 rounded-md my-3 ${editMode ? 'ring-1 ring-black' : ''}`}
+                    className={`my-3 w-[40%] rounded-md border-[1px] border-black border-opacity-10 bg-gray-100 p-2 px-4 shadow-inner outline-none ${editMode ? 'ring-1 ring-black' : ''}`}
                 />
                 <Icon
                     icon={editMode ? 'CheckIcon' : 'PencilSquareIcon'}

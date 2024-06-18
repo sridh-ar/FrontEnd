@@ -7,8 +7,8 @@ const phone = process.env.PHONE || '8682021651';
 
 export default function Support() {
     return (
-        <section className="bg-white dark:bg-gray-900 h-full">
-            <div className="container px-6 py-12 mx-auto">
+        <section className="h-full bg-white dark:bg-gray-900">
+            <div className="container mx-auto px-6 py-12">
                 <div className="text-center">
                     <p className="font-medium text-blue-500 dark:text-blue-400">Contact us</p>
 
@@ -17,16 +17,16 @@ export default function Support() {
                     <p className="mt-3 text-gray-500 dark:text-gray-400">Our friendly team is always here to chat.</p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-12 mt-10 md:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-10 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
                     <div className="flex flex-col items-center justify-center text-center">
-                        <span className="p-3 text-blue-500 rounded-full bg-blue-100/80 dark:bg-gray-800">
+                        <span className="rounded-full bg-blue-100/80 p-3 text-blue-500 dark:bg-gray-800">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 strokeWidth="1.5"
                                 stroke="currentColor"
-                                className="w-6 h-6"
+                                className="h-6 w-6"
                             >
                                 <path
                                     strokeLinecap="round"
@@ -44,14 +44,14 @@ export default function Support() {
                     </div>
 
                     <div className="flex flex-col items-center justify-center text-center">
-                        <span className="p-3 text-blue-500 rounded-full bg-blue-100/80 dark:bg-gray-800">
+                        <span className="rounded-full bg-blue-100/80 p-3 text-blue-500 dark:bg-gray-800">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 strokeWidth="1.5"
                                 stroke="currentColor"
-                                className="w-6 h-6"
+                                className="h-6 w-6"
                             >
                                 <path
                                     strokeLinecap="round"
@@ -69,14 +69,14 @@ export default function Support() {
                     </div>
 
                     <div className="flex flex-col items-center justify-center text-center">
-                        <span className="p-3 text-blue-500 rounded-full bg-blue-100/80 dark:bg-gray-800">
+                        <span className="rounded-full bg-blue-100/80 p-3 text-blue-500 dark:bg-gray-800">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 strokeWidth="1.5"
                                 stroke="currentColor"
-                                className="w-6 h-6"
+                                className="h-6 w-6"
                             >
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path

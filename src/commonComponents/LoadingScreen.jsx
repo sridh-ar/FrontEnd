@@ -1,6 +1,6 @@
 export default function LoadingScreen({ className }) {
     return (
-        <div className={`flex flex-col items-center justify-center w-full h-full z-50 ${className}`}>
+        <div className={`z-50 flex h-full w-full flex-col items-center justify-center ${className}`}>
             <img src="/loading.gif" alt="" className="w-24" />
         </div>
     );
