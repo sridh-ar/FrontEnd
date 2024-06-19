@@ -73,7 +73,14 @@ const AdminSection = ({ title, description, subDescription, buttonName, configVa
 
             <section className="flex items-center justify-between bg-gray-200 p-3 px-5 text-sm">
                 <p>{subDescription}</p>
-                {buttonName && <Button title={buttonName} isLoading={isButtonLoading} onClick={() => methods.handleReset(!isResetApp)} />}
+                {buttonName && (
+                    <Button
+                        title={buttonName}
+                        className="text-white"
+                        isLoading={isButtonLoading}
+                        onClick={() => methods.handleReset(!isResetApp)}
+                    />
+                )}
             </section>
         </div>
     );
@@ -104,7 +111,7 @@ export default function AdminDashboard() {
 
     return (
         <SidebarContainer isLoading={isLoading}>
-            <div className="h-full w-full px-7 py-2">
+            <div className="h-full w-full overflow-y-scroll px-7 py-2">
                 <AdminSection
                     title="Application Configurations"
                     description="This is your team's visible name. For example, the name of your company or department."
