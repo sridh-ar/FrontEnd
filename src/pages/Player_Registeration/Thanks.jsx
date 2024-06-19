@@ -22,7 +22,7 @@ export default function ThanksPage() {
     data = JSON.parse(data);
 
     return (
-        <div className="flex h-screen w-screen flex-col items-center justify-center p-5">
+        <div className="flex h-screen w-screen flex-col items-center justify-center bg-gray-200 p-5">
             <PlayersCard
                 key={data.name}
                 name={data.name}

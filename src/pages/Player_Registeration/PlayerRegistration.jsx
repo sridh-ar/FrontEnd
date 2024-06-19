@@ -89,9 +89,6 @@ export default function PlayerRegistration() {
     return (
         <div className="bg-gray-200 p-3">
             <div className="flex w-full flex-col items-center rounded-xl bg-white p-2 py-4">
-                {/* Close Icon */}
-                <Icon icon="XCircleIcon" className="absolute right-10 top-10" size={8} onClick={() => window.history.back()} />
-
                 {/* Actual Form Body */}
                 <p className="my-3 text-lg font-semibold tracking-wider">🎭 Player Registration</p>
                 <form className="grid w-full grid-cols-2 gap-3 p-5" onSubmit={handleSubmit}>
@@ -152,7 +149,7 @@ export default function PlayerRegistration() {
                         </ol>
 
                         {/* Terms Checkbox */}
-                        <div className="mb-5 flex items-start">
+                        <div className="mb-5 flex items-center">
                             <input
                                 id="terms"
                                 type="checkbox"
@@ -170,9 +167,10 @@ export default function PlayerRegistration() {
                         </div>
                     </div>
 
-                    {/* Submit Button */}
-                    <div className="col-span-2 flex items-center justify-center">
+                    {/* Submit Button and cancel button */}
+                    <div className="col-span-2 flex items-center justify-center gap-5">
                         <Button title="Submit" className="col-span-2 bg-black px-10 text-white" type="submit" isLoading={isUploading} />
+                        <Button title="Cancel" className="col-span-2 bg-gray-300 px-10 text-black" onClick={() => window.history.back()} />
                     </div>
                 </form>
             </div>
