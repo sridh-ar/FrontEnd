@@ -19,7 +19,7 @@ function TextField({ title, value, icon }) {
     );
 }
 
-export default function PlayersCard({ name, contact, role, team, image, id, fromRegisterMenu = false }) {
+export default function PlayersCard({ name, contact, role, team, image, id, fromRegisterMenu = false, onClick }) {
     const [isButtonLoading, setIsButtonLoading] = useState(false);
 
     async function handleDelete() {
@@ -34,7 +34,7 @@ export default function PlayersCard({ name, contact, role, team, image, id, from
     }
 
     return (
-        <main className="relative flex w-full items-center rounded-lg bg-white p-3 shadow">
+        <main className="relative flex w-full items-center rounded-lg bg-white p-3 shadow" onClick={onClick}>
             <img
                 src={image}
                 alt="Rounded avatar"

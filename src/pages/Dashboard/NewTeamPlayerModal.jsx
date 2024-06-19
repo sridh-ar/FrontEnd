@@ -1,36 +1,49 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoadingScreen from '../../commonComponents/LoadingScreen';
 import Input from '../../commonComponents/Input';
 import { newTeamPlayer } from '../../utils/constants';
 import Button from '../../commonComponents/Button';
 import Icon from '../../commonComponents/Icon';
 import ModalWrapper from '../../commonComponents/ModalWrapper';
+import { fetchAPI } from '../../utils/commonServices';
+import toast from 'react-hot-toast';
 
 export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
     //State Variables
     const [isLoading, setisLoading] = useState(false);
     const [playerData, setPlayerData] = useState(null);
+    const [playersList, setplayersList] = useState([]);
 
     const [teamPlayerData, setTeamPlayerData] = useState({
         team_name: selectedTeam.team_name,
         player_no: '',
         player_name: '',
         points: '',
-        team_id: selectedTeam.team_id,
+        team_id: selectedTeam.id,
     });
+
+    // Use Effect
+    useEffect(() => {
+        setisLoading(true);
+        fetchAPI('/player')
+            .then((data) => {
+                setplayersList(data);
+                setisLoading(false);
+            })
+            .catch((error) => console.error(error));
+    }, []);
 
     // Function to handle changes in input fields
     const handleInputChange = async (e) => {
         let { name, value } = e.target;
 
         if (name == 'player_no') {
-            const query = `select name,player_role from player where id = ${parseInt(value) || 0}`;
-
-            fetch(`/api/select?query=${query}`)
-                .then((response) => response.json())
-                .then((data) => setPlayerData(data[0]))
-                .catch((err) => alert(err.message));
+            if (value.length > 0) {
+                setPlayerData(playersList.find((item) => item.id === value || item.name.toLowerCase().includes(value.toLowerCase())));
+            } else {
+                setPlayerData(null);
+            }
         }
 
         setTeamPlayerData({
@@ -44,58 +57,31 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
         setisLoading(true);
 
         try {
-            const query = `select player_no from team_players where player_no = ${parseInt(teamPlayerData.player_no)}`;
-
-            fetch(`/api/select?query=${query}`)
-                .then((response) => response.json())
-                .then(async (data) => {
-                    console.log(data);
-                    if (data.length > 0) {
-                        setisLoading(false);
-                        alert('Player already part of another team or Not Available');
-                    } else {
-                        const response = await fetch('/api/insert', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                table_name: 'team_players',
-                            },
-                            body: JSON.stringify(teamPlayerData),
-                        });
-
-                        if (!response.ok) {
-                            throw new Error('Failed to submit team player data, Contact Admin');
-                        }
-
-                        // updating team remainig points and remaing slots
-                        let updateQuery = `UPDATE team SET remaining_slots = remaining_slots - 1, 
-              remaining_points_available = remaining_points_available - ${parseInt(teamPlayerData.points)} 
-              WHERE id = ${teamPlayerData.team_id}`;
-
-                        fetch(`/api/update?query=${updateQuery}`);
-
-                        setisLoading(false);
-                        closeFunction();
-                    }
-                })
-                .catch((err) => alert(err.message));
+            const apiResponse = await fetchAPI('/teamPlayer/create', 'POST', teamPlayerData);
+            console.log(apiResponse);
+            setisLoading(false);
+            closeFunction();
+            // window.location.reload();
         } catch (error) {
-            alert(error.message);
-            window.location.replace('/Dashboard');
+            if (error.message.includes('part of')) {
+                toast.error(error.message);
+                setisLoading(false);
+            } else {
+                closeFunction();
+            }
         }
     };
-
-    if (isLoading) {
-        <LoadingScreen />;
-    }
 
     return (
         <ModalWrapper>
             <motion.div
-                className="relative flex h-[60%] w-[60%] flex-col items-center rounded-xl bg-white p-2"
+                className="relative flex h-[60%] w-[60%] flex-col items-center overflow-hidden rounded-xl bg-white p-2"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
             >
+                {/* Loading Screen */}
+                {isLoading && <LoadingScreen className="absolute z-[100] bg-white" />}
+
                 {/* Close Icon */}
                 <Icon icon="XCircleIcon" className="absolute right-8 top-6" onClick={() => closeFunction()} />
 
@@ -113,6 +99,7 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
                                 value={teamPlayerData[input.name]}
                                 onChange={handleInputChange}
                                 disabled={input.disabled}
+                                placeholder={input.name == 'player_no' ? 'Search by Player No or Name' : null}
                             />
 
                             {/* Player Detail Modal */}
@@ -123,6 +110,7 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
                                         setTeamPlayerData({
                                             ...teamPlayerData,
                                             player_name: playerData.name,
+                                            player_no: playerData.id,
                                         });
                                         setPlayerData(null);
                                     }}
@@ -139,7 +127,7 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
 
                     {/* Submit Button */}
                     <div className="col-span-2 my-1 flex items-center justify-center">
-                        <Button title="Submit" type="submit" className="col-span-2" />
+                        <Button title="Submit" type="submit" className="col-span-2 text-white" />
                     </div>
                 </form>
             </motion.div>

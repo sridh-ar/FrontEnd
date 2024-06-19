@@ -11,8 +11,9 @@ export default function SidebarContainer({ children, isLoading = true }) {
             {/* Side Bar */}
             <section className="flex min-h-screen w-[3.5%] flex-col items-center justify-between bg-white py-3">
                 {/* Logo */}
-                <div className="h-10 w-10 bg-red-200">
-                    <img src="/logo.png" alt="Next.js Logo" className="w-10" />
+                <div></div>
+                <div className="absolute left-0.5 top-1 h-12 w-16">
+                    <img src="/cup.png" alt="Next.js Logo" className="object-cover" />
                 </div>
 
                 {/* Menus Icons */}
@@ -40,8 +41,8 @@ export default function SidebarContainer({ children, isLoading = true }) {
             {/* Container */}
             <section className="w-full bg-white">
                 {/* NavBar */}
-                <nav className="flex h-[9%] items-center justify-between px-5">
-                    <p className="font-semibold tracking-wider">{menuName}</p>
+                <nav className="ml-3 flex h-[9%] items-center justify-between px-5">
+                    <p className="font-semibold tracking-wider">{menuName} Menu</p>
                     <Icon icon="UserCircleIcon" size={8} />
                 </nav>
 

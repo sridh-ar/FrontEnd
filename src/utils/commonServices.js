@@ -13,7 +13,7 @@ async function fetchAPI(url = '', method = 'GET', body = {}) {
         });
 
         if (!apiResult.ok) {
-            throw new Error('Api Request not Processed');
+            throw new Error((await apiResult.json()).message);
         }
 
         apiResult = apiResult.json();

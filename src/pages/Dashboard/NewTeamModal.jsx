@@ -110,12 +110,13 @@ export default function NewTeamModal({ closeFunction }) {
                             idName={input.name}
                             onChange={handleInputChange}
                             key={index}
+                            fileName={teamData[input.name] ? 'Uploaded!' : 'Choose a File'}
                         />
                     ))}
 
                     {/* Submit Button */}
                     <div className="col-span-2 flex items-center justify-center">
-                        <Button title="Submit" type="submit" className="col-span-2 mt-2" isLoading={isImageUploading} />
+                        <Button title="Submit" type="submit" className="col-span-2 mt-2 text-white" isLoading={isImageUploading} />
                     </div>
                 </form>
             </motion.div>

@@ -12,6 +12,7 @@ export default function Input({
     options = [],
     disabled = false,
     fileName = 'Choose a File',
+    placeholder,
 }) {
     if (type == 'select') {
         return (
@@ -73,7 +74,7 @@ export default function Input({
                 type={type}
                 name={idName}
                 value={value}
-                placeholder={label}
+                placeholder={placeholder || label}
                 onChange={onChange}
                 required={required}
                 disabled={disabled}

@@ -4,6 +4,7 @@ import SidebarContainer from '../../commonComponents/SideBarContainer';
 import { fetchAPI } from '../../utils/commonServices';
 import Icon from '../../commonComponents/Icon';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import PlayersCardFull from './PlayerDetailScreen';
 
 const SearchBar = ({ handleSearch }) => {
     return (
@@ -24,10 +25,9 @@ const SearchBar = ({ handleSearch }) => {
 
 export default function PlayerDashboard() {
     const [playersData, setPlayersData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    //Infinity scroll
     const [filteredList, setfilteredList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [selectedPlayer, setselectedPlayer] = useState('');
 
     useEffect(() => {
         fetchAPI('/player')
@@ -50,28 +50,35 @@ export default function PlayerDashboard() {
     return (
         <SidebarContainer isLoading={isLoading}>
             <div className="h-full overflow-y-scroll">
-                <div className="grid grid-cols-3 gap-3 p-7">
-                    <SearchBar handleSearch={(value) => handleSearch(value)} />
-                    {filteredList.map((item, index) => {
-                        return (
-                            <PlayersCard
-                                key={index}
-                                name={item.name}
-                                jerseyname={item.jersey_name}
-                                contact={item.contact_number}
-                                role={item.player_role}
-                                team={item.team_name}
-                                id={item.id}
-                                area={item.area}
-                                image={item.player_photo}
-                                approved={item.approved}
-                                handleApproved={() => setisLoading(true)}
-                                battingStyle={item.batting_style}
-                                bowlingStyle={item.bowling_style}
-                            />
-                        );
-                    })}
-                </div>
+                {!selectedPlayer ? (
+                    <div className="grid grid-cols-3 gap-3 p-7">
+                        <SearchBar handleSearch={(value) => handleSearch(value)} />
+                        {filteredList.map((item, index) => {
+                            return (
+                                <PlayersCard
+                                    key={index}
+                                    name={item.name}
+                                    jerseyname={item.jersey_name}
+                                    contact={item.contact_number}
+                                    role={item.player_role}
+                                    team={item.team_name}
+                                    id={item.id}
+                                    area={item.area}
+                                    image={item.player_photo}
+                                    approved={item.approved}
+                                    handleApproved={() => setisLoading(true)}
+                                    battingStyle={item.batting_style}
+                                    bowlingStyle={item.bowling_style}
+                                    onClick={() => setselectedPlayer(index)}
+                                />
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className="overflow-hidden">
+                        <PlayersCardFull playerDetails={filteredList.at(selectedPlayer)} closeModal={() => setselectedPlayer(null)} />
+                    </div>
+                )}
             </div>
         </SidebarContainer>
     );
