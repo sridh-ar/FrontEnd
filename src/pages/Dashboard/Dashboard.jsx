@@ -137,7 +137,7 @@ export default function Dashboard() {
                 {/* <Icon icon="PlusCircleIcon" className="absolute top-1 right-14" size={10} onClick={() => setOpenNewTeamModel(true)} /> */}
                 <Button
                     title="New Team"
-                    className="absolute right-14 top-3 h-7 rounded-lg bg-slate-300 text-xs text-black"
+                    className="absolute right-14 top-3 h-7 rounded-lg bg-slate-300 text-xs"
                     onClick={() => setOpenNewTeamModel(true)}
                 />
 

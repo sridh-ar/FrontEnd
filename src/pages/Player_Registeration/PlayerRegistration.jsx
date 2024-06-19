@@ -110,7 +110,14 @@ export default function PlayerRegistration() {
                     ))}
 
                     {/* File Upload */}
-                    <Input type="file" label="Player Photo" idName="player_photo" required onChange={handleInputChange} />
+                    <Input
+                        type="file"
+                        label="Player Photo"
+                        idName="player_photo"
+                        required
+                        onChange={handleInputChange}
+                        fileName={playerData.player_photo ? 'Uploaded!' : 'Choose a File'}
+                    />
 
                     {/* Selects */}
                     {registration.selectColumns.map((select, index) => (
