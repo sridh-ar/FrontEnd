@@ -61,7 +61,6 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
             console.log(apiResponse);
             setisLoading(false);
             closeFunction();
-            // window.location.reload();
         } catch (error) {
             if (error.message.includes('part of')) {
                 toast.error(error.message);
