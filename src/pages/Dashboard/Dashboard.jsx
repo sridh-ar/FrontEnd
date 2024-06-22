@@ -8,8 +8,10 @@ import { TEAM_DASHBOARD_ROWS, TEAM_TABLE_ROWS, mockTableData, mockTeamTableData 
 import Icon from '../../commonComponents/Icon';
 import AnalysticsDiv from './AnalysticsDiv';
 import Button from '../../commonComponents/Button';
-import TeamDetailScreen from './TeamDetailScreen';
+import TeamDetailScreen from './TeamDetailTable';
 import _ from 'lodash';
+import LoadingScreen from '../../commonComponents/LoadingScreen';
+import TeamTable from './TeamTable';
 
 export default function Dashboard() {
     // State variables initialization
@@ -18,6 +20,7 @@ export default function Dashboard() {
     const [teamData, setTeamData] = useState([]);
     const [selectedTeamForPlayer, setSelectedTeamForPlayer] = useState({});
     const [isLoading, setisLoading] = useState(true);
+    const [isTableLoading, setisTableLoading] = useState(false);
     const [analyticalData, setanalyticalData] = useState({});
     const [openSeletedTeam, setopenSeletedTeam] = useState(null);
 
@@ -75,14 +78,14 @@ export default function Dashboard() {
     }
 
     async function openSeletesTeam(team_id) {
-        setisLoading(true);
+        setisTableLoading(true);
         const teamPlayersResult = await fetchAPI(`/teamPlayer/team-players-list/${team_id}`);
         if (!_.isEmpty(teamPlayersResult)) {
             setopenSeletedTeam(teamPlayersResult);
         } else {
             toast.error('No Players Registered to this Team.');
         }
-        setisLoading(false);
+        setisTableLoading(false);
     }
 
     return (
@@ -96,44 +99,23 @@ export default function Dashboard() {
                 />
 
                 {/* Table Body */}
-                {!openSeletedTeam && (
-                    <div className="h-[91%] w-full bg-[#d4dced] p-5">
-                        <div className="relative z-10 grid h-[10%] grid-cols-8 items-center rounded-t-3xl bg-white text-center text-sm shadow">
-                            {TEAM_DASHBOARD_ROWS.map((row) => (
-                                <span className="py-3 font-normal tracking-wider text-[#aab4c3]">{row}</span>
-                            ))}
-                            <span className="absolute bottom-0 right-0 h-[0.5px] w-full bg-slate-200" />
-                        </div>
-                        <div className="h-[92%] overflow-y-scroll rounded-b-3xl bg-white text-center text-sm">
-                            {teamData.map((item, index) => (
-                                <div className="relative grid h-10 grid-cols-8 items-center text-center text-sm" key={index}>
-                                    <span
-                                        className="relative flex cursor-pointer items-center justify-center"
-                                        onClick={() => openSeletesTeam(item.id)}
-                                    >
-                                        {item.team_name && <img src={item.team_photo} className="mr-2 h-8 w-8 rounded" />}
-                                        {item.team_name.slice(0, 15)}
-                                    </span>
+                <div className="h-[91%] w-full bg-[#d4dced] p-5">
+                    {/* Loading Screen */}
+                    {isTableLoading && <LoadingScreen className="h-[102%] w-full rounded-3xl bg-white" />}
 
-                                    <span> {item.captain.length > 15 ? `${item.captain.slice(0, 15)}...` : item.captain} </span>
-                                    <span> {item.owner.length > 10 ? `${item.owner.slice(0, 10)}...` : item.owner} </span>
-                                    <span>{item.slots}</span>
-                                    <span> {item.remaining_slots} </span>
-                                    <span>{item.total_points_available}</span>
-                                    <span>{item.remaining_points_available}</span>
+                    {/* Team Table */}
+                    {!(openSeletedTeam || isTableLoading) && (
+                        <TeamTable
+                            tableData={teamData}
+                            openTeamDetails={(team_id) => openSeletesTeam(team_id)}
+                            handleNewTeamPlayer={handleNewTeamPlayer}
+                            handleTeamDelete={handleTeamDelete}
+                        />
+                    )}
 
-                                    <span className="flex cursor-pointer items-center justify-evenly">
-                                        <Icon icon="UserPlusIcon" className="fill-green-800" onClick={() => handleNewTeamPlayer(item)} />
-                                        <Icon icon="TrashIcon" className="fill-red-700" onClick={() => handleTeamDelete(item.id)} />
-                                    </span>
-                                    <span className="absolute bottom-0 right-0 h-[0.5px] w-full bg-slate-200" />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {openSeletedTeam && <TeamDetailScreen playersData={openSeletedTeam} closeFunction={() => setopenSeletedTeam(null)} />}
+                    {/* Team Details Table */}
+                    {openSeletedTeam && <TeamDetailScreen playersData={openSeletedTeam} closeFunction={() => setopenSeletedTeam(null)} />}
+                </div>
 
                 {/* Render Icon to open new team modal */}
                 {!openSeletedTeam && (

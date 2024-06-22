@@ -10,7 +10,7 @@ export default function PlayersCardFull({ playerDetails, closeModal }) {
     const [isPlayerLoading, setPlayerLoading] = useState(true);
 
     return (
-        <div className="h-full">
+        <div className="absolute flex h-screen w-screen items-end">
             {/* BG Image */}
             <img
                 src="/stadium_bg.jpg"
@@ -23,7 +23,7 @@ export default function PlayersCardFull({ playerDetails, closeModal }) {
             <div className="absolute bg-black opacity-50" />
 
             {/* Close Icon */}
-            <Icon icon="XCircleIcon" className="absolute right-8 top-6" size={7} onClick={closeModal} />
+            <Icon icon="XCircleIcon" className="absolute right-8 top-6 z-50 text-white" size={10} onClick={closeModal} />
 
             {/* Modal Body */}
             <div className="absolute grid w-full grid-cols-8 items-end p-5 px-20 text-white">
@@ -73,8 +73,8 @@ export default function PlayersCardFull({ playerDetails, closeModal }) {
                         </tr>
                     </table>
                 </section>
-                <div className="absolute bottom-2 ml-[5%] h-1 w-[90%] shadow-[0_-5px_20px_#fff]" />
-                <div className="absolute bottom-2 ml-[5%] h-1 w-[90%] shadow-[0_-5px_20px_#fff]" />
+                <div className="absolute bottom-2 ml-[5%] h-1 w-[90%] rounded-full bg-white opacity-75 shadow-[0_-5px_20px_#fff]" />
+                <div className="absolute bottom-2 ml-[5%] h-1 w-[90%] rounded-full bg-white opacity-75 shadow-[0_-5px_20px_#fff]" />
             </div>
         </div>
     );

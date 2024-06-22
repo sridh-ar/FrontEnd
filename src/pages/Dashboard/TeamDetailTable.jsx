@@ -3,7 +3,7 @@ import { TEAM_TABLE_ROWS } from '../../utils/constants';
 
 export default function TeamDetailScreen({ playersData = [], closeFunction }) {
     return (
-        <div className="h-[91%] w-full bg-[#d4dced] p-5">
+        <>
             <div className="relative z-10 mb-[0.5px] flex h-[10%] items-center gap-10 rounded-t-3xl bg-white px-8 text-lg font-semibold italic text-[#aab4c3] shadow">
                 <Button title="Close" className="absolute right-10 w-32 scale-75 bg-black text-white" onClick={closeFunction} />
                 <p>
@@ -33,6 +33,6 @@ export default function TeamDetailScreen({ playersData = [], closeFunction }) {
                     </div>
                 ))}
             </div>
-        </div>
+        </>
     );
 }
