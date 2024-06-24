@@ -61,6 +61,7 @@ export default function NewTeamModal({ closeFunction }) {
             toast.success('Team Added  Successfully', { duration: 5000 });
             setIsLoading(false);
             closeFunction();
+            window.location.reload();
         } catch (error) {
             console.log('[NewTeam.jsx] Error - ', error.stack);
             toast.error('Unable to add New Team.');

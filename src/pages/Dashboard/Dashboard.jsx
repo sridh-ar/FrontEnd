@@ -101,7 +101,7 @@ export default function Dashboard() {
                 {/* Table Body */}
                 <div className="h-[91%] w-full bg-[#d4dced] p-5">
                     {/* Loading Screen */}
-                    {isTableLoading && <LoadingScreen className="h-[102%] w-full rounded-3xl bg-white" />}
+                    {isTableLoading && <LoadingScreen className="h-[103%] w-full rounded-3xl bg-white" />}
 
                     {/* Team Table */}
                     {!(openSeletedTeam || isTableLoading) && (
