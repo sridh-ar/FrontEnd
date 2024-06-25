@@ -47,9 +47,9 @@ export default function PlayerDashboard() {
         }
     }
 
-    if (selectedPlayer) {
-        return <PlayersCardFull playerDetails={filteredList.at(selectedPlayer)} closeModal={() => setselectedPlayer(null)} />;
-    }
+    // if (selectedPlayer) {
+    //     return <PlayersCardFull playerDetails={filteredList.at(selectedPlayer)} closeModal={() => setselectedPlayer(null)} />;
+    // }
     return (
         <SidebarContainer isLoading={isLoading}>
             <div className="h-full overflow-y-scroll">
@@ -77,6 +77,10 @@ export default function PlayerDashboard() {
                     })}
                 </div>
             </div>
+            {/* Player Full Screen */}
+            {selectedPlayer && (
+                <PlayersCardFull playerDetails={filteredList.at(selectedPlayer)} closeModal={() => setselectedPlayer(null)} />
+            )}
         </SidebarContainer>
     );
 }

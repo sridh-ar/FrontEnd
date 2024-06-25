@@ -10,7 +10,7 @@ export default function PlayersCardFull({ playerDetails, closeModal }) {
     const [isPlayerLoading, setPlayerLoading] = useState(true);
 
     return (
-        <div className="absolute flex h-screen w-screen items-end">
+        <div className="absolute left-0 top-0 z-50 flex h-screen w-screen items-end">
             {/* BG Image */}
             <img
                 src="/stadium_bg.jpg"

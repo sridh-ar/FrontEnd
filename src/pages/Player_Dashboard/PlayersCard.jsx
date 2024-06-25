@@ -23,14 +23,17 @@ export default function PlayersCard({ name, contact, role, team, image, id, from
     const [isButtonLoading, setIsButtonLoading] = useState(false);
 
     async function handleDelete() {
-        setIsButtonLoading(true);
-        try {
-            await fetchAPI(`/player/delete/${id}`, 'PUT');
-            window.location.reload();
-        } catch (error) {
-            toast.error('Unable to Delete the Player.');
+        const confirmation = confirm('Do you want to delete this player?');
+        if (confirmation) {
+            setIsButtonLoading(true);
+            try {
+                await fetchAPI(`/player/delete/${id}`, 'PUT');
+                window.location.reload();
+            } catch (error) {
+                toast.error('Unable to Delete the Player.');
+            }
+            setIsButtonLoading(false);
         }
-        setIsButtonLoading(false);
     }
 
     return (
