@@ -71,7 +71,7 @@ export default function PlayerDashboard() {
                                 handleApproved={() => setisLoading(true)}
                                 battingStyle={item.batting_style}
                                 bowlingStyle={item.bowling_style}
-                                onClick={() => setselectedPlayer(index)}
+                                onClick={() => setselectedPlayer(index.toString())}
                             />
                         );
                     })}
