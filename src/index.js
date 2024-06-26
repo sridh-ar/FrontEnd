@@ -18,6 +18,7 @@ import ThanksPage from './pages/Player_Registeration/Thanks';
 import { Toaster } from 'react-hot-toast';
 import AdminMenu from './pages/Admin/AdminDashboard';
 import PlayerDashboard from './pages/Player_Dashboard/PlayerDashboard';
+import SignIn from './pages/Sign_In/SignIn';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -38,6 +39,7 @@ root.render(
                     <Route path="dashboard" Component={Dashboard} />
                     <Route path="admin" Component={AdminMenu} />
                     <Route path="players" Component={PlayerDashboard} />
+                    <Route path="signin" Component={SignIn} />
                 </Routes>
             </BrowserRouter>
             <Toaster />
