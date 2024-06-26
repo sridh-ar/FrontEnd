@@ -1,16 +1,21 @@
-import { XMarkIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from '../../commonComponents/Icon';
-// import { Meteors } from "./ui/meteors";
-// import { Button } from "./ui/moving-border";
+import LoadingScreen from '../../commonComponents/LoadingScreen';
 
 export default function PlayersCardFull({ playerDetails, closeModal }) {
     const { name, id, player_role, team_name, batting_style, bowling_style, area, player_photo } = playerDetails;
-    const [isBgLoading, setBgLoading] = useState(true);
-    const [isPlayerLoading, setPlayerLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 800);
+    }, []);
 
     return (
         <div className="absolute left-0 top-0 z-50 flex h-screen w-screen items-end">
+            {/* Loading Logo */}
+            {isLoading && <LoadingScreen className="absolute z-[100] bg-white" />}
+
             {/* BG Image */}
             <img
                 src="/stadium_bg.jpg"
