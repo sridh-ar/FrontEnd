@@ -1,8 +1,12 @@
+import { useState } from 'react';
+import ProfileDropdown from '../pages/Dashboard/ProfileDropdown';
 import { SIDEBAR_MENUS } from '../utils/constants';
 import Icon from './Icon';
 import LoadingScreen from './LoadingScreen';
+import { set } from 'lodash';
 
 export default function SidebarContainer({ children, isLoading = true }) {
+    const [openUserModal, setOpenUserModal] = useState(false);
     let menuName = '';
     const url = window.location.href.toLowerCase();
 
@@ -35,7 +39,7 @@ export default function SidebarContainer({ children, isLoading = true }) {
                 </div>
 
                 {/* Account */}
-                <Icon icon="ArrowLeftStartOnRectangleIcon" className="text-[#aab4c3]" size={6} />
+                <div />
             </section>
 
             {/* Container */}
@@ -43,7 +47,16 @@ export default function SidebarContainer({ children, isLoading = true }) {
                 {/* NavBar */}
                 <nav className="ml-3 flex h-[9%] items-center justify-between px-5">
                     <p className="font-semibold tracking-wider">{menuName} Menu</p>
-                    <Icon icon="UserCircleIcon" size={8} />
+                    {/* User Profile */}
+                    <div className="relative right-5">
+                        <img
+                            src="/profile.jpg"
+                            alt=""
+                            className="w-10 cursor-pointer rounded-full"
+                            onClick={() => setOpenUserModal(!openUserModal)}
+                        />
+                        {openUserModal && <ProfileDropdown />}
+                    </div>
                 </nav>
 
                 {/* Component */}

@@ -121,7 +121,7 @@ export default function Dashboard() {
                 {!openSeletedTeam && (
                     <Button
                         title="New Team"
-                        className="absolute right-14 top-3 h-7 rounded-lg bg-slate-300 text-xs"
+                        className="absolute right-14 top-3 text-xs text-white shadow"
                         onClick={() => setOpenNewTeamModel(true)}
                     />
                 )}
