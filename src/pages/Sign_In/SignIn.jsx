@@ -1,25 +1,29 @@
 import { EnvelopeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
+import { fetchAPI } from '../../utils/commonServices';
+import toast from 'react-hot-toast';
+import Button from '../../commonComponents/Button';
+import { useState } from 'react';
 
 export default function SignIn() {
+    const [buttonLoading, setButtonLoading] = useState(false);
     async function handleSubmit(event) {
+        setButtonLoading(true);
         event.preventDefault();
-        // let values = [];
-        // for (let i = 0; i < 2; i++) {
-        //     values.push(event.target[i].value);
-        // }
-        // fetch('/api/auth', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(values),
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         localStorage.setItem('aauutthh', data);
-        //         router.push('/Dashboard');
-        //     })
-        //     .catch((error) => console.error(error));
+        const payload = {
+            email: event.target[0].value,
+            password: event.target[1].value,
+        };
+
+        try {
+            const authResponse = await fetchAPI('/auth/login', 'POST', payload);
+            localStorage.setItem('token', authResponse);
+            window.location.href = '/dashboard';
+        } catch (error) {
+            toast.error(error.message);
+            console.error('[SignIn.jsx][HandleSubmit] Error - ', error.message);
+        } finally {
+            setButtonLoading(false);
+        }
     }
 
     return (
@@ -36,18 +40,28 @@ export default function SignIn() {
                     {/* Email */}
                     <div className="m-2 flex w-full items-center justify-center rounded-full bg-gray-200 p-2 px-4">
                         <EnvelopeIcon height={20} width={20} />
-                        <input type="email" required placeholder="Email" className="mx-2 w-full bg-gray-200 text-sm outline-0" />
+                        <input
+                            type="email"
+                            name="email"
+                            required
+                            placeholder="Email"
+                            className="mx-2 w-full bg-gray-200 text-sm outline-0"
+                        />
                     </div>
 
                     {/* Password */}
                     <div className="m-2 flex w-full items-center justify-center rounded-full bg-gray-200 p-2 px-4">
                         <EyeSlashIcon height={20} width={20} />
-                        <input type="password" required placeholder="Password" className="mx-2 w-full bg-gray-200 text-sm outline-0" />
+                        <input
+                            type="password"
+                            name="password"
+                            required
+                            placeholder="Password"
+                            className="mx-2 w-full bg-gray-200 text-sm outline-0"
+                        />
                     </div>
 
-                    <button type="submit" required className="m-2 mx-2 w-full rounded-full bg-green-400 p-1 px-4 text-sm">
-                        Login
-                    </button>
+                    <Button title="Login" className="h-7 w-full rounded-full bg-green-400" type="submit" isLoading={buttonLoading} />
                 </div>
             </form>
         </div>
