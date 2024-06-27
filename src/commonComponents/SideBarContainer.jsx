@@ -34,7 +34,7 @@ export default function SidebarContainer({ children, isLoading = true }) {
                 {/* Logo */}
                 <div></div>
                 <div className="absolute left-2 top-3 h-12 w-16">
-                    {/* <img src="/cup.png" alt="Next.js Logo" className="object-cover" /> */}
+                    {/* <img src="/logo.svg" alt="Next.js Logo" className="object-cover" /> */}
                     <svg
                         width="50px"
                         height="50px"
