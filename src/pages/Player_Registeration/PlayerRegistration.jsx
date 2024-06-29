@@ -10,6 +10,7 @@ import Input from '../../commonComponents/Input';
 import Button from '../../commonComponents/Button';
 import Icon from '../../commonComponents/Icon';
 import { fetchAPI } from '../../utils/commonServices';
+import toast from 'react-hot-toast';
 
 export default function PlayerRegistration() {
     // States
@@ -42,14 +43,20 @@ export default function PlayerRegistration() {
         if (name == 'player_photo') {
             setisUploading(true);
             let imageResult = e.target.files[0];
-            const storage = getStorage(firebaseApp);
-            const imageRef = ref(storage, `kpl/Player_${Math.floor(Math.random() * 90000) + 10000}`);
-            await uploadBytes(imageRef, imageResult).then(async (res) => {
-                await getDownloadURL(res.ref).then((res) => {
-                    value = res;
-                    setisUploading(false);
+            if (imageResult && ['jpg', 'jpeg', 'png'].includes(imageResult.name.split('.').pop())) {
+                const storage = getStorage(firebaseApp);
+                const imageRef = ref(storage, `kpl/Player_${Math.floor(Math.random() * 90000) + 10000}`);
+                await uploadBytes(imageRef, imageResult).then(async (res) => {
+                    await getDownloadURL(res.ref).then((res) => {
+                        value = res;
+                        setisUploading(false);
+                    });
                 });
-            });
+            } else {
+                toast.error('Please upload image in jpg, jpeg, png formats');
+                setisUploading(false);
+                return;
+            }
         }
 
         setPlayerData({
