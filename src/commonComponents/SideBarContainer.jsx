@@ -5,6 +5,9 @@ import Icon from './Icon';
 import LoadingScreen from './LoadingScreen';
 import { set } from 'lodash';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { animations } from '../utils/animationConstant';
 
 export default function SidebarContainer({ children, isLoading = true }) {
     const [openUserModal, setOpenUserModal] = useState(false);
@@ -36,8 +39,8 @@ export default function SidebarContainer({ children, isLoading = true }) {
                 <div className="absolute left-2 top-3 h-12 w-16">
                     {/* <img src="/logo.svg" alt="Next.js Logo" className="object-cover" /> */}
                     <svg
-                        width="50px"
-                        height="50px"
+                        width="40px"
+                        height="40px"
                         viewBox="-2.45 0 2452.5 2452.5"
                         enable-background="new 0 0 2447.6 2452.5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -76,14 +79,14 @@ export default function SidebarContainer({ children, isLoading = true }) {
                         const isActive = url.includes(item.name.toLowerCase());
                         menuName = isActive ? item.name : menuName;
                         return (
-                            <button
+                            <Link
                                 className={`flex justify-center border-l-2 text-gray-400 ${isActive ? 'border-[#8ccc45]' : ''}`}
-                                onClick={() => (window.location.href = `/${item.name.toLowerCase()}`)}
+                                to={{ pathname: `/${item.name.toLowerCase()}` }}
                                 disabled={isActive}
                                 key={index}
                             >
                                 <Icon icon={item.icon} size={6} className={isActive ? 'text-[#8ccc45]' : 'text-[#aab4c3]'} />
-                            </button>
+                            </Link>
                         );
                     })}
                 </div>
@@ -96,15 +99,21 @@ export default function SidebarContainer({ children, isLoading = true }) {
             <section className="w-full bg-white">
                 {/* NavBar */}
                 <nav className="ml-3 flex h-[9%] items-center justify-between px-5">
-                    <p className="font-semibold tracking-wider">{menuName} Menu</p>
+                    <motion.p
+                        className="font-semibold tracking-wider"
+                        initial="hidden"
+                        animate="visible"
+                        variants={animations.titleAnimation}
+                    >
+                        {menuName} Menu
+                    </motion.p>
                     {/* User Profile */}
-                    <div className="relative right-5">
-                        <img
-                            src="/profile.jpg"
-                            alt=""
-                            className="w-10 cursor-pointer rounded-full"
-                            onClick={() => setOpenUserModal(!openUserModal)}
-                        />
+                    <div
+                        className="relative right-5 p-1"
+                        onMouseEnter={() => setOpenUserModal(!openUserModal)}
+                        onMouseLeave={() => setOpenUserModal(!openUserModal)}
+                    >
+                        <img src="/profile.jpg" alt="" className="w-10 cursor-pointer rounded-full" />
                         {openUserModal && <ProfileDropdown />}
                     </div>
                 </nav>

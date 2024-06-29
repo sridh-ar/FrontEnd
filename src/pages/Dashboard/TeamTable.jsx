@@ -1,23 +1,35 @@
 import Icon from '../../commonComponents/Icon';
+import { animations } from '../../utils/animationConstant';
 import { TEAM_DASHBOARD_ROWS } from '../../utils/constants';
+import { motion } from 'framer-motion';
 
 export default function TeamTable({ tableData = [], openTeamDetails, handleNewTeamPlayer, handleTeamDelete }) {
     return (
         <>
-            <div className="relative z-10 grid h-[10%] grid-cols-8 items-center rounded-t-3xl bg-white text-center text-sm shadow">
+            <div className="relative z-10 grid h-[10%] grid-cols-9 items-center rounded-t-3xl bg-white text-center text-sm shadow">
                 {TEAM_DASHBOARD_ROWS.map((row) => (
-                    <span className="py-3 font-normal tracking-wider text-[#aab4c3]">{row}</span>
+                    <span className={`py-3 font-normal tracking-wider text-[#aab4c3] ${row == 'Team Name' ? 'col-span-2' : ''} `}>
+                        {row}
+                    </span>
                 ))}
                 <span className="absolute bottom-0 right-0 h-[0.5px] w-full bg-slate-200" />
             </div>
-            <div className="h-[92%] overflow-y-scroll rounded-b-3xl bg-white text-center text-sm">
+            <motion.div
+                className="no-scrollbar h-[92%] overflow-y-scroll rounded-b-3xl bg-white text-center text-sm"
+                initial="hidden"
+                animate="visible"
+                transition={{ staggerChildren: 0.1 }}
+            >
                 {tableData.map((item, index) => (
-                    <div className="relative grid h-10 grid-cols-8 items-center text-center text-sm" key={index}>
-                        <span className="relative flex cursor-pointer items-center justify-center" onClick={() => openTeamDetails(item.id)}>
-                            {item.team_name && <img src={item.team_photo} className="mr-2 h-8 w-8 rounded" />}
-                            {item.team_name.slice(0, 15)}
+                    <motion.div
+                        className="relative grid h-10 grid-cols-9 items-center text-center text-sm"
+                        key={index}
+                        variants={animations.opacityAnimation}
+                    >
+                        <span className="col-span-2 flex cursor-pointer items-center gap-4 px-10" onClick={() => openTeamDetails(item.id)}>
+                            <img src={item.team_photo} className="h-8 w-8 rounded" />
+                            {item.team_name}
                         </span>
-
                         <span> {item.captain.length > 15 ? `${item.captain.slice(0, 15)}...` : item.captain} </span>
                         <span> {item.owner.length > 10 ? `${item.owner.slice(0, 10)}...` : item.owner} </span>
                         <span>{item.slots}</span>
@@ -30,9 +42,9 @@ export default function TeamTable({ tableData = [], openTeamDetails, handleNewTe
                             <Icon icon="TrashIcon" className="fill-red-700" onClick={() => handleTeamDelete(item.id)} />
                         </span>
                         <span className="absolute bottom-0 right-0 h-[0.5px] w-full bg-slate-200" />
-                    </div>
+                    </motion.div>
                 ))}
-            </div>
+            </motion.div>
         </>
     );
 }

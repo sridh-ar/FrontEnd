@@ -1,4 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
+import { motion } from 'framer-motion';
+import { animations } from '../../utils/animationConstant';
 
 export default function ProfileDropdown() {
     const token = localStorage.getItem('token') || '';
@@ -9,7 +11,12 @@ export default function ProfileDropdown() {
         window.location.replace('/signin');
     }
     return (
-        <main className="absolute right-0 top-11 z-50 divide-y-[1px] rounded-lg bg-white text-sm shadow">
+        <motion.main
+            className="absolute right-0 top-11 z-50 min-w-48 divide-y-[1px] rounded-lg bg-white text-sm shadow"
+            initial="hidden"
+            animate="visible"
+            variants={animations.profileDropdown}
+        >
             <section className="p-4">
                 <p className="my-1 px-2 capitalize">{userDetail.name}</p>
                 <p className="px-2 text-xs lowercase">{userDetail.email}</p>
@@ -20,6 +27,6 @@ export default function ProfileDropdown() {
                     Sign Out
                 </p>
             </section>
-        </main>
+        </motion.main>
     );
 }

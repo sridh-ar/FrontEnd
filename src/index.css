@@ -13,8 +13,11 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
 /* Customize the scrollbar track, thumb, and buttons */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
     overflow: hidden;
