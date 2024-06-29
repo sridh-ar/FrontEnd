@@ -105,7 +105,7 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
                             {/* Player Detail Modal */}
                             {input.name == 'player_no' && playerData && (
                                 <div
-                                    className="absolute -bottom-16 right-0 z-50 w-[99%] cursor-pointer rounded bg-white p-2 text-sm shadow ring-1 ring-gray-200"
+                                    className="absolute bottom-[-100px] right-0 z-50 flex w-[99%] cursor-pointer items-center gap-4 rounded bg-white p-2 text-sm shadow ring-1 ring-gray-200 hover:bg-slate-200"
                                     onClick={() => {
                                         setTeamPlayerData({
                                             ...teamPlayerData,
@@ -115,11 +115,17 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
                                         setPlayerData(null);
                                     }}
                                 >
-                                    <b>Name: </b>
-                                    {playerData.name}
-                                    <br />
-                                    <b>Player Role: </b>
-                                    {playerData.player_role}
+                                    <img src={playerData.player_photo} alt="playerPhoto" className="h-20 w-20 rounded-xl object-contain" />
+                                    <span>
+                                        <b>Name: </b>
+                                        {playerData.name}
+                                        <br />
+                                        <b>Area: </b>
+                                        {playerData.area}
+                                        <br />
+                                        <b>Player Role: </b>
+                                        {playerData.player_role}
+                                    </span>
                                 </div>
                             )}
                         </div>
