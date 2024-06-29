@@ -15,4 +15,8 @@ export const animations = {
         hidden: { opacity: 0 },
         visible: { opacity: 1 },
     },
+    signInAnimation: {
+        hidden: { opacity: 0, scale: 0 },
+        visible: { opacity: 1, scale: 1 },
+    },
 };

@@ -3,6 +3,8 @@ import { fetchAPI } from '../../utils/commonServices';
 import toast from 'react-hot-toast';
 import Button from '../../commonComponents/Button';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { animations } from '../../utils/animationConstant';
 
 export default function SignIn() {
     const [buttonLoading, setButtonLoading] = useState(false);
@@ -28,17 +30,20 @@ export default function SignIn() {
 
     return (
         <div className="flex h-screen items-center justify-center bg-slate-300">
-            <form
+            <motion.form
                 className="flex w-[80%] flex-col items-center justify-center rounded-lg bg-white p-2 lg:w-[50%] lg:flex-row"
                 onSubmit={handleSubmit}
+                initial="hidden"
+                animate="visible"
+                variants={animations.signInAnimation}
             >
-                <img src="/login_logo.jpg" className="w-[50%]" />
+                <img src="/login_logo.jpg" />
 
-                <div className="flex flex-col items-center justify-center">
-                    <p className="m-5 text-lg font-semibold">Administrator Login</p>
+                <div className="flex flex-col items-center justify-center gap-4">
+                    <p className="text-lg font-semibold">👩‍🚀 Administrator Login</p>
 
                     {/* Email */}
-                    <div className="m-2 flex w-full items-center justify-center rounded-full bg-gray-200 p-2 px-4">
+                    <div className="flex w-full items-center justify-center rounded-full bg-gray-200 p-2 px-4">
                         <EnvelopeIcon height={20} width={20} />
                         <input
                             type="email"
@@ -50,7 +55,7 @@ export default function SignIn() {
                     </div>
 
                     {/* Password */}
-                    <div className="m-2 flex w-full items-center justify-center rounded-full bg-gray-200 p-2 px-4">
+                    <div className="flex w-full items-center justify-center rounded-full bg-gray-200 p-2 px-4">
                         <EyeSlashIcon height={20} width={20} />
                         <input
                             type="password"
@@ -63,7 +68,7 @@ export default function SignIn() {
 
                     <Button title="Login" className="h-7 w-full rounded-full bg-green-400" type="submit" isLoading={buttonLoading} />
                 </div>
-            </form>
+            </motion.form>
         </div>
     );
 }

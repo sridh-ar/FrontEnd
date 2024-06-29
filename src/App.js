@@ -9,16 +9,8 @@ import Button from './commonComponents/Button';
 
 export default function Home() {
     // States
-    const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [configValues, setconfigValues] = useState({});
-
-    async function validateUser() {
-        // const res = await validateToken();
-        // if (res)
-        setLoggedIn(true);
-        // else setLoggedIn(false);
-    }
 
     async function initialDataRetrival() {
         const dashBaoardResult = await fetchAPI('/admin/dashboard');
@@ -37,7 +29,6 @@ export default function Home() {
     }
 
     useEffect(() => {
-        validateUser();
         initialDataRetrival();
     }, []);
 
@@ -55,7 +46,7 @@ export default function Home() {
             {/* Body */}
             <div className="flex h-2/3 flex-col items-center justify-center">
                 {/* Logo Image */}
-                <a href={loggedIn ? '/Dashboard' : '/signin'}>
+                <a href="/Dashboard">
                     <img className="relative m-5 outline-none" src={configValues.logo} alt="Next.js Logo" width={250} height={250} />
                 </a>
 
