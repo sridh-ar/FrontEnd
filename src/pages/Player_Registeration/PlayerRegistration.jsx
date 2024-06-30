@@ -43,7 +43,7 @@ export default function PlayerRegistration() {
         if (name == 'player_photo') {
             setisUploading(true);
             let imageResult = e.target.files[0];
-            if (imageResult && ['jpg', 'jpeg', 'png'].includes(imageResult.name.split('.').pop())) {
+            if (imageResult && ['jpg', 'jpeg', 'png'].includes(imageResult.type.split('/').pop())) {
                 const storage = getStorage(firebaseApp);
                 const imageRef = ref(storage, `kpl/Player_${Math.floor(Math.random() * 90000) + 10000}`);
                 await uploadBytes(imageRef, imageResult).then(async (res) => {
