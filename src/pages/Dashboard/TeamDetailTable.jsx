@@ -2,13 +2,22 @@ import Button from '../../commonComponents/Button';
 import { animations } from '../../utils/animationConstant';
 import { TEAM_TABLE_ROWS } from '../../utils/constants';
 import { motion } from 'framer-motion';
+import TeamImage from './TeamImage';
+import { useState } from 'react';
 
 export default function TeamDetailScreen({ playersData = [], closeFunction }) {
+    const [openTeamImage, setOpenTeamImage] = useState(false);
     return (
         <>
             <div className="relative z-10 mb-[0.5px] flex h-[10%] items-center gap-10 rounded-t-3xl bg-white px-8 text-lg font-semibold italic text-[#aab4c3] shadow">
                 {/* Close Button */}
                 <Button title="Back to Teams 🎯" className="absolute right-10 scale-75 bg-black text-white" onClick={closeFunction} />
+                {/* Download Button */}
+                <Button
+                    title="Download Team Image 📷"
+                    className="absolute right-48 scale-75 bg-slate-300 text-black"
+                    onClick={() => setOpenTeamImage(true)}
+                />
 
                 {/* Heading */}
                 <p>
@@ -50,6 +59,7 @@ export default function TeamDetailScreen({ playersData = [], closeFunction }) {
                     </motion.div>
                 ))}
             </motion.div>
+            {openTeamImage && <TeamImage teamData={playersData} closeModal={() => setOpenTeamImage(false)} />}
         </>
     );
 }
