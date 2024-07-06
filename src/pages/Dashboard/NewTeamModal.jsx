@@ -6,7 +6,7 @@ import LoadingScreen from '../../commonComponents/LoadingScreen';
 import { newTeam } from '../../utils/constants';
 import Input from '../../commonComponents/Input';
 import Button from '../../commonComponents/Button';
-import { fetchAPI } from '../../utils/commonServices';
+import { fetchAPI, uploadToGit } from '../../utils/commonServices';
 import toast from 'react-hot-toast';
 import Icon from '../../commonComponents/Icon';
 import ModalWrapper from '../../commonComponents/ModalWrapper';
@@ -36,14 +36,23 @@ export default function NewTeamModal({ closeFunction }) {
         if (['team_photo', 'owner_photo', 'captain_photo'].includes(name)) {
             setIsImageUploading(true);
             let imageResult = e.target.files[0];
-            const storage = getStorage(firebaseApp);
-            const imageRef = ref(storage, `kpl/Team_${Math.floor(Math.random() * 90000) + 10000}`);
-            await uploadBytes(imageRef, imageResult).then(async (res) => {
-                await getDownloadURL(res.ref).then((res) => {
-                    value = res;
-                    setIsImageUploading(false);
-                });
-            });
+            // const storage = getStorage(firebaseApp);
+            // const imageRef = ref(storage, `kpl/Team_${Math.floor(Math.random() * 90000) + 10000}`);
+            // await uploadBytes(imageRef, imageResult).then(async (res) => {
+            //     await getDownloadURL(res.ref).then((res) => {
+            //         value = res;
+            //         setIsImageUploading(false);
+            //     });
+            // });
+            const imageName = `Team_${Math.floor(Math.random() * 90000) + 10000}.jpg`;
+            value = `https://github.com/sridh-ar/Images/blob/main/${imageName}?raw=true`;
+
+            let reader = new FileReader();
+            reader.readAsDataURL(imageResult);
+            reader.onload = async () => {
+                await uploadToGit(imageName, reader.result);
+                setIsImageUploading(false);
+            };
         }
 
         setteamData({

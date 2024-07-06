@@ -9,7 +9,7 @@ import LoadingScreen from '../../commonComponents/LoadingScreen';
 import Input from '../../commonComponents/Input';
 import Button from '../../commonComponents/Button';
 import Icon from '../../commonComponents/Icon';
-import { fetchAPI } from '../../utils/commonServices';
+import { fetchAPI, uploadToGit } from '../../utils/commonServices';
 import toast from 'react-hot-toast';
 
 export default function PlayerRegistration() {
@@ -44,14 +44,23 @@ export default function PlayerRegistration() {
             setisUploading(true);
             let imageResult = e.target.files[0];
             if (imageResult && ['jpg', 'jpeg', 'png'].includes(imageResult.type.split('/').pop())) {
-                const storage = getStorage(firebaseApp);
-                const imageRef = ref(storage, `kpl/Player_${Math.floor(Math.random() * 90000) + 10000}`);
-                await uploadBytes(imageRef, imageResult).then(async (res) => {
-                    await getDownloadURL(res.ref).then((res) => {
-                        value = res;
-                        setisUploading(false);
-                    });
-                });
+                // const storage = getStorage(firebaseApp);
+                // const imageRef = ref(storage, `kpl/Player_${Math.floor(Math.random() * 90000) + 10000}`);
+                // await uploadBytes(imageRef, imageResult).then(async (res) => {
+                //     await getDownloadURL(res.ref).then((res) => {
+                //         value = res;
+                //         setisUploading(false);
+                //     });
+                // });
+                const imageName = `Player_${Math.floor(Math.random() * 90000) + 10000}.jpg`;
+                value = `https://github.com/sridh-ar/Images/blob/main/${imageName}?raw=true`;
+
+                let reader = new FileReader();
+                reader.readAsDataURL(imageResult);
+                reader.onload = async () => {
+                    await uploadToGit(imageName, reader.result);
+                    setisUploading(false);
+                };
             } else {
                 toast.error('Please upload image in jpg, jpeg, png formats');
                 setisUploading(false);

@@ -1,12 +1,13 @@
 const URL = process.env.BACKEND_URL || 'https://leaguebackend-sridhars-projects-ef3aeec5.vercel.app';
 // const URL = process.env.BACKEND_URL || 'https://didactic-space-broccoli-r67q5wg55w5fp9q-3001.app.github.dev'
 
-async function fetchAPI(url = '', method = 'GET', body = {}) {
+async function fetchAPI(url = '', method = 'GET', body = {}, headers = {}, rawUrl = false) {
     try {
-        let apiResult = await fetch(`${URL}${url}`, {
+        let apiResult = await fetch(rawUrl ? `${url}` : `${URL}${url}`, {
             method: method,
             headers: {
                 'Content-Type': 'application/json',
+                ...headers,
             },
             // If method is != get no need to send body
             ...(method !== 'GET' ? { body: JSON.stringify(body) } : {}),
@@ -23,4 +24,29 @@ async function fetchAPI(url = '', method = 'GET', body = {}) {
     }
 }
 
-module.exports = { fetchAPI };
+async function uploadToGit(imageName, imageUrl) {
+    const token = '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';
+    const repoName = 'Images';
+
+    try {
+        await fetchAPI(
+            `https://api.github.com/repos/sridh-ar/${repoName}/contents/${imageName}`,
+            'PUT',
+            {
+                message: 'Add image',
+                content: imageUrl.split('base64,')[1],
+            },
+            {
+                Authorization: `Bearer ${token}`,
+            },
+            true,
+        );
+        console.log('Image uploaded successfully!');
+        return true;
+    } catch (error) {
+        toast.error(error.message);
+        return false;
+    }
+}
+
+module.exports = { fetchAPI, uploadToGit };
