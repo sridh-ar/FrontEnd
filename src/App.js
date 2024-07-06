@@ -59,7 +59,9 @@ export default function Home() {
                     />
 
                     {/* Remaining Slots */}
-                    <span className="mt-3 text-xs tracking-wide text-orange-700">Remaininig Slots - {configValues.remainingSlots}</span>
+                    <span className="mt-3 text-xs tracking-wide text-orange-700">
+                        Remaining Slots - {configValues.remainingSlots > 0 ? configValues.remainingSlots : 0}
+                    </span>
                 </div>
             </div>
 
