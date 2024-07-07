@@ -12,28 +12,30 @@ import Icon from '../../commonComponents/Icon';
 import { fetchAPI, uploadToGit } from '../../utils/commonServices';
 import toast from 'react-hot-toast';
 
-export default function PlayerRegistration() {
+export default function PlayerRegistration({ editData, closeModal }) {
     // States
     const [isLoading, setisLoading] = useState(true);
     const [isTermAccepted, setisTermAccepted] = useState(false);
     const [isUploading, setisUploading] = useState(false);
 
-    const [playerData, setPlayerData] = useState({
-        name: '',
-        dob: '',
-        age: '',
-        contact_number: '',
-        team_name: '',
-        area: '',
-        jersey_name: '',
-        jersey_no: '',
-        jersey_size: 'Small',
-        player_photo: '',
-        player_role: 'All Rounder',
-        batting_style: 'N/A',
-        bowling_style: 'N/A',
-        approved: false,
-    });
+    const [playerData, setPlayerData] = useState(
+        editData || {
+            name: '',
+            dob: '',
+            age: '',
+            contact_number: '',
+            team_name: '',
+            area: '',
+            jersey_name: '',
+            jersey_no: '',
+            jersey_size: 'Small',
+            player_photo: '',
+            player_role: 'All Rounder',
+            batting_style: 'N/A',
+            bowling_style: 'N/A',
+            approved: false,
+        },
+    );
 
     // Function to handle changes in input fields
     const handleInputChange = async (e) => {
@@ -80,13 +82,23 @@ export default function PlayerRegistration() {
         localStorage.removeItem('playerData');
 
         try {
-            await fetchAPI('/player/create', 'POST', playerData);
-            localStorage.setItem('playerData', JSON.stringify(playerData));
-            setisLoading(false);
-            window.location.replace('/thanks');
+            fetchAPI('/player/createorupdate', 'POST', playerData).then((data) => {
+                localStorage.setItem('playerData', JSON.stringify(playerData));
+                setisLoading(false);
+                if (editData) {
+                    closeModal();
+                    window.location.reload();
+                } else {
+                    window.location.replace('/thanks');
+                }
+            });
         } catch (error) {
             alert(error.message);
-            window.location.replace('/');
+            if (editData) {
+                window.location.reload();
+            } else {
+                window.location.replace('/');
+            }
         }
     };
 
@@ -95,18 +107,16 @@ export default function PlayerRegistration() {
     }, []);
 
     if (isLoading) {
-        return (
-            <div className="h-screen w-screen">
-                <LoadingScreen />
-            </div>
-        );
+        return <LoadingScreen className="absolute z-[100] bg-white" />;
     }
 
     return (
         <div className="bg-gray-200 p-3">
             <div className="flex w-full flex-col items-center rounded-xl bg-white p-2 py-4">
                 {/* Actual Form Body */}
-                <p className="my-3 text-lg font-semibold tracking-wider">🎭 Player Registration</p>
+                <p className="my-3 text-lg font-semibold tracking-wider">
+                    {editData ? '📝 Edit Player Details' : `🎭 Player Registration`}
+                </p>
                 <form className="grid w-full grid-cols-2 gap-3 p-5" onSubmit={handleSubmit}>
                     {/* Inputs */}
                     {registration.inputColumns.map((input, index) => (
@@ -127,7 +137,7 @@ export default function PlayerRegistration() {
                         type="file"
                         label="Player Photo"
                         idName="player_photo"
-                        required
+                        required={!editData}
                         onChange={handleInputChange}
                         fileName={playerData.player_photo ? 'Uploaded!' : 'Choose a File'}
                     />
@@ -152,41 +162,47 @@ export default function PlayerRegistration() {
                     ))}
 
                     {/* Terms & Conditions */}
-                    <div className="col-span-2 flex w-full flex-col text-sm">
-                        <h3 className="font-bold">Terms & Conditions:</h3>
-                        <ol className="relative left-10 my-3 w-[90%] list-disc break-words sm:w-full">
-                            <li>Player Registration Amount is Rs.111/-</li>
-                            <li>Players Should be available for the whole tournament</li>
-                            <li>
-                                If the players not available without any valid reason, player cannot participate in the tournament for the
-                                next 2 seasons
-                            </li>
-                            <li>If the player Gets caught for chucking he cannot bowl for the Rest of the tournament</li>
-                        </ol>
+                    {!editData && (
+                        <div className="col-span-2 flex w-full flex-col text-sm">
+                            <h3 className="font-bold">Terms & Conditions:</h3>
+                            <ol className="relative left-10 my-3 w-[90%] list-disc break-words sm:w-full">
+                                <li>Player Registration Amount is Rs.111/-</li>
+                                <li>Players Should be available for the whole tournament</li>
+                                <li>
+                                    If the players not available without any valid reason, player cannot participate in the tournament for
+                                    the next 2 seasons
+                                </li>
+                                <li>If the player Gets caught for chucking he cannot bowl for the Rest of the tournament</li>
+                            </ol>
 
-                        {/* Terms Checkbox */}
-                        <div className="mb-5 flex items-center">
-                            <input
-                                id="terms"
-                                type="checkbox"
-                                checked={isTermAccepted}
-                                className="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300"
-                                required
-                                onChange={() => setisTermAccepted(!isTermAccepted)}
-                            />
-                            <label htmlFor="terms" className="ml-2 ms-2 text-sm font-medium text-gray-900">
-                                I agree with the{' '}
-                                <a href="/terms" className="text-blue-600 hover:underline">
-                                    terms and conditions
-                                </a>
-                            </label>
+                            {/* Terms Checkbox */}
+                            <div className="mb-5 flex items-center">
+                                <input
+                                    id="terms"
+                                    type="checkbox"
+                                    checked={isTermAccepted}
+                                    className="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300"
+                                    required
+                                    onChange={() => setisTermAccepted(!isTermAccepted)}
+                                />
+                                <label htmlFor="terms" className="ml-2 ms-2 text-sm font-medium text-gray-900">
+                                    I agree with the{' '}
+                                    <a href="/terms" className="text-blue-600 hover:underline">
+                                        terms and conditions
+                                    </a>
+                                </label>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Submit Button and cancel button */}
                     <div className="col-span-2 flex items-center justify-center gap-5">
                         <Button title="Submit" className="col-span-2 bg-black px-10 text-white" type="submit" isLoading={isUploading} />
-                        <Button title="Cancel" className="col-span-2 bg-gray-300 px-10 text-black" onClick={() => window.history.back()} />
+                        <Button
+                            title="Cancel"
+                            className="col-span-2 bg-gray-300 px-10 text-black"
+                            onClick={() => (editData ? closeModal() : window.history.back())}
+                        />
                     </div>
                 </form>
             </div>

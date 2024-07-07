@@ -72,6 +72,7 @@ export default function PlayerDashboard() {
                                 battingStyle={item.batting_style}
                                 bowlingStyle={item.bowling_style}
                                 onClick={() => setselectedPlayer(index.toString())}
+                                playerData={item}
                             />
                         );
                     })}

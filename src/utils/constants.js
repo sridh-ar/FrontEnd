@@ -7,8 +7,8 @@ export const registration = {
             required: true,
         },
         {
-            label: 'Date of Birth',
-            type: 'date',
+            label: 'Date of Birth (DD-MM-YYYY)',
+            type: 'text',
             name: 'dob',
             required: true,
         },
