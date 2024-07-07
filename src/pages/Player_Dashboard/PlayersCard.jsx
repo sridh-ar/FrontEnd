@@ -56,9 +56,10 @@ export default function PlayersCard({ name, contact, role, team, image, id, from
             {/* Delete Icon */}
             {!isButtonLoading ? (
                 <Icon
-                    icon="XCircleIcon"
-                    size={6}
-                    className={`absolute right-3 top-3 fill-gray-400 ${fromRegisterMenu ? 'hidden' : ''}`}
+                    icon="ArchiveBoxXMarkIcon"
+                    size={4}
+                    outline
+                    className={`absolute right-3 top-3 text-red-400 ${fromRegisterMenu ? 'hidden' : ''}`}
                     onClick={() => handleDelete()}
                 />
             ) : (

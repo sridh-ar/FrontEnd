@@ -16,6 +16,7 @@ import TeamTable from './TeamTable';
 export default function Dashboard() {
     // State variables initialization
     const [openNewTeamModel, setOpenNewTeamModel] = useState(false);
+    const [editTeam, setEditTeam] = useState(null);
     const [openNewTeamPlayer, setOpenNewTeamPlayer] = useState(false);
     const [teamData, setTeamData] = useState([]);
     const [selectedTeamForPlayer, setSelectedTeamForPlayer] = useState({});
@@ -110,6 +111,7 @@ export default function Dashboard() {
                             openTeamDetails={(team_id) => openSeletesTeam(team_id)}
                             handleNewTeamPlayer={handleNewTeamPlayer}
                             handleTeamDelete={handleTeamDelete}
+                            editTeamData={(data) => setEditTeam(data)}
                         />
                     )}
 
@@ -127,7 +129,15 @@ export default function Dashboard() {
                 )}
 
                 {/* Render new team modal */}
-                {openNewTeamModel && <NewTeamModal closeFunction={() => setOpenNewTeamModel(false)} />}
+                {(openNewTeamModel || editTeam) && (
+                    <NewTeamModal
+                        closeFunction={() => {
+                            setOpenNewTeamModel(false);
+                            setEditTeam(null);
+                        }}
+                        editTeamData={editTeam}
+                    />
+                )}
 
                 {/* Render new team player modal */}
                 {openNewTeamPlayer && (

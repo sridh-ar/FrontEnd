@@ -11,22 +11,24 @@ import toast from 'react-hot-toast';
 import Icon from '../../commonComponents/Icon';
 import ModalWrapper from '../../commonComponents/ModalWrapper';
 
-export default function NewTeamModal({ closeFunction }) {
+export default function NewTeamModal({ closeFunction, editTeamData }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isImageUploading, setIsImageUploading] = useState(false);
 
-    const [teamData, setteamData] = useState({
-        team_name: '',
-        captain: '',
-        owner: '',
-        slots: '15',
-        remaining_slots: '15',
-        total_points_available: '6000',
-        remaining_points_available: '6000',
-        team_photo: '',
-        owner_photo: '',
-        captain_photo: '',
-    });
+    const [teamData, setteamData] = useState(
+        editTeamData || {
+            team_name: '',
+            captain: '',
+            owner: '',
+            slots: '15',
+            remaining_slots: '15',
+            total_points_available: '6000',
+            remaining_points_available: '6000',
+            team_photo: '',
+            owner_photo: '',
+            captain_photo: '',
+        },
+    );
 
     // Function to handle changes in input fields
     const handleInputChange = async (e) => {
@@ -66,7 +68,7 @@ export default function NewTeamModal({ closeFunction }) {
         console.log(teamData);
         setIsLoading(true);
         try {
-            await fetchAPI('/team/create', 'POST', teamData);
+            await fetchAPI('/team/createorupdate', 'POST', teamData);
             toast.success('Team Added  Successfully', { duration: 5000 });
             setIsLoading(false);
             closeFunction();

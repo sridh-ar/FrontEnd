@@ -3,7 +3,7 @@ import { animations } from '../../utils/animationConstant';
 import { TEAM_DASHBOARD_ROWS } from '../../utils/constants';
 import { motion } from 'framer-motion';
 
-export default function TeamTable({ tableData = [], openTeamDetails, handleNewTeamPlayer, handleTeamDelete }) {
+export default function TeamTable({ tableData = [], openTeamDetails, handleNewTeamPlayer, handleTeamDelete, editTeamData }) {
     return (
         <>
             <div className="relative z-10 grid h-[10%] grid-cols-9 items-center rounded-t-3xl bg-white text-center text-sm shadow">
@@ -38,8 +38,9 @@ export default function TeamTable({ tableData = [], openTeamDetails, handleNewTe
                         <span>{item.remaining_points_available}</span>
 
                         <span className="flex cursor-pointer items-center justify-evenly">
-                            <Icon icon="UserPlusIcon" className="fill-green-800" onClick={() => handleNewTeamPlayer(item)} />
-                            <Icon icon="TrashIcon" className="fill-red-700" onClick={() => handleTeamDelete(item.id)} />
+                            <Icon icon="UserPlusIcon" size={5} className="fill-green-800" onClick={() => handleNewTeamPlayer(item)} />
+                            <Icon icon="PencilSquareIcon" size={5} className="fill-sky-700" onClick={() => editTeamData(item)} />
+                            <Icon icon="TrashIcon" size={5} className="fill-red-700" onClick={() => handleTeamDelete(item.id)} />
                         </span>
                         <span className="absolute bottom-0 right-0 h-[0.5px] w-full bg-slate-200" />
                     </motion.div>
