@@ -166,7 +166,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
                         <div className="col-span-2 flex w-full flex-col text-sm">
                             <h3 className="font-bold">Terms & Conditions:</h3>
                             <ol className="relative left-10 my-3 w-[90%] list-disc break-words sm:w-full">
-                                <li>Player Registration Amount is Rs.111/-</li>
+                                <li>Player Registration Amount is Rs.151/-</li>
                                 <li>Players Should be available for the whole tournament</li>
                                 <li>
                                     If the players not available without any valid reason, player cannot participate in the tournament for
