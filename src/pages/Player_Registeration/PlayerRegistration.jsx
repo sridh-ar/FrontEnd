@@ -89,8 +89,8 @@ export default function PlayerRegistration({ editData, closeModal }) {
                     closeModal();
                     window.location.reload();
                 } else {
-                    // window.location.replace('/thanks');
-                    window.location.replace('/upi');
+                    window.location.replace('/thanks');
+                    // window.location.replace('/upi');
                 }
             });
         } catch (error) {
@@ -200,12 +200,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
 
                     {/* Submit Button and cancel button */}
                     <div className="col-span-2 flex items-center justify-center gap-5">
-                        <Button
-                            title="Make Payment"
-                            className="col-span-2 bg-black px-10 text-white"
-                            type="submit"
-                            isLoading={isUploading}
-                        />
+                        <Button title="Submit" className="col-span-2 bg-black px-10 text-white" type="submit" isLoading={isUploading} />
                         <Button
                             title="Cancel"
                             className="col-span-2 bg-gray-300 px-10 text-black"
