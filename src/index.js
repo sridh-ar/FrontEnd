@@ -19,6 +19,7 @@ import { Toaster } from 'react-hot-toast';
 import AdminMenu from './pages/Admin/AdminDashboard';
 import PlayerDashboard from './pages/Player_Dashboard/PlayerDashboard';
 import SignIn from './pages/Sign_In/SignIn';
+import UPI from './pages/Player_Registeration/Upi';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -34,6 +35,7 @@ root.render(
                     <Route path="support" Component={Support} />
                     <Route path="terms" Component={Terms} />
                     <Route path="thanks" Component={ThanksPage} />
+                    <Route path="upi" Component={UPI} />
                     {/* <Route path="*" element={<NoPage />} /> */}
                     {/* Dashboard Routes */}
                     <Route path="dashboard" Component={Dashboard} />
