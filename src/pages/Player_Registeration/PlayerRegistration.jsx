@@ -11,6 +11,7 @@ import Button from '../../commonComponents/Button';
 import Icon from '../../commonComponents/Icon';
 import { fetchAPI, uploadToGit } from '../../utils/commonServices';
 import toast from 'react-hot-toast';
+import makePayment from '../../utils/payment';
 
 export default function PlayerRegistration({ editData, closeModal }) {
     // States
@@ -82,17 +83,20 @@ export default function PlayerRegistration({ editData, closeModal }) {
         localStorage.removeItem('playerData');
 
         try {
-            fetchAPI('/player/createorupdate', 'POST', playerData).then((data) => {
-                localStorage.setItem('playerData', JSON.stringify(playerData));
-                setisLoading(false);
-                if (editData) {
-                    closeModal();
-                    window.location.reload();
-                } else {
-                    window.location.replace('/thanks');
-                    // window.location.replace('/upi');
-                }
-            });
+            const result = await makePayment(playerData.name, '', playerData.contact_number, 1);
+            if (result) {
+                fetchAPI('/player/createorupdate', 'POST', playerData).then(async (data) => {
+                    localStorage.setItem('playerData', JSON.stringify(playerData));
+                    setisLoading(false);
+                    if (editData) {
+                        closeModal();
+                        window.location.reload();
+                    } else {
+                        window.location.replace('/thanks');
+                        // window.location.replace('/upi');
+                    }
+                });
+            }
         } catch (error) {
             alert(error.message);
             if (editData) {
