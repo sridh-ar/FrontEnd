@@ -25,7 +25,7 @@ async function fetchAPI(url = '', method = 'GET', body = {}, headers = {}, rawUr
 }
 
 async function uploadToGit(imageName, imageUrl) {
-    const token = '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';
+    const token = process.env.TOKEN;
     const repoName = 'Images';
 
     try {
@@ -44,8 +44,7 @@ async function uploadToGit(imageName, imageUrl) {
         console.log('Image uploaded successfully!');
         return true;
     } catch (error) {
-        toast.error(error.message);
-        return false;
+        throw new Error(error);
     }
 }
 

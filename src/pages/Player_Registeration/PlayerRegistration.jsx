@@ -60,7 +60,11 @@ export default function PlayerRegistration({ editData, closeModal }) {
                 let reader = new FileReader();
                 reader.readAsDataURL(imageResult);
                 reader.onload = async () => {
-                    await uploadToGit(imageName, reader.result);
+                    try {
+                        await uploadToGit(imageName, reader.result);
+                    } catch (error) {
+                        toast.error(error.message);
+                    }
                     setisUploading(false);
                 };
             } else {

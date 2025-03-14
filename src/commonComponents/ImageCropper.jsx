@@ -15,19 +15,24 @@ export default function ImageCropper({ uploadedFile, onChange, closeModal }) {
 
     const onImageLoad = (e) => {
         const { width, height } = e.currentTarget;
-        const cropWidthInPercent = (MIN_DIMENSION / width) * 100;
+
+        // Determine the size of the square crop based on the smaller dimension
+        const cropSize = Math.min(width, height);
 
         const crop = makeAspectCrop(
             {
-                unit: '%',
-                width: cropWidthInPercent,
+                unit: 'px', // Using pixels for precise size control
+                width: cropSize,
+                height: cropSize,
+                x: (width - cropSize) / 2, // Center the crop horizontally
+                y: (height - cropSize) / 2, // Center the crop vertically
             },
             ASPECT_RATIO,
             width,
             height,
         );
-        const centeredCrop = centerCrop(crop, width, height);
-        setCrop(centeredCrop);
+
+        setCrop(crop);
     };
 
     return (
