@@ -115,12 +115,15 @@ export default function PlayerRegistration({ editData, closeModal }) {
     }
 
     return (
-        <div className="bg-gray-200 p-3">
+        <div className="relative bg-gray-200 p-3">
             <div className="flex w-full flex-col items-center rounded-xl bg-white p-2 py-4">
                 {/* Actual Form Body */}
                 <p className="my-3 text-lg font-semibold tracking-wider">
                     {editData ? '📝 Edit Player Details' : `🎭 Player Registration`}
                 </p>
+
+                {isUploading && <LoadingScreen className="absolute z-[100] bg-white opacity-50" />}
+
                 <form className="grid w-full grid-cols-2 gap-3 p-5" onSubmit={handleSubmit}>
                     {/* Inputs */}
                     {registration.inputColumns.map((input, index) => (
