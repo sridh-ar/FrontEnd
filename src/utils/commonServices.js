@@ -25,7 +25,7 @@ async function fetchAPI(url = '', method = 'GET', body = {}, headers = {}, rawUr
 }
 
 async function uploadToGit(imageName, imageUrl) {
-    const token = process.env.TOKEN;
+    const token = process.env.NEXT_PUBLIC_TOKEN;
     const repoName = 'Images';
 
     try {
