@@ -25,7 +25,7 @@ async function fetchAPI(url = '', method = 'GET', body = {}, headers = {}, rawUr
 }
 
 async function uploadToGit(imageName, imageUrl) {
-    const token = process.env.NEXT_PUBLIC_TOKEN;
+    const token_config = await fetchAPI(`/admin/git_token`);
     const repoName = 'Images';
 
     try {
@@ -37,7 +37,7 @@ async function uploadToGit(imageName, imageUrl) {
                 content: imageUrl.split('base64,')[1],
             },
             {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token_config.config_value}`,
             },
             true,
         );
