@@ -10,14 +10,16 @@ import Input from '../../commonComponents/Input';
 import Button from '../../commonComponents/Button';
 import Icon from '../../commonComponents/Icon';
 import { fetchAPI, uploadToGit } from '../../utils/commonServices';
+import makePayment from './RazorPay_Gateway';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function PlayerRegistration({ editData, closeModal }) {
     // States
     const [isLoading, setisLoading] = useState(true);
     const [isTermAccepted, setisTermAccepted] = useState(false);
     const [isUploading, setisUploading] = useState(false);
-
+    const navigate = useNavigate();
     const [playerData, setPlayerData] = useState(
         editData || {
             name: '',
@@ -88,12 +90,17 @@ export default function PlayerRegistration({ editData, closeModal }) {
         try {
             fetchAPI('/player/createorupdate', 'POST', playerData).then((data) => {
                 localStorage.setItem('playerData', JSON.stringify(playerData));
+                console.log(data);
+                let uniqueId = data['id'];
                 setisLoading(false);
                 if (editData) {
                     closeModal();
                     window.location.reload();
                 } else {
-                    window.location.replace('/thanks');
+                    // window.location.replace('/upi');
+                    // navigate('/upi', { replace: true, state: { id: uniqueId } });
+                    makePayment(playerData.name, playerData.contact_number, 111, uniqueId);
+                    // window.location.replace('/thanks');
                 }
             });
         } catch (error) {
