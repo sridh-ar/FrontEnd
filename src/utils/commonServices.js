@@ -1,5 +1,5 @@
-// const URL = process.env.BACKEND_URL || 'https://leaguebackend-sridhars-projects-ef3aeec5.vercel.app';
-const URL = 'http://localhost:3001';
+const URL = process.env.BACKEND_URL || 'https://leaguebackend-sridhars-projects-ef3aeec5.vercel.app';
+// const URL = 'http://localhost:3001';
 // const URL = process.env.BACKEND_URL || 'https://didactic-space-broccoli-r67q5wg55w5fp9q-3001.app.github.dev'
 
 async function fetchAPI(url = '', method = 'GET', body = {}, headers = {}, rawUrl = false) {
