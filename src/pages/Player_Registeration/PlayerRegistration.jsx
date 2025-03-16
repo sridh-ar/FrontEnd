@@ -10,6 +10,7 @@ import Input from '../../commonComponents/Input';
 import Button from '../../commonComponents/Button';
 import Icon from '../../commonComponents/Icon';
 import { fetchAPI, uploadToGit } from '../../utils/commonServices';
+import makePayment from './RazorPay_Gateway';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -97,7 +98,8 @@ export default function PlayerRegistration({ editData, closeModal }) {
                     window.location.reload();
                 } else {
                     // window.location.replace('/upi');
-                    navigate('/upi', { replace: true, state: { id: uniqueId } });
+                    // navigate('/upi', { replace: true, state: { id: uniqueId } });
+                    makePayment(playerData.name, playerData.contact_number, 111, uniqueId);
                     // window.location.replace('/thanks');
                 }
             });
