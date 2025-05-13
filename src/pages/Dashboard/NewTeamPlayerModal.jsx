@@ -63,7 +63,8 @@ export default function NewTeamPlayerModal({ closeFunction, selectedTeam }) {
             closeFunction();
             window.location.reload();
         } catch (error) {
-            if (error.message.includes('part of')) {
+            // if (error.message.includes('part of')) {
+            if (error.message) {
                 toast.error(error.message);
                 setisLoading(false);
             } else {

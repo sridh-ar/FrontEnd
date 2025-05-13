@@ -6,12 +6,12 @@ export const registration = {
             name: 'name',
             required: true,
         },
-        {
-            label: 'Date of Birth (DD-MM-YYYY)',
-            type: 'text',
-            name: 'dob',
-            required: true,
-        },
+        // {
+        //     label: 'Date of Birth (DD-MM-YYYY)',
+        //     type: 'text',
+        //     name: 'dob',
+        //     required: true,
+        // },
         { label: 'Age', type: 'number', name: 'age', required: true },
         {
             label: 'Contact Number',

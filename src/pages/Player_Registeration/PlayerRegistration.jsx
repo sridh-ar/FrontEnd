@@ -23,7 +23,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
     const [playerData, setPlayerData] = useState(
         editData || {
             name: '',
-            dob: '',
+            // dob: '',
             age: '',
             contact_number: '',
             team_name: '',
