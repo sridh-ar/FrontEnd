@@ -63,9 +63,20 @@ export default function PlayerRegistration({ editData, closeModal }) {
     const [photoPreview, setPhotoPreview] = useState(null);
     const [uploadedFile, setUploadedFile] = useState(null);
     const [playerData, setPlayerData] = useState(editData || initialData);
+    const [paymentRequired, setPaymentRequired] = useState(true);
     const formRef = useRef(null);
 
-    useEffect(() => { setTimeout(() => setIsLoading(false), 500); }, []);
+    useEffect(() => {
+        async function init() {
+            try {
+                const config = await fetchAPI('/admin/dashboard');
+                const val = config.find(c => c.config_name === 'Payment_Required')?.config_value;
+                setPaymentRequired(val?.toLowerCase() === 'yes');
+            } catch {}
+            setTimeout(() => setIsLoading(false), 500);
+        }
+        init();
+    }, []);
 
     const handleChange = (e) => setPlayerData(p => ({ ...p, [e.target.name]: e.target.value }));
 
@@ -102,7 +113,8 @@ export default function PlayerRegistration({ editData, closeModal }) {
                 const uniqueId = data['id'];
                 setIsLoading(false);
                 if (editData) { closeModal(); window.location.reload(); }
-                else makePayment(playerData.name, playerData.contact_number, 111, uniqueId);
+                else if (paymentRequired) makePayment(playerData.name, playerData.contact_number, 111, uniqueId);
+                else window.location.replace('/');
             });
         } catch (error) {
             alert(error.message);
@@ -164,7 +176,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
                 <div style={s.termsBox}>
                     <p style={s.termsTitle}>Terms & Conditions</p>
                     <ul style={s.termsList}>
-                        <li>Registration fee: <span style={{ color: '#facc15' }}>₹111/-</span></li>
+                        {paymentRequired && <li>Registration fee: <span style={{ color: '#facc15' }}>₹111/-</span></li>}
                         <li>Must be available for the entire tournament</li>
                         <li>Absence without reason = 2 season ban</li>
                         <li>Chucking = banned from bowling for the tournament</li>
