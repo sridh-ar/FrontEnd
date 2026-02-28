@@ -9,7 +9,7 @@ import LoadingScreen from './commonComponents/LoadingScreen';
 export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [configValues, setconfigValues] = useState({});
-
+    
     async function initialDataRetrival() {
         const dashBaoardResult = await fetchAPI('/admin/dashboard');
         const configObject = dashBaoardResult.reduce((accumulator, current) => {

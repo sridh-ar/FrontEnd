@@ -64,6 +64,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
     const [uploadedFile, setUploadedFile] = useState(null);
     const [playerData, setPlayerData] = useState(editData || initialData);
     const [paymentRequired, setPaymentRequired] = useState(true);
+    const [registeredId, setRegisteredId] = useState(() => new URLSearchParams(window.location.search).get('registered'));
     const formRef = useRef(null);
 
     useEffect(() => {
@@ -114,7 +115,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
                 setIsLoading(false);
                 if (editData) { closeModal(); window.location.reload(); }
                 else if (paymentRequired) makePayment(playerData.name, playerData.contact_number, 111, uniqueId);
-                else window.location.replace('/');
+                else setRegisteredId(uniqueId);
             });
         } catch (error) {
             alert(error.message);
@@ -124,6 +125,21 @@ export default function PlayerRegistration({ editData, closeModal }) {
     };
 
     if (isLoading) return <div style={s.page}><LoadingScreen /></div>;
+
+    if (registeredId) return (
+        <div style={s.page}>
+            <div style={{ ...s.card, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                <div style={{ fontSize: '3rem' }}>🎉</div>
+                <p style={{ color: '#fff', fontWeight: '800', fontSize: '1.3rem', margin: 0 }}>Registration Successful!</p>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', margin: 0 }}>Your registration ID</p>
+                <div style={{ background: 'rgba(124,58,237,0.2)', border: '1px solid #7c3aed', borderRadius: '12px', padding: '0.75rem 2rem' }}>
+                    <span style={{ color: '#a78bfa', fontWeight: '900', fontSize: '1.8rem', letterSpacing: '0.1em' }}>#{registeredId}</span>
+                </div>
+                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem', margin: 0 }}>Please save this ID for future reference</p>
+                <button style={{ ...s.btnNext, marginTop: '0.5rem', width: '100%' }} onClick={() => window.location.replace('/')}>Done</button>
+            </div>
+        </div>
+    );
 
     const showBatting = ['All Rounder', 'Batsman'].includes(playerData.player_role);
     const showBowling = ['All Rounder', 'Bowler'].includes(playerData.player_role);
@@ -255,7 +271,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
                             setIsUploading(true);
                             try {
                                 const downloadUrl = await uploadToGit(imageName, reader.result);
-                                setPlayerData(p => ({ ...p, player_photo: downloadUrl }));
+                                setPlayerData(p => ({ ...p, player_photo: downloadUrl+'?raw=true' }));
                             } catch (err) { toast.error(err.message); }
                             setIsUploading(false);
                         };

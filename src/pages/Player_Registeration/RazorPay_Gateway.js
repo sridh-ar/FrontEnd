@@ -56,7 +56,7 @@ export default async function makePayment(name, contact, amount, id) {
                         razorpay_payment_id: response.razorpay_payment_id,
                         razorpay_signature: response.razorpay_signature,
                         userId: Number.parseInt(id),
-                    }).then((data) => window.location.replace('/thanks'));
+                    }).then((data) => window.location.replace(`/?registered=${id}`));
                 } catch (error) {
                     alert('Payment Failed');
                 }
