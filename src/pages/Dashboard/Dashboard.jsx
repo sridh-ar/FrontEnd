@@ -4,17 +4,13 @@ import NewTeamPlayerModal from './NewTeamPlayerModal';
 import { fetchAPI } from '../../utils/commonServices';
 import toast from 'react-hot-toast';
 import SidebarContainer from '../../commonComponents/SideBarContainer';
-import { TEAM_DASHBOARD_ROWS, TEAM_TABLE_ROWS, mockTableData, mockTeamTableData } from '../../utils/constants';
-import Icon from '../../commonComponents/Icon';
 import AnalysticsDiv from './AnalysticsDiv';
-import Button from '../../commonComponents/Button';
 import TeamDetailScreen from './TeamDetailTable';
 import _ from 'lodash';
 import LoadingScreen from '../../commonComponents/LoadingScreen';
 import TeamTable from './TeamTable';
 
 export default function Dashboard() {
-    // State variables initialization
     const [openNewTeamModel, setOpenNewTeamModel] = useState(false);
     const [editTeam, setEditTeam] = useState(null);
     const [openNewTeamPlayer, setOpenNewTeamPlayer] = useState(false);
@@ -25,54 +21,34 @@ export default function Dashboard() {
     const [analyticalData, setanalyticalData] = useState({});
     const [openSeletedTeam, setopenSeletedTeam] = useState(null);
 
-    // Fetch team data from API on component mount and whenever isOpen or isAddOpen changes
-
     async function initialDataRetrival() {
         try {
             const apiResult = await fetchAPI('/team');
             const dashboardAPIResult = await fetchAPI('/admin/dashboard');
-
-            const configObject = dashboardAPIResult.reduce((accumulator, current) => {
-                accumulator[current.config_name] = current.config_value;
-                return accumulator;
+            const configObject = dashboardAPIResult.reduce((acc, cur) => {
+                acc[cur.config_name] = cur.config_value;
+                return acc;
             }, {});
-
-            // To fill the table with dummy data for Cleaner UI look
-            // const additionalList = 11 - apiResult.length;
-            // if (additionalList > 0) {
-            //     for (let i = 1; i <= additionalList; i++) {
-            //         apiResult.push(mockTableData);
-            //     }
-            // }
             setanalyticalData(configObject);
             setTeamData(apiResult);
             setisLoading(false);
         } catch (error) {
-            // alert(error);
             setisLoading(false);
         }
     }
 
-    useEffect(() => {
-        initialDataRetrival();
-    }, [openNewTeamModel, openNewTeamPlayer]);
+    useEffect(() => { initialDataRetrival(); }, [openNewTeamModel, openNewTeamPlayer]);
 
-    //Handling Functions
     async function handleTeamDelete(teamId) {
-        console.log({ teamId });
         try {
             await fetchAPI(`/team/delete/${teamId}`, 'PUT');
             toast.success('Record Deleted Successfully.');
-
-            // to refresh the table call data retrival.
             initialDataRetrival();
         } catch (error) {
-            console.log('[Table.jsx] Error - ', error.stack);
             toast.error('Unable to delete the record.');
         }
     }
 
-    // Handling new team member function
     async function handleNewTeamPlayer(teamData) {
         setSelectedTeamForPlayer(teamData);
         setOpenNewTeamPlayer(true);
@@ -96,10 +72,11 @@ export default function Dashboard() {
                     totalRegisteredPlayers={analyticalData.totalRegisteredPlayers}
                     totalTeamPlayers={analyticalData.totalTeamPlayers}
                     totalTeams={analyticalData.totalTeams}
+                    onNewTeam={!openSeletedTeam ? () => setOpenNewTeamModel(true) : undefined}
                 />
 
                 <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-                    {isTableLoading && <LoadingScreen className="h-full w-full rounded-2xl" />}
+                    {isTableLoading && <LoadingScreen variant="skeleton" className="h-full w-full rounded-2xl" />}
 
                     {!(openSeletedTeam || isTableLoading) && (
                         <TeamTable
@@ -113,14 +90,6 @@ export default function Dashboard() {
 
                     {openSeletedTeam && <TeamDetailScreen playersData={openSeletedTeam} closeFunction={() => setopenSeletedTeam(null)} />}
                 </div>
-
-                {!openSeletedTeam && (
-                    <Button
-                        title="New Team"
-                        className="absolute right-0 top-0 text-xs font-semibold text-white shadow"
-                        onClick={() => setOpenNewTeamModel(true)}
-                    />
-                )}
 
                 {(openNewTeamModel || editTeam) && (
                     <NewTeamModal

@@ -1,6 +1,15 @@
-export default function ModalWrapper({ children }) {
+export default function ModalWrapper({ children, closing }) {
     return (
-        <div className="justify-centerbg-opacity-20 fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-50 p-2 py-10">
+        <div style={{
+            position: 'fixed', inset: 0, zIndex: 50,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'rgba(0,0,0,0.5)', padding: '1rem',
+            animation: `${closing ? 'backdropOut' : 'backdropIn'} 0.22s ease both`,
+        }}>
+            <style>{`
+                @keyframes backdropIn{from{opacity:0}to{opacity:1}}
+                @keyframes backdropOut{from{opacity:1}to{opacity:0}}
+            `}</style>
             {children}
         </div>
     );

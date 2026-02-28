@@ -14,32 +14,24 @@ export default function SidebarContainer({ children, isLoading = true }) {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (!token) {
-            toast.error('Demo');
-            window.location.href = '/signin';
-        } else {
-            setIsValidToken(true);
-        }
+        if (!token) { toast.error('Demo'); window.location.href = '/signin'; }
+        else setIsValidToken(true);
     }, []);
 
-    if (!isValidToken) return <main style={{ ...s.root, background: '#0f0c29' }} />;
+    if (!isValidToken) return <main style={{ height: '100vh', background: '#f0f4ff' }} />;
 
     return (
         <main style={s.root}>
-            {/* Orbs */}
-            <div style={s.orb1} /><div style={s.orb2} />
-
             {/* Sidebar */}
             <aside style={s.sidebar}>
-                <div />
+                <div style={s.sidebarAccent} />
                 <div style={s.menuList}>
                     {SIDEBAR_MENUS.map((item, index) => {
                         const isActive = url.includes(item.name.toLowerCase());
                         menuName = isActive ? item.name : menuName;
                         return (
-                            <Link key={index} to={`/${item.name.toLowerCase()}`} style={s.menuItem}>
-                                <div style={{ ...s.menuDot, ...(isActive ? s.menuDotActive : {}) }} />
-                                <Icon icon={item.icon} size={5} className={isActive ? 'text-[#a78bfa]' : 'text-[rgba(255,255,255,0.3)]'} />
+                            <Link key={index} to={`/${item.name.toLowerCase()}`} style={{ ...s.menuItem, ...(isActive ? s.menuItemActive : {}) }}>
+                                <Icon icon={item.icon} size={5} className={isActive ? 'text-white' : 'text-[#94a3b8]'} />
                             </Link>
                         );
                     })}
@@ -51,7 +43,10 @@ export default function SidebarContainer({ children, isLoading = true }) {
             <section style={s.main}>
                 {/* Navbar */}
                 <nav style={s.navbar}>
-                    <p style={s.navTitle}>{menuName}</p>
+                    <div style={s.navLeft}>
+                        <div style={s.navAccent} />
+                        <p style={s.navTitle}>{menuName} Dashboard</p>
+                    </div>
                     <div style={{ position: 'relative' }}
                         onMouseEnter={() => setOpenUserModal(true)}
                         onMouseLeave={() => setOpenUserModal(false)}>
@@ -62,7 +57,7 @@ export default function SidebarContainer({ children, isLoading = true }) {
 
                 {/* Content */}
                 <div style={s.content}>
-                    {isLoading ? <LoadingScreen /> : children}
+                    {isLoading ? <LoadingScreen variant="skeleton" /> : children}
                 </div>
             </section>
         </main>
@@ -70,42 +65,37 @@ export default function SidebarContainer({ children, isLoading = true }) {
 }
 
 const s = {
-    root: {
-        display: 'flex', height: '100vh', width: '100vw',
-        background: '#0f0c29', position: 'relative', overflow: 'hidden',
-    },
-    orb1: {
-        position: 'fixed', top: '5%', left: '-60px', width: '300px', height: '300px',
-        borderRadius: '50%', pointerEvents: 'none',
-        background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)',
-    },
-    orb2: {
-        position: 'fixed', bottom: '5%', right: '-60px', width: '300px', height: '300px',
-        borderRadius: '50%', pointerEvents: 'none',
-        background: 'radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%)',
-    },
+    root: { display: 'flex', height: '100vh', width: '100vw', background: '#f0f4ff', overflow: 'hidden' },
     sidebar: {
-        width: '56px', minHeight: '100vh', flexShrink: 0,
+        width: '56px', minHeight: '100vh', background: '#1e293b',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
-        justifyContent: 'space-between', paddingTop: '1rem', paddingBottom: '1rem',
-        borderRight: '1px solid rgba(255,255,255,0.06)', zIndex: 1,
+        justifyContent: 'space-between', padding: '1rem 0', flexShrink: 0,
+        boxShadow: '4px 0 20px rgba(0,0,0,0.15)',
     },
-    menuList: { display: 'flex', flexDirection: 'column', gap: '1.5rem', alignItems: 'center' },
-    menuItem: { position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px' },
-    menuDot: {
-        position: 'absolute', left: '-8px', width: '3px', height: '20px',
-        borderRadius: '999px', background: 'transparent', transition: 'background 0.2s',
+    sidebarAccent: {
+        width: '24px', height: '3px', borderRadius: '999px',
+        background: 'linear-gradient(90deg,#7c3aed,#db2777)',
     },
-    menuDotActive: { background: 'linear-gradient(180deg,#7c3aed,#db2777)' },
-    main: { flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', zIndex: 1 },
+    menuList: { display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'center', width: '100%' },
+    menuItem: {
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
+        padding: '8px 0', width: '100%', textDecoration: 'none',
+        borderLeft: '3px solid transparent', transition: 'all 0.2s',
+    },
+    menuItemActive: {
+        borderLeft: '3px solid #a78bfa',
+        background: 'rgba(167,139,250,0.1)',
+    },
+    menuLabel: { fontSize: '0.55rem', color: '#a78bfa', letterSpacing: '0.05em', textTransform: 'uppercase' },
+    main: { flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' },
     navbar: {
-        height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.06)', flexShrink: 0,
+        height: '48px', background: '#fff', display: 'flex', alignItems: 'center',
+        justifyContent: 'space-between', padding: '0 1.25rem', flexShrink: 0,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.06)', borderBottom: '1px solid #e2e8f0',
     },
-    navTitle: {
-        color: '#fff', fontWeight: '700', fontSize: '0.95rem',
-        letterSpacing: '0.08em', textTransform: 'uppercase', margin: 0,
-    },
-    avatar: { width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer', objectFit: 'cover', border: '1px solid rgba(255,255,255,0.15)' },
-    content: { flex: 1, overflow: 'auto', padding: '1.25rem' },
+    navLeft: { display: 'flex', alignItems: 'center', gap: '10px' },
+    navAccent: { width: '3px', height: '20px', borderRadius: '999px', background: 'linear-gradient(180deg,#7c3aed,#db2777)' },
+    navTitle: { fontSize: '0.95rem', fontWeight: '800', color: '#1e293b', margin: 0, letterSpacing: '-0.3px' },
+    avatar: { width: '28px', height: '28px', borderRadius: '50%', cursor: 'pointer', objectFit: 'cover', border: '2px solid #e2e8f0' },
+    content: { flex: 1, overflow: 'auto', padding: '1rem', background: '#f0f4ff' },
 };
