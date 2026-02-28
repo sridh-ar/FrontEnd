@@ -29,7 +29,7 @@ async function uploadToGit(imageName, imageUrl) {
     const repoName = 'Images';
 
     try {
-        await fetchAPI(
+        const result = await fetchAPI(
             `https://api.github.com/repos/sridh-ar/${repoName}/contents/${imageName}`,
             'PUT',
             {
@@ -41,8 +41,7 @@ async function uploadToGit(imageName, imageUrl) {
             },
             true,
         );
-        console.log('Image uploaded successfully!');
-        return true;
+        return result.content.download_url;
     } catch (error) {
         throw new Error(error);
     }

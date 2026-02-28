@@ -1,51 +1,70 @@
 import Icon from '../../commonComponents/Icon';
-import { animations } from '../../utils/animationConstant';
 import { TEAM_DASHBOARD_ROWS } from '../../utils/constants';
-import { motion } from 'framer-motion';
 
 export default function TeamTable({ tableData = [], openTeamDetails, handleNewTeamPlayer, handleTeamDelete, editTeamData }) {
     return (
-        <>
-            <div className="relative z-10 grid h-[10%] grid-cols-9 items-center rounded-t-3xl bg-white text-center text-sm shadow">
+        <div style={s.wrap}>
+            {/* Header */}
+            <div style={s.header}>
                 {TEAM_DASHBOARD_ROWS.map((row) => (
-                    <span className={`py-3 font-normal tracking-wider text-[#aab4c3] ${row == 'Team Name' ? 'col-span-2' : ''} `}>
+                    <span key={row} style={{ ...s.headerCell, ...(row === 'Team Name' ? { gridColumn: 'span 2' } : {}) }}>
                         {row}
                     </span>
                 ))}
-                <span className="absolute bottom-0 right-0 h-[0.5px] w-full bg-slate-200" />
             </div>
-            <motion.div
-                className="no-scrollbar h-[92%] overflow-y-scroll rounded-b-3xl bg-white text-center text-sm"
-                initial="hidden"
-                animate="visible"
-                transition={{ staggerChildren: 0.1 }}
-            >
-                {tableData.map((item, index) => (
-                    <motion.div
-                        className="relative grid h-10 grid-cols-9 items-center text-center text-sm"
-                        key={index}
-                        variants={animations.opacityAnimation}
-                    >
-                        <span className="col-span-2 flex cursor-pointer items-center gap-4 px-10" onClick={() => openTeamDetails(item.id)}>
-                            <img src={item.team_photo} className="h-8 w-8 rounded" />
-                            {item.team_name}
-                        </span>
-                        <span> {item.captain.length > 15 ? `${item.captain.slice(0, 15)}...` : item.captain} </span>
-                        <span> {item.owner.length > 10 ? `${item.owner.slice(0, 10)}...` : item.owner} </span>
-                        <span>{item.slots}</span>
-                        <span> {item.remaining_slots} </span>
-                        <span>{item.total_points_available}</span>
-                        <span>{item.remaining_points_available}</span>
 
-                        <span className="flex cursor-pointer items-center justify-evenly">
-                            <Icon icon="UserPlusIcon" size={5} className="fill-green-800" onClick={() => handleNewTeamPlayer(item)} />
-                            <Icon icon="PencilSquareIcon" size={5} className="fill-sky-700" onClick={() => editTeamData(item)} />
-                            <Icon icon="TrashIcon" size={5} className="fill-red-700" onClick={() => handleTeamDelete(item.id)} />
+            {/* Rows */}
+            <div style={s.body}>
+                {tableData.map((item, index) => (
+                    <div key={index} style={s.row}>
+                        <span style={{ ...s.cell, gridColumn: 'span 2', justifyContent: 'flex-start', gap: '10px', cursor: 'pointer' }}
+                            onClick={() => openTeamDetails(item.id)}>
+                            <img src={item.team_photo} style={s.teamImg} alt="" />
+                            <span style={{ color: '#fff', fontWeight: '600' }}>{item.team_name}</span>
                         </span>
-                        <span className="absolute bottom-0 right-0 h-[0.5px] w-full bg-slate-200" />
-                    </motion.div>
+                        <span style={s.cell}>{item.captain?.length > 12 ? `${item.captain.slice(0, 12)}…` : item.captain}</span>
+                        <span style={s.cell}>{item.owner?.length > 10 ? `${item.owner.slice(0, 10)}…` : item.owner}</span>
+                        <span style={s.cell}>{item.slots}</span>
+                        <span style={s.cell}>{item.remaining_slots}</span>
+                        <span style={s.cell}>{item.total_points_available}</span>
+                        <span style={s.cell}>{item.remaining_points_available}</span>
+                        <span style={{ ...s.cell, gap: '12px' }}>
+                            <Icon icon="UserPlusIcon" size={4} className="text-emerald-400 cursor-pointer" onClick={() => handleNewTeamPlayer(item)} />
+                            <Icon icon="PencilSquareIcon" size={4} className="text-sky-400 cursor-pointer" onClick={() => editTeamData(item)} />
+                            <Icon icon="TrashIcon" size={4} className="text-red-400 cursor-pointer" onClick={() => handleTeamDelete(item.id)} />
+                        </span>
+                        <div style={s.divider} />
+                    </div>
                 ))}
-            </motion.div>
-        </>
+            </div>
+        </div>
     );
 }
+
+const s = {
+    wrap: {
+        background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: '16px', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column',
+    },
+    header: {
+        display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
+        padding: '0 1rem', borderBottom: '1px solid rgba(255,255,255,0.08)', flexShrink: 0,
+    },
+    headerCell: {
+        padding: '0.75rem 0.5rem', fontSize: '0.7rem', fontWeight: '600',
+        color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em', textTransform: 'uppercase',
+        textAlign: 'center',
+    },
+    body: { overflowY: 'auto', flex: 1 },
+    row: {
+        display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
+        padding: '0 1rem', position: 'relative', alignItems: 'center',
+        transition: 'background 0.15s',
+    },
+    cell: {
+        padding: '0.6rem 0.5rem', fontSize: '0.78rem', color: 'rgba(255,255,255,0.6)',
+        textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center',
+    },
+    teamImg: { width: '28px', height: '28px', borderRadius: '6px', objectFit: 'cover', flexShrink: 0 },
+    divider: { position: 'absolute', bottom: 0, left: '1rem', right: '1rem', height: '1px', background: 'rgba(255,255,255,0.05)' },
+};

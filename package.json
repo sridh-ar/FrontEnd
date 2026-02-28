@@ -35,12 +35,6 @@
         "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
         "lint:fix": "eslint --fix --ext .js,.jsx ."
     },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
     "browserslist": {
         "production": [
             ">0.2%",

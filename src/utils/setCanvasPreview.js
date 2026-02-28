@@ -26,7 +26,9 @@ const setCanvasPreview = (
     const cropX = crop.x * scaleX;
     const cropY = crop.y * scaleY;
 
-    // Move the crop origin to the canvas origin (0,0)
+    ctx.beginPath();
+    ctx.rect(0, 0, crop.width * scaleX, crop.height * scaleY);
+    ctx.clip();
     ctx.translate(-cropX, -cropY);
     ctx.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight, 0, 0, image.naturalWidth, image.naturalHeight);
 

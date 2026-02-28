@@ -3,11 +3,8 @@ import ProfileDropdown from '../pages/Dashboard/ProfileDropdown';
 import { SIDEBAR_MENUS } from '../utils/constants';
 import Icon from './Icon';
 import LoadingScreen from './LoadingScreen';
-import { set } from 'lodash';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { animations } from '../utils/animationConstant';
 
 export default function SidebarContainer({ children, isLoading = true }) {
     const [openUserModal, setOpenUserModal] = useState(false);
@@ -16,7 +13,6 @@ export default function SidebarContainer({ children, isLoading = true }) {
     const url = window.location.href.toLowerCase();
 
     useEffect(() => {
-        // Validate User Login
         const token = localStorage.getItem('token');
         if (!token) {
             toast.error('Demo');
@@ -26,104 +22,90 @@ export default function SidebarContainer({ children, isLoading = true }) {
         }
     }, []);
 
-    if (!isValidToken) {
-        return <main className="flex h-screen w-screen bg-white" />;
-    }
+    if (!isValidToken) return <main style={{ ...s.root, background: '#0f0c29' }} />;
 
     return (
-        <main className="flex h-screen w-screen bg-white">
-            {/* Side Bar */}
-            <section className="flex min-h-screen w-[3.5%] flex-col items-center justify-between bg-white py-3">
-                {/* Logo */}
-                <div></div>
-                <div className="absolute left-2 top-3 h-12 w-16">
-                    {/* <img src="/logo.svg" alt="Next.js Logo" className="object-cover" /> */}
-                    <svg
-                        width="40px"
-                        height="40px"
-                        viewBox="-2.45 0 2452.5 2452.5"
-                        enable-background="new 0 0 2447.6 2452.5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="#000000"
-                    >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            {' '}
-                            <g clip-rule="evenodd" fill-rule="evenodd">
-                                {' '}
-                                <path
-                                    d="m897.4 0c-135.3.1-244.8 109.9-244.7 245.2-.1 135.3 109.5 245.1 244.8 245.2h244.8v-245.1c.1-135.3-109.5-245.1-244.9-245.3.1 0 .1 0 0 0m0 654h-652.6c-135.3.1-244.9 109.9-244.8 245.2-.2 135.3 109.4 245.1 244.7 245.3h652.7c135.3-.1 244.9-109.9 244.8-245.2.1-135.4-109.5-245.2-244.8-245.3z"
-                                    fill="#36c5f0"
-                                ></path>{' '}
-                                <path
-                                    d="m2447.6 899.2c.1-135.3-109.5-245.1-244.8-245.2-135.3.1-244.9 109.9-244.8 245.2v245.3h244.8c135.3-.1 244.9-109.9 244.8-245.3zm-652.7 0v-654c.1-135.2-109.4-245-244.7-245.2-135.3.1-244.9 109.9-244.8 245.2v654c-.2 135.3 109.4 245.1 244.7 245.3 135.3-.1 244.9-109.9 244.8-245.3z"
-                                    fill="#2eb67d"
-                                ></path>{' '}
-                                <path
-                                    d="m1550.1 2452.5c135.3-.1 244.9-109.9 244.8-245.2.1-135.3-109.5-245.1-244.8-245.2h-244.8v245.2c-.1 135.2 109.5 245 244.8 245.2zm0-654.1h652.7c135.3-.1 244.9-109.9 244.8-245.2.2-135.3-109.4-245.1-244.7-245.3h-652.7c-135.3.1-244.9 109.9-244.8 245.2-.1 135.4 109.4 245.2 244.7 245.3z"
-                                    fill="#ecb22e"
-                                ></path>{' '}
-                                <path
-                                    d="m0 1553.2c-.1 135.3 109.5 245.1 244.8 245.2 135.3-.1 244.9-109.9 244.8-245.2v-245.2h-244.8c-135.3.1-244.9 109.9-244.8 245.2zm652.7 0v654c-.2 135.3 109.4 245.1 244.7 245.3 135.3-.1 244.9-109.9 244.8-245.2v-653.9c.2-135.3-109.4-245.1-244.7-245.3-135.4 0-244.9 109.8-244.8 245.1 0 0 0 .1 0 0"
-                                    fill="#e01e5a"
-                                ></path>{' '}
-                            </g>{' '}
-                        </g>
-                    </svg>
-                </div>
+        <main style={s.root}>
+            {/* Orbs */}
+            <div style={s.orb1} /><div style={s.orb2} />
 
-                {/* Menus Icons */}
-                <div className="flex w-full flex-col gap-6">
+            {/* Sidebar */}
+            <aside style={s.sidebar}>
+                <div />
+                <div style={s.menuList}>
                     {SIDEBAR_MENUS.map((item, index) => {
                         const isActive = url.includes(item.name.toLowerCase());
                         menuName = isActive ? item.name : menuName;
                         return (
-                            <Link
-                                className={`flex justify-center border-l-2 text-gray-400 ${isActive ? 'border-[#8ccc45]' : ''}`}
-                                to={{ pathname: `/${item.name.toLowerCase()}` }}
-                                disabled={isActive}
-                                key={index}
-                            >
-                                <Icon icon={item.icon} size={6} className={isActive ? 'text-[#8ccc45]' : 'text-[#aab4c3]'} />
+                            <Link key={index} to={`/${item.name.toLowerCase()}`} style={s.menuItem}>
+                                <div style={{ ...s.menuDot, ...(isActive ? s.menuDotActive : {}) }} />
+                                <Icon icon={item.icon} size={5} className={isActive ? 'text-[#a78bfa]' : 'text-[rgba(255,255,255,0.3)]'} />
                             </Link>
                         );
                     })}
                 </div>
-
-                {/* Account */}
                 <div />
-            </section>
+            </aside>
 
-            {/* Container */}
-            <section className="w-full bg-white">
-                {/* NavBar */}
-                <nav className="ml-3 flex h-[9%] items-center justify-between px-5">
-                    <motion.p
-                        className="font-semibold tracking-wider"
-                        initial="hidden"
-                        animate="visible"
-                        variants={animations.titleAnimation}
-                    >
-                        {menuName} Menu
-                    </motion.p>
-                    {/* User Profile */}
-                    <div
-                        className="relative right-5 p-1"
-                        onMouseEnter={() => setOpenUserModal(!openUserModal)}
-                        onMouseLeave={() => setOpenUserModal(!openUserModal)}
-                    >
-                        <img src="/profile.jpg" alt="" className="w-10 cursor-pointer rounded-full" />
+            {/* Main */}
+            <section style={s.main}>
+                {/* Navbar */}
+                <nav style={s.navbar}>
+                    <p style={s.navTitle}>{menuName}</p>
+                    <div style={{ position: 'relative' }}
+                        onMouseEnter={() => setOpenUserModal(true)}
+                        onMouseLeave={() => setOpenUserModal(false)}>
+                        <img src="/profile.jpg" alt="" style={s.avatar} />
                         {openUserModal && <ProfileDropdown />}
                     </div>
                 </nav>
 
-                {/* Component */}
-                <div className="h-[91%] w-full overflow-hidden rounded-tl-[60px] bg-[#ecf0f6]">
-                    {isLoading && <LoadingScreen />}
-                    {!isLoading && children}
+                {/* Content */}
+                <div style={s.content}>
+                    {isLoading ? <LoadingScreen /> : children}
                 </div>
             </section>
         </main>
     );
 }
+
+const s = {
+    root: {
+        display: 'flex', height: '100vh', width: '100vw',
+        background: '#0f0c29', position: 'relative', overflow: 'hidden',
+    },
+    orb1: {
+        position: 'fixed', top: '5%', left: '-60px', width: '300px', height: '300px',
+        borderRadius: '50%', pointerEvents: 'none',
+        background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)',
+    },
+    orb2: {
+        position: 'fixed', bottom: '5%', right: '-60px', width: '300px', height: '300px',
+        borderRadius: '50%', pointerEvents: 'none',
+        background: 'radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%)',
+    },
+    sidebar: {
+        width: '56px', minHeight: '100vh', flexShrink: 0,
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'space-between', paddingTop: '1rem', paddingBottom: '1rem',
+        borderRight: '1px solid rgba(255,255,255,0.06)', zIndex: 1,
+    },
+    menuList: { display: 'flex', flexDirection: 'column', gap: '1.5rem', alignItems: 'center' },
+    menuItem: { position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px' },
+    menuDot: {
+        position: 'absolute', left: '-8px', width: '3px', height: '20px',
+        borderRadius: '999px', background: 'transparent', transition: 'background 0.2s',
+    },
+    menuDotActive: { background: 'linear-gradient(180deg,#7c3aed,#db2777)' },
+    main: { flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', zIndex: 1 },
+    navbar: {
+        height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.06)', flexShrink: 0,
+    },
+    navTitle: {
+        color: '#fff', fontWeight: '700', fontSize: '0.95rem',
+        letterSpacing: '0.08em', textTransform: 'uppercase', margin: 0,
+    },
+    avatar: { width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer', objectFit: 'cover', border: '1px solid rgba(255,255,255,0.15)' },
+    content: { flex: 1, overflow: 'auto', padding: '1.25rem' },
+};

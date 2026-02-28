@@ -19,13 +19,13 @@ export default function Input({
 }) {
     if (type == 'select') {
         return (
-            <div key={index} className={`relative flex w-full flex-col justify-center gap-1 text-sm ${hidden ? 'hidden' : ''}`}>
-                <label>
+            <div key={index} className={`relative flex w-full flex-col justify-center gap-1 text-base ${hidden ? 'hidden' : ''}`}>
+                <label className="text-white/70">
                     {label}
-                    {required && <span className="text-red-600">{' *'}</span>}
+                    {required && <span className="text-red-400">{' *'}</span>}
                 </label>
                 <select
-                    className="my-2 h-9 w-full appearance-none rounded-xl bg-gray-200 p-2 px-4 outline-none ring-1 ring-gray-100"
+                    className="my-2 h-11 w-full appearance-none rounded-xl bg-white/10 p-2 px-4 text-white outline-none ring-1 ring-white/20"
                     name={idName}
                     value={value}
                     required={required}
@@ -64,12 +64,12 @@ export default function Input({
         };
         return (
             <>
-                <div key={index || idName} className="flex w-full flex-col justify-center gap-2 text-sm">
-                    <label>
+                <div key={index || idName} className="flex w-full flex-col justify-center gap-2 text-base">
+                    <label className="text-white/70">
                         {label}
-                        {required && <span className="text-red-600">{' *'}</span>}
+                        {required && <span className="text-red-400">{' *'}</span>}
                     </label>
-                    <div className="flex h-9 w-full items-center rounded-xl bg-gray-200 p-2 px-4 outline-none ring-1 ring-gray-100">
+                    <div className="flex h-11 w-full items-center rounded-xl bg-white/10 p-2 px-4 text-white outline-none ring-1 ring-white/20">
                         <Icon icon="ArrowUpTrayIcon" size={5} />
                         <input
                             className={`z-10 ml-3 h-full w-full opacity-0`}
@@ -79,7 +79,7 @@ export default function Input({
                             required={required}
                             disabled={disabled}
                         />
-                        <span className="absolute ml-6">{fileName}</span>
+                        <span className="absolute ml-6 text-white/60">{fileName}</span>
                     </div>
                 </div>
 
@@ -91,13 +91,13 @@ export default function Input({
 
     // Other than Select and file
     return (
-        <div key={index || idName} className="flex w-full flex-col justify-center gap-2 text-sm">
-            <label>
+        <div key={index || idName} className="flex w-full flex-col justify-center gap-2 text-base">
+            <label className="text-white/70">
                 {label}
-                {required && <span className="text-red-600">{' *'}</span>}
+                {required && <span className="text-red-400">{' *'}</span>}
             </label>
             <input
-                className={`h-9 w-full appearance-none rounded-xl bg-gray-200 p-2 px-4 outline-none ring-1 ring-gray-100`}
+                className={`h-11 w-full appearance-none rounded-xl bg-white/10 p-2 px-4 text-white placeholder-white/30 outline-none ring-1 ring-white/20`}
                 type={type}
                 name={idName}
                 value={value}

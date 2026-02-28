@@ -91,20 +91,16 @@ export default function Dashboard() {
 
     return (
         <SidebarContainer isLoading={isLoading}>
-            <div className="relative h-full w-full">
-                {/* Analystics Data */}
+            <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <AnalysticsDiv
                     totalRegisteredPlayers={analyticalData.totalRegisteredPlayers}
                     totalTeamPlayers={analyticalData.totalTeamPlayers}
                     totalTeams={analyticalData.totalTeams}
                 />
 
-                {/* Table Body */}
-                <div className="h-[91%] w-full bg-[#d4dced] p-5">
-                    {/* Loading Screen */}
-                    {isTableLoading && <LoadingScreen className="h-[103%] w-full rounded-3xl bg-white" />}
+                <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+                    {isTableLoading && <LoadingScreen className="h-full w-full rounded-2xl" />}
 
-                    {/* Team Table */}
                     {!(openSeletedTeam || isTableLoading) && (
                         <TeamTable
                             tableData={teamData}
@@ -115,31 +111,24 @@ export default function Dashboard() {
                         />
                     )}
 
-                    {/* Team Details Table */}
                     {openSeletedTeam && <TeamDetailScreen playersData={openSeletedTeam} closeFunction={() => setopenSeletedTeam(null)} />}
                 </div>
 
-                {/* Render Icon to open new team modal */}
                 {!openSeletedTeam && (
                     <Button
                         title="New Team"
-                        className="absolute right-14 top-3 text-xs font-semibold text-white shadow"
+                        className="absolute right-0 top-0 text-xs font-semibold text-white shadow"
                         onClick={() => setOpenNewTeamModel(true)}
                     />
                 )}
 
-                {/* Render new team modal */}
                 {(openNewTeamModel || editTeam) && (
                     <NewTeamModal
-                        closeFunction={() => {
-                            setOpenNewTeamModel(false);
-                            setEditTeam(null);
-                        }}
+                        closeFunction={() => { setOpenNewTeamModel(false); setEditTeam(null); }}
                         editTeamData={editTeam}
                     />
                 )}
 
-                {/* Render new team player modal */}
                 {openNewTeamPlayer && (
                     <NewTeamPlayerModal closeFunction={() => setOpenNewTeamPlayer(false)} selectedTeam={selectedTeamForPlayer} />
                 )}
