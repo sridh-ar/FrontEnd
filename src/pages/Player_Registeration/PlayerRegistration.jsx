@@ -64,6 +64,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
     const [uploadedFile, setUploadedFile] = useState(null);
     const [playerData, setPlayerData] = useState(editData || initialData);
     const [paymentRequired, setPaymentRequired] = useState(true);
+    const [paymentAmount, setPaymentAmount] = useState(111);
     const [registeredId, setRegisteredId] = useState(() => new URLSearchParams(window.location.search).get('registered'));
     const formRef = useRef(null);
 
@@ -73,6 +74,8 @@ export default function PlayerRegistration({ editData, closeModal }) {
                 const config = await fetchAPI('/admin/dashboard');
                 const val = config.find(c => c.config_name === 'Payment_Required')?.config_value;
                 setPaymentRequired(val?.toLowerCase() === 'yes');
+                const amt = config.find(c => c.config_name === 'Payment_Amount')?.config_value;
+                if (amt) setPaymentAmount(Number(amt));
             } catch {}
             setTimeout(() => setIsLoading(false), 500);
         }
@@ -114,7 +117,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
                 const uniqueId = data['id'];
                 setIsLoading(false);
                 if (editData) { closeModal(); window.location.reload(); }
-                else if (paymentRequired) makePayment(playerData.name, playerData.contact_number, 111, uniqueId);
+                else if (paymentRequired) makePayment(playerData.name, playerData.contact_number, paymentAmount, uniqueId);
                 else setRegisteredId(uniqueId);
             });
         } catch (error) {
@@ -192,7 +195,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
                 <div style={s.termsBox}>
                     <p style={s.termsTitle}>Terms & Conditions</p>
                     <ul style={s.termsList}>
-                        {paymentRequired && <li>Registration fee: <span style={{ color: '#facc15' }}>₹111/-</span></li>}
+                        {paymentRequired && <li>Registration fee: <span style={{ color: '#facc15' }}>₹{paymentAmount}/-</span></li>}
                         <li>Must be available for the entire tournament</li>
                         <li>Absence without reason = 2 season ban</li>
                         <li>Chucking = banned from bowling for the tournament</li>
@@ -271,7 +274,7 @@ export default function PlayerRegistration({ editData, closeModal }) {
                             setIsUploading(true);
                             try {
                                 const downloadUrl = await uploadToGit(imageName, reader.result);
-                                setPlayerData(p => ({ ...p, player_photo: downloadUrl+'?raw=true' }));
+                                setPlayerData(p => ({ ...p, player_photo: downloadUrl }));
                             } catch (err) { toast.error(err.message); }
                             setIsUploading(false);
                         };
