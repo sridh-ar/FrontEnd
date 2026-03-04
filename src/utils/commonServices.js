@@ -25,25 +25,46 @@ async function fetchAPI(url = '', method = 'GET', body = {}, headers = {}, rawUr
 }
 
 async function uploadToGit(imageName, imageUrl) {
-    const token_config = await fetchAPI(`/admin/git_token`);
-    const repoName = 'Images';
-
     try {
+        const token_config = await fetchAPI(`/admin/git_token`);
+        if (!token_config?.config_value) {
+            throw new Error('GitHub token not configured');
+        }
+        
+        const repoName = 'Images';
+        
+        // Validate base64 format
+        if (!imageUrl || !imageUrl.includes('base64,')) {
+            throw new Error('Invalid image format - must be base64');
+        }
+        
+        const base64Content = imageUrl.split('base64,')[1];
+        if (!base64Content) {
+            throw new Error('Invalid base64 content');
+        }
+
         const result = await fetchAPI(
             `https://api.github.com/repos/sridh-ar/${repoName}/contents/${imageName}`,
             'PUT',
             {
-                message: 'Add image',
-                content: imageUrl.split('base64,')[1],
+                message: 'Add player image',
+                content: base64Content,
             },
             {
                 Authorization: `Bearer ${token_config.config_value}`,
+                'Content-Type': 'application/json',
             },
             true,
         );
+        
+        if (!result?.content?.download_url) {
+            throw new Error('GitHub API did not return download URL');
+        }
+        
         return result.content.download_url;
     } catch (error) {
-        throw new Error(error);
+        console.error('GitHub upload error:', error);
+        throw new Error(`Upload failed: ${error.message || 'Unknown error'}`);
     }
 }
 

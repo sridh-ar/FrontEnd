@@ -86,11 +86,34 @@ export default function PlayerRegistration({ editData, closeModal }) {
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
-        if (!file || !['jpg', 'jpeg', 'png'].includes(file.name.split('.').pop().toLowerCase())) {
-            toast.error('Please upload jpg, jpeg or png'); return;
+        if (!file) return;
+        
+        // Validate file type
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (!allowedTypes.includes(file.type)) {
+            toast.error('Please upload JPG, JPEG or PNG files only');
+            return;
         }
+        
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            toast.error('File size must be less than 5MB');
+            return;
+        }
+        
         const reader = new FileReader();
-        reader.addEventListener('load', () => { setUploadedFile(reader.result?.toString() || ''); setPhotoError(false); });
+        reader.addEventListener('load', () => {
+            const result = reader.result?.toString();
+            if (result && result.startsWith('data:image/')) {
+                setUploadedFile(result);
+                setPhotoError(false);
+            } else {
+                toast.error('Failed to read image file');
+            }
+        });
+        reader.addEventListener('error', () => {
+            toast.error('Error reading file');
+        });
         reader.readAsDataURL(file);
     };
 
@@ -266,16 +289,40 @@ export default function PlayerRegistration({ editData, closeModal }) {
                     uploadedFile={uploadedFile}
                     onChange={async (e) => {
                         const file = e.target.files[0];
+                        if (!file) {
+                            toast.error('No file selected');
+                            return;
+                        }
+                        
                         const imageName = `Player_${Math.floor(Math.random() * 90000) + 10000}.jpg`;
                         const reader = new FileReader();
                         reader.readAsDataURL(file);
                         reader.onload = async () => {
-                            setPhotoPreview(reader.result);
+                            const dataUrl = reader.result;
+                            if (!dataUrl || !dataUrl.startsWith('data:image/')) {
+                                toast.error('Invalid image format');
+                                return;
+                            }
+                            
+                            setPhotoPreview(dataUrl);
                             setIsUploading(true);
                             try {
-                                const downloadUrl = await uploadToGit(imageName, reader.result);
-                                setPlayerData(p => ({ ...p, player_photo: downloadUrl }));
-                            } catch (err) { toast.error(err.message); }
+                                const downloadUrl = await uploadToGit(imageName, dataUrl);
+                                if (downloadUrl) {
+                                    setPlayerData(p => ({ ...p, player_photo: downloadUrl }));
+                                    toast.success('Photo uploaded successfully');
+                                } else {
+                                    throw new Error('Failed to get download URL');
+                                }
+                            } catch (err) {
+                                console.error('Upload error:', err);
+                                toast.error(`Upload failed: ${err.message}`);
+                                setPhotoPreview(null);
+                            }
+                            setIsUploading(false);
+                        };
+                        reader.onerror = () => {
+                            toast.error('Failed to read file');
                             setIsUploading(false);
                         };
                     }}
